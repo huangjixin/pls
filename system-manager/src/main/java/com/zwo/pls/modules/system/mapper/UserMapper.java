@@ -1,6 +1,6 @@
 package com.zwo.pls.modules.system.mapper;
 
-import com.zwo.pls.security.domain.User;
+import com.zwo.pls.modules.system.domain.User;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 

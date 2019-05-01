@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zwo.pls.modules.system.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.zwo.pls.modules.system.domain.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="LOGIN_NAME" jdbcType="VARCHAR" property="loginName" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="REAL_NAME" jdbcType="VARCHAR" property="realName" />
+    <result column="IS_EXPIRED" jdbcType="TINYINT" property="isExpired" />
+    <result column="IS_LOCKED" jdbcType="TINYINT" property="isLocked" />
+    <result column="IS_ENABLED" jdbcType="TINYINT" property="isEnabled" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="EN_NAME" jdbcType="VARCHAR" property="enName" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="SEX" jdbcType="BIT" property="sex" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, LOGIN_NAME, PASSWORD, REAL_NAME, IS_EXPIRED, IS_LOCKED, IS_ENABLED, TYPE, STATUS, 
+    CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, EN_NAME, EMAIL, SEX, MOBILE
+  </sql>
+  <resultMap id="UserDtoMap" type="com.zwo.pls.modules.system.domain.User" extends="BaseResultMap">
+    <collection property="permissions"
+                ofType="com.zwo.pls.modules.system.domain.Permission">
+      <id column="PERMISSION_ID" jdbcType="VARCHAR" property="id" />
+      <result column="PERMISSION_NAME" jdbcType="VARCHAR" property="name" />
+      <result column="PERMISSION_IS_EXPIRED" jdbcType="TINYINT" property="isExpired" />
+      <result column="PERMISSION_IS_LOCKED" jdbcType="TINYINT" property="isLocked" />
+      <result column="PERMISSION_IS_ENABLED" jdbcType="TINYINT" property="isEnabled" />
+      <result column="PERMISSION_TYPE" jdbcType="INTEGER" property="type" />
+      <result column="PERMISSION_STATUS" jdbcType="INTEGER" property="status" />
+      <result column="PERMISSION_CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+      <result column="PERMISSION_CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="PERMISSION_UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+      <result column="PERMISSION_UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="PERMISSION_EN_NAME" jdbcType="VARCHAR" property="enName" />
+      <result column="PERMISSION_PARENT_ID" jdbcType="VARCHAR" property="parentId" />
+      <result column="PERMISSION_CODE" jdbcType="VARCHAR" property="code" />
+    </collection>
+  </resultMap>
+  <select id="selectByUserName" resultMap="UserDtoMap">
+    SELECT DISTINCT
+        a.*, e.ID AS PERMISSION_ID,
+        e. NAME AS PERMISSION_NAME,
+        e.IS_EXPIRED AS PERMISSION_IS_EXPIRED,
+        e.IS_LOCKED AS PERMISSION_IS_LOCKED,
+        e.IS_ENABLED AS PERMISSION_IS_ENABLED,
+        e.TYPE AS PERMISSION_TYPE,
+        e.STATUS AS PERMISSION_STATUS,
+        e.CREATE_BY AS PERMISSION_CREATE_BY,
+        e.CREATE_TIME AS PERMISSION_CREATE_TIME,
+        e.UPDATE_BY AS PERMISSION_UPDATE_BY,
+        e.UPDATE_TIME AS PERMISSION_UPDATE_TIME,
+        e.EN_NAME AS PERMISSION_EN_NAME,
+        e.PARENT_ID AS PERMISSION_PARENT_ID,
+        e. CODE AS PERMISSION_CODE
+    FROM
+        sys_user AS a
+    LEFT JOIN sys_user_role AS b ON a.ID = b.USER_ID
+    LEFT JOIN sys_role AS c ON b.ROLE_ID = c.ID
+    LEFT JOIN sys_role_permission AS d ON c.ID = d.ROLE_ID
+    LEFT JOIN sys_permission AS e ON d.PERMISSION_ID = e.ID
+    WHERE
+        a.LOGIN_NAME = #{loginName}
+  </select>
+</mapper>
