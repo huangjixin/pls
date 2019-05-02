@@ -1,8 +1,8 @@
 package com.zwo.pls.modules.mem.web;
 
 import com.zwo.pls.core.web.BaseController;
+import com.zwo.pls.modules.mem.domain.Member;
 import com.zwo.pls.modules.mem.service.IMemberService;
-import com.zwo.pls.modules.system.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +19,8 @@ public class MemberController extends BaseController {
     private IMemberService memberService;
 
     @GetMapping("test")
-    public User test(){
-        User user = memberService.selectByPrimaryKey("1");
+    public Member test(){
+        Member user = memberService.selectByPrimaryKey("1");
         return  user;
     }
 }

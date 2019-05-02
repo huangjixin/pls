@@ -1,6 +1,7 @@
 package com.zwo.pls.modules.mem.service.impl;
 
 import com.zwo.pls.core.service.impl.BaseServiceImpl;
+import com.zwo.pls.modules.mem.domain.Member;
 import com.zwo.pls.modules.mem.mapper.MemberMapper;
 import com.zwo.pls.modules.mem.service.IMemberService;
 import com.zwo.pls.modules.system.domain.User;
@@ -18,25 +19,26 @@ import tk.mybatis.mapper.common.Mapper;
  */
 @Service
 @Transactional
-public class MemberServiceImpl extends BaseServiceImpl<User> implements IMemberService {
+public class MemberServiceImpl extends BaseServiceImpl<Member> implements IMemberService {
 
     private static Logger logger= LoggerFactory.getLogger(MemberServiceImpl.class);
+    private static final String MESSAGE = "用户增删改查";
 
     @Autowired
     private MemberMapper memberMapper;
 
     @Override
-    protected Mapper<User> getBaseMapper() {
-        return null;
+    protected Mapper<Member> getBaseMapper() {
+        return memberMapper;
     }
 
     @Override
     protected String getBaseMessage() {
-        return null;
+        return MESSAGE;
     }
 
     @Override
     protected Logger getLogger() {
-        return null;
+        return logger;
     }
 }
