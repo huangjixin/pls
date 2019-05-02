@@ -1,10 +1,13 @@
-package com.zwo.pls.modules.system.service.impl;
+package com.zwo.pls.modules.mem.service.impl;
 
 import com.zwo.pls.core.service.impl.BaseServiceImpl;
+import com.zwo.pls.modules.mem.mapper.MemberMapper;
+import com.zwo.pls.modules.mem.service.IMemberService;
 import com.zwo.pls.modules.system.domain.User;
-import com.zwo.pls.modules.system.service.IUserService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.common.Mapper;
@@ -15,7 +18,13 @@ import tk.mybatis.mapper.common.Mapper;
  */
 @Service
 @Transactional
-public class UserServiceImpl extends BaseServiceImpl<User> implements IUserService {
+public class MemberServiceImpl extends BaseServiceImpl<User> implements IMemberService {
+
+    private static Logger logger= LoggerFactory.getLogger(MemberServiceImpl.class);
+
+    @Autowired
+    private MemberMapper memberMapper;
+
     @Override
     protected Mapper<User> getBaseMapper() {
         return null;

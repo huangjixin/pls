@@ -1,8 +1,8 @@
-package com.zwo.pls.modules.system.web;
+package com.zwo.pls.modules.mem.web;
 
 import com.zwo.pls.core.web.BaseController;
+import com.zwo.pls.modules.mem.service.IMemberService;
 import com.zwo.pls.modules.system.domain.User;
-import com.zwo.pls.modules.system.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by Tony(黄记新) in 2019/4/30
  */
 @RestController
-@RequestMapping("user")
-public class UserController extends BaseController {
+@RequestMapping("member")
+public class MemberController extends BaseController {
     @Autowired
-    private IUserService userService;
+    private IMemberService memberService;
 
     @GetMapping("test")
     public User test(){
-        User user = userService.selectByPrimaryKey("1");
+        User user = memberService.selectByPrimaryKey("1");
         return  user;
     }
 }

@@ -22,8 +22,8 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("奖金计算项目APIs")
-                .description("奖金计算项目后台API接口文档")
+                .title("PLS演示项目APIs")
+                .description("PLS演示项目后台API接口文档")
                 .version("2.0.0").build();
     }
 

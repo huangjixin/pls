@@ -1,9 +1,11 @@
+server:
+  port: 10003
 spring:
   datasource:
     druid:
-      url: jdbc:mysql://127.0.0.1:3306/pls_dev?characterEncoding=utf-8
+      url: jdbc:mysql://172.16.106.31:33060/pls_dev?characterEncoding=utf-8
       username: root
-      password: root
+      password: abc123
       validation-query: SELECT 1 FROM DUAL
       validation-query-timeout: 60000
       driver-class-name: com.mysql.jdbc.Driver
@@ -26,7 +28,7 @@ spring:
       min-idle: 5
       pool-prepared-statements: true
       stat-view-servlet:
-        allow: 127.0.0.1
+        allow: 172.30.20.106
         enabled: true
         login-password: admin
         login-username: admin

@@ -7,7 +7,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zwo.pls.core.service.IBaseService;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.logging.log4j.Logger;
+
+import org.slf4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.common.Mapper;
 
