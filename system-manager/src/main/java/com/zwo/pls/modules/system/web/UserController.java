@@ -6,8 +6,11 @@ import com.zwo.pls.modules.system.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.jwt.Jwt;
+import org.springframework.security.jwt.JwtHelper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -47,5 +50,12 @@ public class UserController extends BaseController {
     public Collection<SimpleGrantedAuthority> getAuthorities(){
         Collection<SimpleGrantedAuthority> authorities = super.getAuthorities();
         return  authorities;
+    }
+
+    @GetMapping("getClaims")
+    public String getClaims(@RequestParam String token){
+        Jwt jwt = JwtHelper.decode(token);
+        String claims = jwt.getClaims();
+        return  claims;
     }
 }
