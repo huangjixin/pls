@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zwo.pls.modules.mem.mapper.MemberMapper">
+  <resultMap id="BaseResultMap" type="com.zwo.pls.modules.mem.domain.Member">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="IS_EXPIRED" jdbcType="TINYINT" property="isExpired" />
+    <result column="IS_LOCKED" jdbcType="TINYINT" property="isLocked" />
+    <result column="IS_ENABLED" jdbcType="TINYINT" property="isEnabled" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="EN_NAME" jdbcType="VARCHAR" property="enName" />
+    <result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+    <result column="WECHAT" jdbcType="VARCHAR" property="wechat" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="SEX" jdbcType="TINYINT" property="sex" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="OPEN_ID" jdbcType="VARCHAR" property="openId" />
+    <result column="UNION_ID" jdbcType="VARCHAR" property="unionId" />
+    <result column="LOGIN_NAME" jdbcType="VARCHAR" property="loginName" />
+    <result column="ID_CARD" jdbcType="VARCHAR" property="idCard" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, NAME, IS_EXPIRED, IS_LOCKED, IS_ENABLED, TYPE, STATUS, CREATE_BY, CREATE_TIME, 
+    UPDATE_BY, UPDATE_TIME, EN_NAME, NICK_NAME, WECHAT, MOBILE, SEX, EMAIL, OPEN_ID, 
+    UNION_ID, LOGIN_NAME, ID_CARD
+  </sql>
+  <select id="selectByExample" parameterType="com.zwo.pls.modules.mem.domain.MemberCriteria" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mem_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.zwo.pls.modules.mem.domain.MemberCriteria">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from mem_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.zwo.pls.modules.mem.domain.MemberCriteria" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from mem_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update mem_member
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isExpired != null">
+        IS_EXPIRED = #{record.isExpired,jdbcType=TINYINT},
+      </if>
+      <if test="record.isLocked != null">
+        IS_LOCKED = #{record.isLocked,jdbcType=TINYINT},
+      </if>
+      <if test="record.isEnabled != null">
+        IS_ENABLED = #{record.isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="record.type != null">
+        TYPE = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createBy != null">
+        CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null">
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enName != null">
+        EN_NAME = #{record.enName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechat != null">
+        WECHAT = #{record.wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        SEX = #{record.sex,jdbcType=TINYINT},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openId != null">
+        OPEN_ID = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unionId != null">
+        UNION_ID = #{record.unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginName != null">
+        LOGIN_NAME = #{record.loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCard != null">
+        ID_CARD = #{record.idCard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update mem_member
+    set ID = #{record.id,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      IS_EXPIRED = #{record.isExpired,jdbcType=TINYINT},
+      IS_LOCKED = #{record.isLocked,jdbcType=TINYINT},
+      IS_ENABLED = #{record.isEnabled,jdbcType=TINYINT},
+      TYPE = #{record.type,jdbcType=INTEGER},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      EN_NAME = #{record.enName,jdbcType=VARCHAR},
+      NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      WECHAT = #{record.wechat,jdbcType=VARCHAR},
+      MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      SEX = #{record.sex,jdbcType=TINYINT},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      OPEN_ID = #{record.openId,jdbcType=VARCHAR},
+      UNION_ID = #{record.unionId,jdbcType=VARCHAR},
+      LOGIN_NAME = #{record.loginName,jdbcType=VARCHAR},
+      ID_CARD = #{record.idCard,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
