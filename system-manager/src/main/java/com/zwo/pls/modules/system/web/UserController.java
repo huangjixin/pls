@@ -1,7 +1,7 @@
-package com.zwo.pls.security.web;
+package com.zwo.pls.modules.system.web;
 
-import com.zwo.pls.security.domain.User;
-import com.zwo.pls.security.service.IUserService;
+import com.zwo.pls.modules.system.domain.User;
+import com.zwo.pls.modules.system.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("test")
     public User test(){
-        User user = userService.selectByUserName("1");
+        User user = userService.selectByPrimaryKey("1");
         return  user;
     }
 }
