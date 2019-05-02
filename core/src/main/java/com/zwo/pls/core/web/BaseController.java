@@ -1,16 +1,15 @@
 package com.zwo.pls.core.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import javax.validation.ValidationException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -35,8 +34,23 @@ public class BaseController {
     protected String getLoginUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String currentUserName = authentication.getName();
+            String currentUserName = authentication.getPrincipal().toString();
             return currentUserName;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 获取框架内当前登录用户名的权限
+     *
+     * @return
+     */
+    protected Collection<SimpleGrantedAuthority> getAuthorities() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) authentication.getAuthorities();
+            return  authorities;
         } else {
             return null;
         }

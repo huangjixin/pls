@@ -4,9 +4,13 @@ import com.zwo.pls.core.web.BaseController;
 import com.zwo.pls.modules.system.domain.User;
 import com.zwo.pls.modules.system.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collection;
 
 /**
  * 一句话描述该类功能：
@@ -22,5 +26,26 @@ public class UserController extends BaseController {
     public User test(){
         User user = userService.selectByPrimaryKey("1");
         return  user;
+    }
+
+    @PreAuthorize("hasAnyAuthority('*', 'sys:user:test')")
+    @GetMapping("testoauth")
+    public String testoauth(){
+        User user = userService.selectByPrimaryKey("1");
+        return  "你已经成功进入受保护的方法，得到user："+user.toString();
+    }
+
+    @PreAuthorize("hasAnyAuthority('*', 'sys:user:getLoginName')")
+    @GetMapping("getLoginName")
+    public String getLoginName(){
+       String loginName = super.getLoginUser();
+        return  loginName;
+    }
+
+    @PreAuthorize("hasAnyAuthority('*', 'sys:user:getAuthorities')")
+    @GetMapping("getAuthorities")
+    public Collection<SimpleGrantedAuthority> getAuthorities(){
+        Collection<SimpleGrantedAuthority> authorities = super.getAuthorities();
+        return  authorities;
     }
 }

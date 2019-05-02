@@ -4,7 +4,6 @@ import com.zwo.pls.core.service.impl.BaseServiceImpl;
 import com.zwo.pls.modules.mem.domain.Member;
 import com.zwo.pls.modules.mem.mapper.MemberMapper;
 import com.zwo.pls.modules.mem.service.IMemberService;
-import com.zwo.pls.modules.system.domain.User;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
