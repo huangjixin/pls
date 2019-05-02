@@ -36,4 +36,9 @@ public class TestController {
         httpSession.removeAttribute("username");
         return  "移除session成功";
     }
+
+    @GetMapping("hello")
+    public String hello(HttpSession httpSession){
+        return  "hello,huang";
+    }
 }
