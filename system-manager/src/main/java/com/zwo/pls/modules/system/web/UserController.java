@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * 一句话描述该类功能：
@@ -57,5 +60,20 @@ public class UserController extends BaseController {
         Jwt jwt = JwtHelper.decode(token);
         String claims = jwt.getClaims();
         return  claims;
+    }
+
+    @GetMapping("insertBatch")
+    public int insertBatch(){
+        int result = -1;
+        List<User> list = new ArrayList<User>();
+        User user = null;
+        for (int i=0;i<10000;i++){
+            user = new User();
+            user.setId(UUID.randomUUID().toString().replaceAll("-",""));
+            user.setLoginName(UUID.randomUUID().toString().replaceAll("-",""));
+            user.setPassword("$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu");
+        }
+        result = this.userService.insertBatch(list);
+        return  result;
     }
 }

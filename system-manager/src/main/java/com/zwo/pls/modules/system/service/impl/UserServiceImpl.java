@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * 一句话描述该类功能：
  * Created by Tony(黄记新) in 2019/5/2
@@ -39,5 +41,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     @Override
     protected Logger getLogger() {
         return logger;
+    }
+
+    @Override
+    public int insertBatch(List<User> users) {
+        int result = this.userMapper.insertBatch(users);
+        return result;
     }
 }

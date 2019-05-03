@@ -138,4 +138,13 @@
     WHERE
         a.LOGIN_NAME = #{loginName}
   </select>
+
+  <insert id="insertBatch" >
+    insert into sys_user (ID, LOGIN_NAME, PASSWORD)
+    values
+    <foreach  collection="users" item="user" separator=",">
+      (#{user.id},#{user.loginName},#{user.password})
+    </foreach>
+
+  </insert>
 </mapper>
