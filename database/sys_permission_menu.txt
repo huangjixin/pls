@@ -1,0 +1,2 @@
+"ID"	"MENU_ID"	"PERMISSION_ID"
+"1"	"1"	"1"
