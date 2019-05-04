@@ -16,6 +16,7 @@
     <properties>
         <java.version>1.8</java.version>
         <swagger.version>2.9.2</swagger.version>
+        <spring-boot-starter-redis.version>1.4.7.RELEASE</spring-boot-starter-redis.version>
     </properties>
 
     <dependencies>
@@ -23,6 +24,16 @@
             <groupId>com.zwo.pls</groupId>
             <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+            <version>${spring-boot-starter-redis.version}</version>
+        </dependency>
+        <!--Spring 封裝的使用Redis的配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <!--<dependency>
             <groupId>org.springframework.boot</groupId>

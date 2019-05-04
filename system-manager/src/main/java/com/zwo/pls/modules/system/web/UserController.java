@@ -7,6 +7,10 @@ import com.zwo.pls.modules.system.service.IUserService;
 import com.zwo.pls.modules.system.vo.UserVo;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.support.CompositeCacheManager;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.jwt.Jwt;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -26,6 +31,15 @@ import java.util.*;
 @RestController
 @RequestMapping("user")
 public class UserController extends BaseController {
+
+    @Autowired
+    @Lazy(value=true)
+    CompositeCacheManager cacheManger;
+
+//    @Resource(name="ehcacheCacheManager")
+//    @Lazy(value=true)
+//    CacheManager cacheManger1;
+
     @Autowired
     private IUserService userService;
 
@@ -65,7 +79,34 @@ public class UserController extends BaseController {
 
     @GetMapping("selectByUserName")
     public UserVo selectByUserName(@RequestParam String loginName) {
-        UserVo userVo = this.userService.selectByUserName(loginName);
+        UserVo userVo = null;
+
+        // 使用缓存
+        if(cacheManger != null){
+            Cache cache = null;
+            try {
+                cache = cacheManger.getCache("UserVo");
+            } catch (Exception e) {
+
+            }
+            if(cache != null)
+                userVo = (UserVo) cache.get(loginName);
+        }
+
+        if (userVo == null) {
+            userVo = this.userService.selectByUserName(loginName);
+            // 使用缓存
+            if(cacheManger != null && userVo != null){
+                Cache cache = null;
+                try {
+                    cache = cacheManger.getCache("UserVo");
+                } catch (Exception e) {
+
+                }
+                if(cache != null)
+                    cache.put(loginName,userVo);
+            }
+        }
         return userVo;
     }
 

@@ -3,6 +3,7 @@ package com.zwo.pls.modules.system.vo;
 import com.zwo.pls.modules.system.domain.Role;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,8 @@ import java.util.List;
  * Created by Tony(黄记新) in 2019/5/4
  */
 @Data
-public class RoleVo extends Role {
+public class RoleVo extends Role  implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private List<PermissionVo> permissiones;
 
