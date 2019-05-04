@@ -89,8 +89,12 @@ public class UserController extends BaseController {
             } catch (Exception e) {
 
             }
-            if(cache != null)
-                userVo = (UserVo) cache.get(loginName);
+            if(cache != null){
+                Cache.ValueWrapper wrapper =  cache.get(loginName);
+                userVo = (UserVo) wrapper.get();
+                UserVo uVo = cache.get(loginName,UserVo.class);
+            }
+
         }
 
         if (userVo == null) {
