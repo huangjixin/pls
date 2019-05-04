@@ -3,6 +3,8 @@ package com.zwo.pls.modules.system.service;
 import com.zwo.pls.core.service.IBaseService;
 import com.zwo.pls.modules.system.domain.User;
 import com.zwo.pls.modules.system.domain.UserCriteria;
+import com.zwo.pls.modules.system.vo.UserVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,6 +13,13 @@ import java.util.List;
  * Created by Tony(黄记新) in 2019/5/2
  */
 public interface IUserService extends IBaseService<User> {
+    /**
+     * 根据用户名查询用户信息（带有权限列表）
+     *
+     * @return UserVo
+     */
+    UserVo selectByUserName(String loginName);
+
     /**
      * 批量插入用户。
      * @param users
@@ -25,5 +34,5 @@ public interface IUserService extends IBaseService<User> {
      * @param size
      * @return
      */
-    List<User> selectByExamplePage(UserCriteria example, Integer start, Integer size);
+    List<UserVo> selectByExamplePage(UserCriteria example, Integer start, Integer size);
 }

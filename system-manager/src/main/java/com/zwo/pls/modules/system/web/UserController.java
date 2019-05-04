@@ -4,6 +4,7 @@ import com.zwo.pls.core.web.BaseController;
 import com.zwo.pls.modules.system.domain.User;
 import com.zwo.pls.modules.system.domain.UserCriteria;
 import com.zwo.pls.modules.system.service.IUserService;
+import com.zwo.pls.modules.system.vo.UserVo;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -62,6 +63,12 @@ public class UserController extends BaseController {
         return  claims;
     }
 
+    @GetMapping("selectByUserName")
+    public UserVo selectByUserName(@RequestParam String loginName) {
+        UserVo userVo = this.userService.selectByUserName(loginName);
+        return userVo;
+    }
+
     @GetMapping("insertBatch")
     public int insertBatch(){
         int result = -1;
@@ -78,9 +85,9 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("selectByExamplePage")
-    List<User> selectByExamplePage(HttpServletRequest request,@RequestParam(required = false,defaultValue = "0") Integer start,@RequestParam(required = false,defaultValue = "10")Integer size){
+    List<UserVo> selectByExamplePage(HttpServletRequest request, @RequestParam(required = false,defaultValue = "0") Integer start, @RequestParam(required = false,defaultValue = "10")Integer size){
         UserCriteria example = this.getCriteria(request);
-        List<User> list = this.userService.selectByExamplePage(example,start,size);
+        List<UserVo> list = this.userService.selectByExamplePage(example,start,size);
         return list;
     }
 

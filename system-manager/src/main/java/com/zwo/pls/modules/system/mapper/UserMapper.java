@@ -16,7 +16,7 @@ public interface UserMapper extends Mapper<User> {
      * @param loginName 用户名
      * @return User
      */
-    User selectByUserName(@Param(value = "loginName") String loginName);
+    UserVo selectByUserName(@Param(value = "loginName") String loginName);
 
     /**
      * 批量插入用户。
@@ -30,5 +30,5 @@ public interface UserMapper extends Mapper<User> {
      * @param example
      * @return
      */
-    List<User> selectByExamplePage(@Param("example")UserCriteria example,@Param("start")Integer start,@Param("size")Integer size);
+    List<UserVo> selectByExamplePage(@Param("example")UserCriteria example,@Param("start")Integer start,@Param("size")Integer size);
 }

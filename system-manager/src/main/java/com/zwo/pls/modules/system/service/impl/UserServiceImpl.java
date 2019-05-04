@@ -6,6 +6,7 @@ import com.zwo.pls.modules.system.domain.User;
 import com.zwo.pls.modules.system.domain.UserCriteria;
 import com.zwo.pls.modules.system.mapper.UserMapper;
 import com.zwo.pls.modules.system.service.IUserService;
+import com.zwo.pls.modules.system.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +46,20 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     }
 
     @Override
+    public UserVo selectByUserName(String loginName) {
+        UserVo userVo = this.userMapper.selectByUserName(loginName);
+        return userVo;
+    }
+
+    @Override
     public int insertBatch(List<User> users) {
         int result = this.userMapper.insertBatch(users);
         return result;
     }
 
     @Override
-    public List<User> selectByExamplePage(UserCriteria example, Integer start, Integer size) {
-        List<User> list = this.userMapper.selectByExamplePage(example,start,size);
+    public List<UserVo> selectByExamplePage(UserCriteria example, Integer start, Integer size) {
+        List<UserVo> list = this.userMapper.selectByExamplePage(example,start,size);
         return list;
     }
 }

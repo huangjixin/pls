@@ -116,7 +116,7 @@
 
   <resultMap id="UserVoMap" type="com.zwo.pls.modules.system.vo.UserVo" extends="BaseResultMap">
     <collection property="roles"
-                ofType="com.zwo.pls.modules.system.domain.Role">
+                ofType="com.zwo.pls.modules.system.vo.RoleVo">
       <id column="ROLE_ID" jdbcType="VARCHAR" property="id" />
       <result column="ROLE_NAME" jdbcType="VARCHAR" property="name" />
       <result column="ROLE_IS_EXPIRED" jdbcType="TINYINT" property="isExpired" />
@@ -129,13 +129,20 @@
       <result column="ROLE_UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
       <result column="ROLE_UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
       <result column="ROLE_EN_NAME" jdbcType="VARCHAR" property="enName" />
+      <collection property="permissiones"
+                  ofType="com.zwo.pls.modules.system.vo.PermissionVo">
+        <id column="PERMISSION_ID" jdbcType="VARCHAR" property="id" />
+        <result column="PERMISSION_NAME" jdbcType="VARCHAR" property="name" />
+      </collection>
     </collection>
-
   </resultMap>
 
-  <select id="selectByUserName" resultMap="UserDtoMap">
-    SELECT DISTINCT
-        a.*, e.ID AS PERMISSION_ID,
+  <select id="selectByUserName" resultMap="UserVoMap">
+    SELECT
+        a.id,a.login_name,a.password,
+        c.id as ROLE_ID,
+        c.NAME AS ROLE_NAME,
+        e.ID AS PERMISSION_ID,
         e. NAME AS PERMISSION_NAME,
         e.IS_EXPIRED AS PERMISSION_IS_EXPIRED,
         e.IS_LOCKED AS PERMISSION_IS_LOCKED,
@@ -158,7 +165,7 @@
     WHERE
         a.LOGIN_NAME = #{loginName}
   </select>
-
+  <!---->
   <insert id="insertBatch" >
     insert into sys_user (ID, LOGIN_NAME, PASSWORD)
     values
@@ -184,7 +191,7 @@
     c.UPDATE_TIME as ROLE_UPDATE_TIME,
     c.EN_NAME as ROLE_EN_NAME
      from (select
-    <if test="example.distinct">
+    <if test="example != null and example.distinct ">
       distinct
     </if>
     <include refid="Base_Column_List"/>
@@ -192,7 +199,7 @@
     <if test="example != null">
       <include refid="Example_Where_Clause"/>
     </if>
-    <if test="example.orderByClause != null">
+    <if test="example != null and example.orderByClause != null">
       order by ${example.orderByClause}
     </if>
     <if test="start != null and size != null ">
