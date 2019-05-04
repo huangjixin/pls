@@ -43,3 +43,7 @@ spring:
         enabled: true
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
         url-pattern: /*
+
+logging:
+  level:
+    com.zwo.pls.modules.*.mapper : debug

@@ -2,7 +2,9 @@ package com.zwo.pls.modules.system.web;
 
 import com.zwo.pls.core.web.BaseController;
 import com.zwo.pls.modules.system.domain.User;
+import com.zwo.pls.modules.system.domain.UserCriteria;
 import com.zwo.pls.modules.system.service.IUserService;
+import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * 一句话描述该类功能：
@@ -75,5 +75,29 @@ public class UserController extends BaseController {
         }
         result = this.userService.insertBatch(list);
         return  result;
+    }
+
+    @GetMapping("selectByExamplePage")
+    List<User> selectByExamplePage(HttpServletRequest request,@RequestParam(required = false,defaultValue = "0") Integer start,@RequestParam(required = false,defaultValue = "10")Integer size){
+        UserCriteria example = this.getCriteria(request);
+        List<User> list = this.userService.selectByExamplePage(example,start,size);
+        return list;
+    }
+
+    private UserCriteria getCriteria(HttpServletRequest request) {
+        UserCriteria example = null;
+        if (request.getParameterNames().hasMoreElements()) {
+            example = new UserCriteria();
+            UserCriteria.Criteria criteria = example.createCriteria();
+            String loginName = request.getParameter("loginName");
+            if (StringUtils.isNotEmpty(loginName)) {
+                criteria.andLoginNameLike("%"+loginName+"%");
+            }
+//            Date createTime = request.getParameter("createTime");
+//            if (StringUtils.isNotEmpty(loginName)) {
+//                criteria.andLoginNameLike("%"+loginName+"%");
+//            }
+        }
+        return example;
     }
 }

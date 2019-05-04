@@ -28,7 +28,7 @@
       WARNING - @mbg.generated
     -->
     <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
           <trim prefix="(" prefixOverrides="and" suffix=")">
             <foreach collection="criteria.criteria" item="criterion">
@@ -113,6 +113,26 @@
       <result column="PERMISSION_CODE" jdbcType="VARCHAR" property="code" />
     </collection>
   </resultMap>
+
+  <resultMap id="UserVoMap" type="com.zwo.pls.modules.system.vo.UserVo" extends="BaseResultMap">
+    <collection property="roles"
+                ofType="com.zwo.pls.modules.system.domain.Role">
+      <id column="ROLE_ID" jdbcType="VARCHAR" property="id" />
+      <result column="ROLE_NAME" jdbcType="VARCHAR" property="name" />
+      <result column="ROLE_IS_EXPIRED" jdbcType="TINYINT" property="isExpired" />
+      <result column="ROLE_IS_LOCKED" jdbcType="TINYINT" property="isLocked" />
+      <result column="ROLE_IS_ENABLED" jdbcType="TINYINT" property="isEnabled" />
+      <result column="ROLE_TYPE" jdbcType="INTEGER" property="type" />
+      <result column="ROLE_STATUS" jdbcType="INTEGER" property="status" />
+      <result column="ROLE_CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+      <result column="ROLE_CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="ROLE_UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+      <result column="ROLE_UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="ROLE_EN_NAME" jdbcType="VARCHAR" property="enName" />
+    </collection>
+
+  </resultMap>
+
   <select id="selectByUserName" resultMap="UserDtoMap">
     SELECT DISTINCT
         a.*, e.ID AS PERMISSION_ID,
@@ -145,6 +165,40 @@
     <foreach  collection="users" item="user" separator=",">
       (#{user.id},#{user.loginName},#{user.password})
     </foreach>
-
   </insert>
+
+  <select id="selectByExamplePage" parameterType="map" resultMap="UserVoMap">
+    select a.ID, a.LOGIN_NAME, a.PASSWORD,
+    a.REAL_NAME, a.IS_EXPIRED, a.IS_LOCKED, a.IS_ENABLED, a.TYPE, a.STATUS,
+    a.CREATE_BY, a.CREATE_TIME, a.UPDATE_BY, a.UPDATE_TIME, a.EN_NAME, a.EMAIL, a.SEX, a.MOBILE,
+    c.ID as ROLE_ID,
+    c.NAME as ROLE_NAME,
+    c.IS_EXPIRED as ROLE_IS_EXPIRED,
+    c.IS_LOCKED as ROLE_IS_LOCKED,
+    c.IS_ENABLED as ROLE_IS_ENABLED,
+    c.TYPE as ROLE_TYPE,
+    c.STATUS as ROLE_STATUS,
+    c.CREATE_BY as ROLE_CREATE_BY,
+    c.CREATE_TIME as ROLE_CREATE_TIME,
+    c.UPDATE_BY as ROLE_UPDATE_BY,
+    c.UPDATE_TIME as ROLE_UPDATE_TIME,
+    c.EN_NAME as ROLE_EN_NAME
+     from (select
+    <if test="example.distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List"/>
+    from sys_user
+    <if test="example != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+    <if test="start != null and size != null ">
+      limit #{start},#{size}
+    </if>) as a
+    LEFT JOIN sys_user_role AS b ON a.ID = b.USER_ID
+    LEFT JOIN sys_role AS c ON b.ROLE_ID = c.ID
+  </select>
 </mapper>

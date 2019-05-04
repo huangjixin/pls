@@ -3,6 +3,7 @@ package com.zwo.pls.modules.system.service.impl;
 import com.zwo.pls.core.service.impl.BaseServiceImpl;
 import com.zwo.pls.modules.mem.service.impl.MemberServiceImpl;
 import com.zwo.pls.modules.system.domain.User;
+import com.zwo.pls.modules.system.domain.UserCriteria;
 import com.zwo.pls.modules.system.mapper.UserMapper;
 import com.zwo.pls.modules.system.service.IUserService;
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ import java.util.List;
  * Created by Tony(黄记新) in 2019/5/2
  */
 @Service
-@Transactional
+@Transactional(noRollbackFor=Exception.class)
 public class UserServiceImpl extends BaseServiceImpl<User> implements IUserService {
 
     private static Logger logger= LoggerFactory.getLogger(MemberServiceImpl.class);
@@ -47,5 +48,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements IUserServi
     public int insertBatch(List<User> users) {
         int result = this.userMapper.insertBatch(users);
         return result;
+    }
+
+    @Override
+    public List<User> selectByExamplePage(UserCriteria example, Integer start, Integer size) {
+        List<User> list = this.userMapper.selectByExamplePage(example,start,size);
+        return list;
     }
 }
