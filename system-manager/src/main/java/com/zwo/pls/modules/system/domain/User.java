@@ -1,6 +1,8 @@
 package com.zwo.pls.modules.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -47,12 +49,16 @@ public class User implements Serializable, UserDetails {
     @Column(name = "CREATE_BY")
     private String createBy;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "CREATE_TIME")
     private Date createTime;
 
     @Column(name = "UPDATE_BY")
     private String updateBy;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "UPDATE_TIME")
     private Date updateTime;
 

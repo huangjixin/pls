@@ -156,4 +156,12 @@ public class UserController extends BaseController {
         }
         return example;
     }
+
+    @GetMapping("testUser")
+    public UserVo testUser(){
+        UserVo userVo = new UserVo();
+        userVo.setCreateTime(new Date());
+        userVo.setUpdateTime(new Date());
+        return  userVo;
+    }
 }
