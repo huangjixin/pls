@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://io.mycat/">
+	<schema name="pls_dev" checkSQLschema="false" sqlMaxLimit="100">
+		<table name="mem_department" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" /><!--一致性Hash算法-->
+		<table name="mem_member" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="mem_member_position" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="mem_postion" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_login_log" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_menu" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_ope_log" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_permission" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_permission_menu" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_role" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_role_permission" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_user_role" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_user" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+	</schema>
+	
+	<dataNode name="dn1" dataHost="localhost1" database="pls_dev" />
+	<dataNode name="dn2" dataHost="localhost2" database="pls_dev" />
+	
+	<dataHost name="localhost1" maxCon="1000" minCon="10" balance="1"
+			  writeType="0" dbType="mysql" dbDriver="native" switchType="3"  slaveThreshold="100">
+		<heartbeat>show status like 'wsrep%'</heartbeat>
+		<!-- <heartbeat>select user()</heartbeat> -->
+		<writeHost host="hostM1" url="percona_cluster_master-node1:3306" user="root" password="abc123">
+			<readHost host="hostS1" url="percona_cluster_worker-node1:3306" user="root" password="abc123" />
+		</writeHost>
+        <writeHost host="hostM2" url="percona_cluster_worker-node1:3306" user="root" password="abc123">
+			<readHost host="hostS3" url="percona_cluster_worker-node1:3306" user="root" password="abc123" />
+		</writeHost>
+	</dataHost>
+
+	<dataHost name="localhost2" maxCon="1000" minCon="10" balance="1"
+			  writeType="0" dbType="mysql" dbDriver="native" switchType="3"  slaveThreshold="100">
+		<heartbeat>show status like 'wsrep%'</heartbeat>
+		<!-- <heartbeat>select user()</heartbeat> -->
+		<writeHost host="hostM4" url="percona_cluster_master-node2:3306" user="root" password="abc123">
+			<readHost host="hostS6" url="percona_cluster_worker-node2:3306" user="root" password="abc123" />
+		</writeHost>
+        <writeHost host="hostM5" url="percona_cluster_worker-node2:3306" user="root" password="abc123">
+			<readHost host="hostS8" url="percona_cluster_worker-node2:3306" user="root" password="abc123" />
+		</writeHost>
+	</dataHost>
+</mycat:schema>
