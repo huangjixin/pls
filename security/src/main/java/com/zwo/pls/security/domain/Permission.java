@@ -1,5 +1,7 @@
 package com.zwo.pls.security.domain;
 
+import com.zwo.pls.core.vo.Node;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
@@ -8,8 +10,9 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 @Table(name = "sys_permission")
-public class Permission implements Serializable, GrantedAuthority {
+public class Permission extends Node implements Serializable, GrantedAuthority {
     @Id
     @Column(name = "ID")
     private String id;
@@ -64,6 +67,7 @@ public class Permission implements Serializable, GrantedAuthority {
     /**
      * @return ID
      */
+    @Override
     public String getId() {
         return id;
     }
@@ -71,6 +75,7 @@ public class Permission implements Serializable, GrantedAuthority {
     /**
      * @param id
      */
+    @Override
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }
@@ -78,6 +83,7 @@ public class Permission implements Serializable, GrantedAuthority {
     /**
      * @return NAME
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -85,6 +91,7 @@ public class Permission implements Serializable, GrantedAuthority {
     /**
      * @param name
      */
+    @Override
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
@@ -234,6 +241,7 @@ public class Permission implements Serializable, GrantedAuthority {
      *
      * @return PARENT_ID - 父类ID
      */
+    @Override
     public String getParentId() {
         return parentId;
     }
@@ -243,6 +251,7 @@ public class Permission implements Serializable, GrantedAuthority {
      *
      * @param parentId 父类ID
      */
+    @Override
     public void setParentId(String parentId) {
         this.parentId = parentId == null ? null : parentId.trim();
     }

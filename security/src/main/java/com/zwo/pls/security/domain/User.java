@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -390,8 +391,8 @@ public class User implements Serializable, UserDetails {
         return sb.toString();
     }
 
-    private List<Permission> permissions;
-    private List<Role> roles;
+    private List<Permission> permissions = new ArrayList<Permission>();
+    private List<Role> roles = new ArrayList<Role>();
     public List<Role> getRoles() {
         return roles;
     }

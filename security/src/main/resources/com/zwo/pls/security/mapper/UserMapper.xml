@@ -114,7 +114,7 @@
     </collection>
   </resultMap>
   <select id="selectByUserName" resultMap="UserDtoMap">
-    SELECT DISTINCT
+    SELECT
         a.*, e.ID AS PERMISSION_ID,
         e. NAME AS PERMISSION_NAME,
         e.IS_EXPIRED AS PERMISSION_IS_EXPIRED,
@@ -137,5 +137,6 @@
     LEFT JOIN sys_permission AS e ON d.PERMISSION_ID = e.ID
     WHERE
         a.LOGIN_NAME = #{loginName}
+    order by PERMISSION_ID asc
   </select>
 </mapper>

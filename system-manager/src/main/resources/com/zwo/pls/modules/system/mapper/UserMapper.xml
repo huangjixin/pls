@@ -155,7 +155,7 @@
         e.UPDATE_TIME AS PERMISSION_UPDATE_TIME,
         e.EN_NAME AS PERMISSION_EN_NAME,
         e.PARENT_ID AS PERMISSION_PARENT_ID,
-        e. CODE AS PERMISSION_CODE
+        e.CODE AS PERMISSION_CODE
     FROM
         sys_user AS a
     LEFT JOIN sys_user_role AS b ON a.ID = b.USER_ID
