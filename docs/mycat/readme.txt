@@ -150,6 +150,9 @@ docker service update --force --image award:1.0 awardswarm_award
 运行镜像：
 docker run -d -p 18066:8066 -p 19066:9066 --net=swarm-overlay --name pls-mycat pls/pls-mycat:1.0
 
+挂载配置目录：
+docker run -d -p 18066:8066 -p 19066:9066 -v /u06/user/pkg/pls-mycat:/mycat/conf --net=swarm-overlay --name pls-mycat pls/pls-mycat:1.0
+
 提升节点从worker到manager的命令是：
 docker node promote java-docker
 java-docker 是所在worker的主机名称（查看命令是：hostname）

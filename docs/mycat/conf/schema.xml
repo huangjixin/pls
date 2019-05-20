@@ -6,15 +6,15 @@
 		<table name="mem_member" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
 		<table name="mem_member_position" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
 		<table name="mem_postion" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
-		<table name="sys_login_log" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
-		<table name="sys_menu" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
-		<table name="sys_ope_log" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
-		<table name="sys_permission" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
-		<table name="sys_permission_menu" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
-		<table name="sys_role" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
-		<table name="sys_role_permission" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
-		<table name="sys_user_role" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
-		<table name="sys_user" primaryKey="id" dataNode="dn1,dn2" rule="sharding-by-murmur" />
+		<table name="sys_login_log" primaryKey="id" dataNode="dn1,dn2" type="global"/>
+		<table name="sys_menu" primaryKey="id" dataNode="dn1,dn2" type="global"/>
+		<table name="sys_ope_log" primaryKey="id" dataNode="dn1,dn2" type="global"/>
+		<table name="sys_permission" primaryKey="id" dataNode="dn1,dn2" type="global"/>
+		<table name="sys_permission_menu" primaryKey="id" dataNode="dn1,dn2" type="global"/>
+		<table name="sys_role" primaryKey="id" dataNode="dn1,dn2" type="global"/>
+		<table name="sys_role_permission" primaryKey="id" dataNode="dn1,dn2" type="global"/>
+		<table name="sys_user_role" primaryKey="id" dataNode="dn1,dn2" type="global"/>
+		<table name="sys_user" primaryKey="id" dataNode="dn1,dn2" type="global"/>
 	</schema>
 	
 	<dataNode name="dn1" dataHost="localhost1" database="pls_dev" />
