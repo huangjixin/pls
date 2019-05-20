@@ -42,3 +42,5 @@ spring:
         enabled: true
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
         url-pattern: /*
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml

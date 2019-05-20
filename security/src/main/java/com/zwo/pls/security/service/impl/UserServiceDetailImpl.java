@@ -2,8 +2,10 @@ package com.zwo.pls.security.service.impl;
 
 import com.zwo.pls.security.domain.User;
 import com.zwo.pls.security.service.IUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceDetailImpl implements UserDetailsService {
 
-    private static Logger logger = LoggerFactory.getLogger(UserServiceDetailImpl.class);
+    private static Logger logger = LogManager.getLogger(UserServiceDetailImpl.class);
     @Autowired
     private IUserService userService;
     @Override
