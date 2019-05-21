@@ -57,27 +57,27 @@ public class UserController extends BaseController {
     }
 
     @PreAuthorize("hasAnyAuthority('*', 'sys:user:getLoginName')")
-    @GetMapping("getLoginName")
+    @GetMapping("login-name")
     public String getLoginName(){
        String loginName = super.getLoginUser();
         return  loginName;
     }
 
     @PreAuthorize("hasAnyAuthority('*', 'sys:user:getAuthorities')")
-    @GetMapping("getAuthorities")
+    @GetMapping("authorities")
     public Collection<SimpleGrantedAuthority> getAuthorities(){
         Collection<SimpleGrantedAuthority> authorities = super.getAuthorities();
         return  authorities;
     }
 
-    @GetMapping("getClaims")
+    @GetMapping("claims")
     public String getClaims(@RequestParam String token){
         Jwt jwt = JwtHelper.decode(token);
         String claims = jwt.getClaims();
         return  claims;
     }
 
-    @GetMapping("selectByUserName")
+    @GetMapping("username")
     public UserVo selectByUserName(@RequestParam String loginName) {
         UserVo userVo = null;
 
@@ -118,7 +118,7 @@ public class UserController extends BaseController {
         return userVo;
     }
 
-    @GetMapping("insertBatch")
+    @GetMapping("insert-batch")
     public int insertBatch(){
         int result = -1;
         List<User> list = new ArrayList<User>();
@@ -133,7 +133,7 @@ public class UserController extends BaseController {
         return  result;
     }
 
-    @GetMapping("selectByExamplePage")
+    @GetMapping("example-page")
     List<UserVo> selectByExamplePage(HttpServletRequest request, @RequestParam(required = false,defaultValue = "0") Integer start, @RequestParam(required = false,defaultValue = "10")Integer size){
         UserCriteria example = this.getCriteria(request);
         List<UserVo> list = this.userService.selectByExamplePage(example,start,size);
