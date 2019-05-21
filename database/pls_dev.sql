@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : percona1 172.16.106.9 30062 root abc123（Manager角色）
-Source Server Version : 50725
-Source Host           : 172.16.106.9:30062
+Source Server         : haproxy 172.16.106.25 17066 root  abc123
+Source Server Version : 50629
+Source Host           : 172.16.106.25:17066
 Source Database       : pls_dev
 
 Target Server Type    : MYSQL
-Target Server Version : 50725
+Target Server Version : 50629
 File Encoding         : 65001
 
-Date: 2019-05-17 14:00:18
+Date: 2019-05-21 16:30:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -75,6 +75,7 @@ CREATE TABLE `mem_member` (
 -- Records of mem_member
 -- ----------------------------
 INSERT INTO `mem_member` VALUES ('1', '1', '0', '0', '1', null, null, '', '2019-04-30 11:09:55', '', '2019-04-30 11:09:55', '', '', '', '', null, '', '', '', '', '');
+INSERT INTO `mem_member` VALUES ('2', '2', '0', '0', '1', null, null, null, '2019-05-21 01:17:32', null, '2019-05-21 01:17:32', null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for mem_member_position
@@ -93,6 +94,10 @@ CREATE TABLE `mem_member_position` (
 -- Records of mem_member_position
 -- ----------------------------
 INSERT INTO `mem_member_position` VALUES ('1', '1', '1');
+INSERT INTO `mem_member_position` VALUES ('5', '2', '1');
+INSERT INTO `mem_member_position` VALUES ('2', '1', '2');
+INSERT INTO `mem_member_position` VALUES ('3', '1', '3');
+INSERT INTO `mem_member_position` VALUES ('4', '1', '4');
 
 -- ----------------------------
 -- Table structure for mem_postion
@@ -122,6 +127,9 @@ CREATE TABLE `mem_postion` (
 -- Records of mem_postion
 -- ----------------------------
 INSERT INTO `mem_postion` VALUES ('1', '1', '0', '0', '1', null, null, '', '2019-04-30 11:10:02', '', '2019-04-30 11:10:02', '', '', '1');
+INSERT INTO `mem_postion` VALUES ('2', '2', '0', '0', '1', null, null, null, '2019-05-20 03:26:47', null, '2019-05-20 03:26:47', null, null, null);
+INSERT INTO `mem_postion` VALUES ('3', '3', '0', '0', '1', null, null, null, '2019-05-20 03:26:52', null, '2019-05-20 03:26:52', null, null, null);
+INSERT INTO `mem_postion` VALUES ('4', '4', '0', '0', '1', null, null, null, '2019-05-20 03:26:58', null, '2019-05-20 03:26:58', null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_login_log
@@ -162,8 +170,8 @@ CREATE TABLE `sys_menu` (
   `UPDATE_BY` varchar(32) DEFAULT NULL,
   `UPDATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
   `EN_NAME` varchar(32) DEFAULT NULL,
-  `PARENT_ID` varchar(32) DEFAULT NULL COMMENT '父类ID',
-  `CODE` varchar(32) DEFAULT NULL,
+  `PARENT_ID` varchar(32) DEFAULT '0' COMMENT '父类ID',
+  `CODE` varchar(32) DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `FK_SYS_MENU_TO_SYS_MENU` (`PARENT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -171,7 +179,6 @@ CREATE TABLE `sys_menu` (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1', 'test', '0', '0', '1', null, null, '', '2019-04-30 10:14:25', '', '2019-04-30 10:14:25', 'test', '', 'test');
 
 -- ----------------------------
 -- Table structure for sys_ope_log
@@ -222,7 +229,8 @@ CREATE TABLE `sys_permission` (
 -- ----------------------------
 -- Records of sys_permission
 -- ----------------------------
-INSERT INTO `sys_permission` VALUES ('1', '', '0', '0', '1', null, null, '', '2019-04-27 15:50:12', '', '2019-04-27 15:50:12', '', '', '*');
+INSERT INTO `sys_permission` VALUES ('1', '1', '0', '0', '1', null, null, null, '2019-05-20 02:46:38', null, '2019-05-20 02:46:38', '1', null, '*');
+INSERT INTO `sys_permission` VALUES ('1', '1', '0', '0', '1', null, null, null, '2019-05-20 02:46:38', null, '2019-05-20 02:46:38', '1', null, '*');
 
 -- ----------------------------
 -- Table structure for sys_permission_menu
@@ -265,7 +273,8 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '', '0', '0', '1', null, null, '', '2019-04-27 15:50:06', '', '2019-04-27 15:50:06', '');
+INSERT INTO `sys_role` VALUES ('1', '1', '0', '0', '1', null, null, null, '2019-05-20 02:46:05', null, '2019-05-20 02:46:05', null);
+INSERT INTO `sys_role` VALUES ('1', '1', '0', '0', '1', null, null, null, '2019-05-20 02:46:05', null, '2019-05-20 02:46:05', null);
 
 -- ----------------------------
 -- Table structure for sys_role_permission
@@ -284,6 +293,8 @@ CREATE TABLE `sys_role_permission` (
 -- Records of sys_role_permission
 -- ----------------------------
 INSERT INTO `sys_role_permission` VALUES ('1', '1', '1');
+INSERT INTO `sys_role_permission` VALUES ('1', '1', '1');
+INSERT INTO `sys_role_permission` VALUES ('4', '4', '1');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -313,26 +324,14 @@ CREATE TABLE `sys_user` (
   KEY `SYS_USER_EMAIL_INDEX` (`EMAIL`) USING BTREE,
   KEY `SYS_USER_MOBILE_INDEX` (`MOBILE`) USING BTREE,
   KEY `SYS_USER_SORT_INDEX` (`SORT`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:06', null, '2019-05-04 01:59:06', null, null, null, null, '1');
-INSERT INTO `sys_user` VALUES ('10', '10', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:09:38', null, '2019-05-04 02:09:38', null, null, null, null, '2');
-INSERT INTO `sys_user` VALUES ('11', '11', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:09:43', null, '2019-05-04 02:09:43', null, null, null, null, '3');
-INSERT INTO `sys_user` VALUES ('12', '12', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:09:48', null, '2019-05-04 02:09:48', null, null, null, null, '4');
-INSERT INTO `sys_user` VALUES ('15', '15', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:10:01', null, '2019-05-04 02:10:01', null, null, null, null, '5');
-INSERT INTO `sys_user` VALUES ('19', '19', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:11:42', null, '2019-05-04 02:11:42', null, null, null, null, '6');
-INSERT INTO `sys_user` VALUES ('2', '2', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:15', null, '2019-05-04 01:59:15', null, null, null, null, '7');
-INSERT INTO `sys_user` VALUES ('20', '20', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:11:48', null, '2019-05-04 02:11:48', null, null, null, null, '8');
-INSERT INTO `sys_user` VALUES ('23', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 04:06:29', null, '2019-05-04 04:06:29', null, null, null, null, '9');
-INSERT INTO `sys_user` VALUES ('24', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 04:06:32', null, '2019-05-04 04:06:32', null, null, null, null, '10');
-INSERT INTO `sys_user` VALUES ('27', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 04:06:43', null, '2019-05-04 04:06:43', null, null, null, null, '11');
-INSERT INTO `sys_user` VALUES ('3', '3', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:20', null, '2019-05-04 01:59:20', null, null, null, null, '12');
-INSERT INTO `sys_user` VALUES ('4', '5', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:25', null, '2019-05-04 01:59:25', null, null, null, null, '13');
-INSERT INTO `sys_user` VALUES ('7', '7', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:36', null, '2019-05-04 01:59:36', null, null, null, null, '14');
-INSERT INTO `sys_user` VALUES ('9', '9', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:47', null, '2019-05-04 01:59:47', null, null, null, null, '15');
+INSERT INTO `sys_user` VALUES ('1', '1', '$2a$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', '', '0', '0', '1', null, null, '', '2019-05-20 02:45:51', '', '2019-05-20 07:10:02', '', '', null, '', '24');
+INSERT INTO `sys_user` VALUES ('2', '2', '$2a$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-21 01:45:06', null, '2019-05-21 01:45:13', null, null, null, null, '26');
+INSERT INTO `sys_user` VALUES ('3', '3', '$2a$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-21 01:45:21', null, '2019-05-21 01:45:21', null, null, null, null, '28');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -352,3 +351,10 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
 INSERT INTO `sys_user_role` VALUES ('2', '2', '1');
+INSERT INTO `sys_user_role` VALUES ('3', '3', '1');
+INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
+
+-- ----------------------------
+-- View structure for mem_department
+-- ----------------------------
+DROP VIEW IF EXISTS `mem_department`;
