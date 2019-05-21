@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50629
 File Encoding         : 65001
 
-Date: 2019-05-21 16:30:34
+Date: 2019-05-21 16:32:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -230,7 +230,6 @@ CREATE TABLE `sys_permission` (
 -- Records of sys_permission
 -- ----------------------------
 INSERT INTO `sys_permission` VALUES ('1', '1', '0', '0', '1', null, null, null, '2019-05-20 02:46:38', null, '2019-05-20 02:46:38', '1', null, '*');
-INSERT INTO `sys_permission` VALUES ('1', '1', '0', '0', '1', null, null, null, '2019-05-20 02:46:38', null, '2019-05-20 02:46:38', '1', null, '*');
 
 -- ----------------------------
 -- Table structure for sys_permission_menu
@@ -274,7 +273,6 @@ CREATE TABLE `sys_role` (
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', '1', '0', '0', '1', null, null, null, '2019-05-20 02:46:05', null, '2019-05-20 02:46:05', null);
-INSERT INTO `sys_role` VALUES ('1', '1', '0', '0', '1', null, null, null, '2019-05-20 02:46:05', null, '2019-05-20 02:46:05', null);
 
 -- ----------------------------
 -- Table structure for sys_role_permission
@@ -293,8 +291,6 @@ CREATE TABLE `sys_role_permission` (
 -- Records of sys_role_permission
 -- ----------------------------
 INSERT INTO `sys_role_permission` VALUES ('1', '1', '1');
-INSERT INTO `sys_role_permission` VALUES ('1', '1', '1');
-INSERT INTO `sys_role_permission` VALUES ('4', '4', '1');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -330,8 +326,6 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('1', '1', '$2a$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', '', '0', '0', '1', null, null, '', '2019-05-20 02:45:51', '', '2019-05-20 07:10:02', '', '', null, '', '24');
-INSERT INTO `sys_user` VALUES ('2', '2', '$2a$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-21 01:45:06', null, '2019-05-21 01:45:13', null, null, null, null, '26');
-INSERT INTO `sys_user` VALUES ('3', '3', '$2a$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-21 01:45:21', null, '2019-05-21 01:45:21', null, null, null, null, '28');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -352,7 +346,6 @@ CREATE TABLE `sys_user_role` (
 INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
 INSERT INTO `sys_user_role` VALUES ('2', '2', '1');
 INSERT INTO `sys_user_role` VALUES ('3', '3', '1');
-INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
 
 -- ----------------------------
 -- View structure for mem_department
