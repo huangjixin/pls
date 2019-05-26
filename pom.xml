@@ -157,5 +157,6 @@
         <module>security</module>
         <module>core</module>
         <module>system-manager</module>
+        <module>javacv</module>
     </modules>
 </project>
