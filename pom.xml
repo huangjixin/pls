@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Finchley.SR1</spring-cloud.version>
+        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <rocketmq-client.version>3.6.2.Final</rocketmq-client.version>
     </properties>
     <dependencyManagement>
@@ -158,5 +158,7 @@
         <module>core</module>
         <module>system-manager</module>
         <module>javacv</module>
+        <module>javagenerator</module>
+        <module>pls-nacos-provider</module>
     </modules>
 </project>
