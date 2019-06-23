@@ -1,11 +1,15 @@
 server:
   port: 10002
+jasypt:
+  encryptor:
+    password: EWRREWRERWECCCXC
+      algorithm: PBEWithMD5AndDES
 spring:
   datasource:
     druid:
-      url: jdbc:mysql://172.16.106.31:33060/pls_dev?characterEncoding=utf-8
-      username: root
-      password: abc123
+      url: jdbc:mysql://172.16.106.25:18066/pls_dev?characterEncoding=utf-8
+      username: ENC(2k8q52zaqcBOkSyj1NVOvg==) #root
+      password: ENC(fr9U2BBcapZUh0GkobPrtg==) #abc123
       validation-query: SELECT 1 FROM DUAL
       validation-query-timeout: 60000
       driver-class-name: com.mysql.jdbc.Driver
