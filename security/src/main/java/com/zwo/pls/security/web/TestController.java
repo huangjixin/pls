@@ -1,8 +1,8 @@
 package com.zwo.pls.security.web;
 
 import com.zwo.pls.security.service.IUserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("test")
 public class TestController {
-    private static Logger logger = LogManager.getLogger(TestController.class);
+//    private static Logger logger = LogManager.getLogger(TestController.class);
 
     @Autowired
     private IUserService userService;
@@ -42,7 +42,7 @@ public class TestController {
 
     @GetMapping("hello")
     public String hello(HttpSession httpSession){
-        logger.log("测试打印");
+//        logger.log("测试打印");
         return  "hello,huang";
     }
 
