@@ -52,6 +52,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!--把session 存放到Redis里面，从而使得可以进行分布式存储-->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+
         <!--阿里巴巴 数据连接池依赖-->
         <dependency>
             <groupId>com.alibaba</groupId>
