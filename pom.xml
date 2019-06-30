@@ -172,6 +172,5 @@
         <module>system-manager</module>
         <module>javacv</module>
         <module>javagenerator</module>
-        <module>pls-nacos-provider</module>
     </modules>
 </project>
