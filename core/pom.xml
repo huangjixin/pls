@@ -70,6 +70,13 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-1.2-api</artifactId>
         </dependency>
+
+        <!-- poi依赖 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+        </dependency>
         <!-- log4j2 -->
         <!--<dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,5 +1,6 @@
 package com.zwo.pls.modules.mem.web;
 
+import com.zwo.pls.core.service.IBaseService;
 import com.zwo.pls.core.web.BaseController;
 import com.zwo.pls.modules.mem.domain.Member;
 import com.zwo.pls.modules.mem.service.IMemberService;
@@ -18,9 +19,15 @@ public class MemberController extends BaseController {
     @Autowired
     private IMemberService memberService;
 
+    @Override
+    protected IBaseService getBaseService() {
+        return memberService;
+    }
+
     @GetMapping("test")
     public Member test(){
         Member user = memberService.selectByPrimaryKey("1");
         return  user;
     }
+
 }

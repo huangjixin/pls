@@ -3,6 +3,7 @@ package com.zwo.pls.core.vo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 一句话描述该类功能：
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Data
 public class Message implements Serializable {
     private Object data;
+    private List dataList;
     private String msg ="success";
     private String code = "200";
 
@@ -38,4 +40,11 @@ public class Message implements Serializable {
         this.code = code;
     }
 
+    public List getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List dataList) {
+        this.dataList = dataList;
+    }
 }

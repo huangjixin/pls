@@ -1,5 +1,6 @@
 package com.zwo.pls.modules.system.web;
 
+import com.zwo.pls.core.service.IBaseService;
 import com.zwo.pls.core.web.BaseController;
 import com.zwo.pls.modules.system.domain.User;
 import com.zwo.pls.modules.system.domain.UserCriteria;
@@ -42,6 +43,11 @@ public class UserController extends BaseController {
 
     @Autowired
     private IUserService userService;
+
+    @Override
+    protected IBaseService getBaseService() {
+        return userService;
+    }
 
     @GetMapping("test")
     public User test(){
