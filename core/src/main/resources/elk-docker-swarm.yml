@@ -1,0 +1,79 @@
+version: '3.3'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.0
+    ports:
+      - "19200:9200"
+      - "19300:9300"
+    environment:
+      - ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      - cluster.name: "docker-cluster"
+      - network.host: "0.0.0.0"
+      - discovery.zen.minimum_master_nodes: "1"
+      - discovery.type: "single-node"
+    networks:
+      - swarm-overlay
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == mes-redis-1.pacific-textiles.com
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.1.0
+    ports:
+      - "15000:5000"
+      - "19600:9600"
+    environment:
+      - LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      - http.host: "0.0.0.0"
+      - path.config: "/usr/share/logstash/pipeline"
+    networks:
+      - swarm-overlay
+    volumes:
+      - /u06/user/pkg/elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  logspout:
+    image: bekt/logspout-logstash
+    environment:
+      ROUTE_URIS: 'logstash://logstash:5000'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - swarm-overlay
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.1.0
+    ports:
+      - "15601:5601"
+    environment:
+      - server.name: "kibana"
+      - server.host: "0"
+      - elasticsearch.url: "http://elasticsearch:9200"
+    networks:
+      - swarm-overlay
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  swarm-overlay:
+    external:
+      name: swarm-overlay
