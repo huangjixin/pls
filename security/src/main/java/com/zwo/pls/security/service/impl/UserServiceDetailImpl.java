@@ -24,9 +24,10 @@ public class UserServiceDetailImpl implements UserDetailsService {
     private IUserService userService;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("认证开始，登录名："+username);
+        logger.info("认证开始，登录名：{}",username);
         User user = this.userService.selectByUserName(username);
-        logger.info("认证结束，结果为："+user == null ? "":user.toString());
+        logger.info("认证结束，结果为：{}",user == null ? "查不到结果":user.toString());
+
         return user;
     }
 }
