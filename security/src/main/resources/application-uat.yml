@@ -1,5 +1,5 @@
 server:
-  port: 10002
+  port: 9999
 #jasypt:
 #  encryptor:
 #    password: EWRREWRERWECCCXC
@@ -46,3 +46,5 @@ spring:
         enabled: true
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
         url-pattern: /*
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml

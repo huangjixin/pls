@@ -33,6 +33,9 @@ import java.util.*;
 @RequestMapping("user")
 public class UserController extends BaseController {
 
+    // 用户命名空间
+    private  static  final  String USER_CACHE_NAMESPACE = "system-manager:system:user";
+
     @Autowired
     @Lazy(value=true)
     CompositeCacheManager cacheManger;
@@ -51,7 +54,26 @@ public class UserController extends BaseController {
 
     @GetMapping("test")
     public User test(){
-        User user = userService.selectByPrimaryKey("1");
+        User user = null;
+        Cache cache = null;
+
+        if (cacheManger != null) {
+            cache = cacheManger.getCache("USER_CACHE");
+            if (cache != null) {
+                Cache.ValueWrapper wrapper = cache.get("1");
+                if (wrapper != null) {
+                    user = (User) wrapper.get();
+                }
+
+                if(user  == null){
+                    user = userService.selectByPrimaryKey("1");
+                    cache.put("1",user);
+                }
+            }
+        }else{
+            user = userService.selectByPrimaryKey("1");
+        }
+
         return  user;
     }
 
