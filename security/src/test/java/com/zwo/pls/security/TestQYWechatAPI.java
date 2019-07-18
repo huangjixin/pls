@@ -51,8 +51,8 @@ public class TestQYWechatAPI {
         JSONObject contentObject = new JSONObject();
         try {
             contentObject.put("content","Hi，我是自动监控！验布系统一切正常！！");
-            jsonObject.put("touser","@all");
-            jsonObject.put("toparty","1");
+            jsonObject.put("touser","HuangJiXin");
+//            jsonObject.put("toparty","1");
             jsonObject.put("msgtype","text");
             jsonObject.put("agentid",agentID);
             jsonObject.put("text",contentObject);
