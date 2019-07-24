@@ -37,6 +37,14 @@ nohup java -jar target/rocketmq-console-ng-1.0.0.jar &  //表示后台运行
 访问：
 http://ip:端口/rocketmq
 
+常用命令
+查看集群情况 ./mqadmin clusterList -n 127.0.0.1:9876
+查看 broker 状态 ./mqadmin brokerStatus -n 127.0.0.1:9876 -b 172.20.1.138:10911 (注意换成你的 broker 地址)
+查看 topic 列表 ./mqadmin topicList -n 127.0.0.1:9876
+查看 topic 状态 ./mqadmin topicStatus -n 127.0.0.1:9876 -t MyTopic (换成你想查询的 topic)
+查看 topic 路由 ./mqadmin topicRoute -n 127.0.0.1:9876 -t MyTopic
+
+
 附broker.conf:
 #broker名字，最好修改，以便区分
 brokerName=broker-a
