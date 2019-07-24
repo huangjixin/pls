@@ -3,7 +3,7 @@
 <Configuration status="WARN" monitorInterval="30">
     <Properties>
         <!-- 定义日志文件的存储地址 -->
-        <Property name="LOG_HOME">C:\\log</Property>
+        <Property name="LOG_HOME">${sys:catalina.home}</Property>
     </Properties>
     <Appenders>
         <!-- 输出控制台的配置 -->

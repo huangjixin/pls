@@ -6,7 +6,7 @@ import com.zwo.pls.modules.system.domain.User;
 import com.zwo.pls.modules.system.domain.UserCriteria;
 import com.zwo.pls.modules.system.service.IUserService;
 import com.zwo.pls.modules.system.vo.UserVo;
-import io.micrometer.core.instrument.util.StringUtils;
+//import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -174,7 +175,7 @@ public class UserController extends BaseController {
             example = new UserCriteria();
             UserCriteria.Criteria criteria = example.createCriteria();
             String loginName = request.getParameter("loginName");
-            if (StringUtils.isNotEmpty(loginName)) {
+            if (!StringUtils.isEmpty(loginName)) {
                 criteria.andLoginNameLike("%"+loginName+"%");
             }
 //            Date createTime = request.getParameter("createTime");

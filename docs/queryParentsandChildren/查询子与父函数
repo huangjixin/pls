@@ -1,0 +1,13 @@
+BEGIN
+DECLARE sTemp VARCHAR(4000);
+DECLARE sTempChd VARCHAR(4000);
+
+SET sTemp='$';
+SET sTempChd = CAST(departmentId AS CHAR);
+
+WHILE sTempChd IS NOT NULL DO
+SET sTemp= CONCAT(sTemp,',',sTempChd);
+SELECT GROUP_CONCAT(id) INTO sTempChd FROM mem_department WHERE FIND_IN_SET(parent_Id,sTempChd)>0;
+END WHILE;
+RETURN sTemp;
+END
