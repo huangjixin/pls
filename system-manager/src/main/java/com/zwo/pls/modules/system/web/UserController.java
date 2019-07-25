@@ -6,7 +6,6 @@ import com.zwo.pls.modules.system.domain.User;
 import com.zwo.pls.modules.system.domain.UserCriteria;
 import com.zwo.pls.modules.system.service.IUserService;
 import com.zwo.pls.modules.system.vo.UserVo;
-//import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -192,5 +191,10 @@ public class UserController extends BaseController {
         userVo.setCreateTime(new Date());
         userVo.setUpdateTime(new Date());
         return  userVo;
+    }
+
+    @GetMapping("test-change")
+    public String testChange(){
+        return  "A";
     }
 }
