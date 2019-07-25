@@ -1,6 +1,6 @@
 FROM java:8-jre-alpine
 VOLUME /tmp
-ADD *.jar app.jar
+ADD target/*.jar app.jar
 #RUN sh -c 'touch /app.jar'
 #ENV JAVA_OPTS="" $JAVA_OPTS
 #EXPOSE 8888
