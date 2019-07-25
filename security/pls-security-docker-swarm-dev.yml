@@ -8,6 +8,11 @@ services:
       replicas: 2
       restart_policy:
         condition: on-failure
+      #滚动更新策略。
+      update_config:
+        parallelism: 1
+        delay: 15s
+        order: start-first
     networks:
       swarm-overlay:
         aliases:
