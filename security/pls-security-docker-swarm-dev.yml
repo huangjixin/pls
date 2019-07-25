@@ -1,6 +1,6 @@
 version: "3"
 services:
-  pls:
+  security:
     image: register.myharbor.com/pls_dev/pls_security:${Tag}
     # 去阿里云拉镜像 registry.cn-shenzhen.aliyuncs.com/zhangzhicheng/zhangzhicheng:micro-cloud-admin-system-0.0.1
     #container_name: micro-cloud-admin-system
