@@ -19,6 +19,7 @@ public class CxfConfig {
     @Autowired
     private ITestWebService testWebService;
 
+
     @Bean
     public Endpoint endpoint() {
         EndpointImpl endpoint = new EndpointImpl(bus,testWebService);
