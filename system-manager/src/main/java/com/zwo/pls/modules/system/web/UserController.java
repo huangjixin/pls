@@ -1,11 +1,12 @@
 package com.zwo.pls.modules.system.web;
 
+import com.zwo.pls.core.service.IBaseService;
 import com.zwo.pls.core.web.BaseController;
 import com.zwo.pls.modules.system.domain.User;
 import com.zwo.pls.modules.system.domain.UserCriteria;
 import com.zwo.pls.modules.system.service.IUserService;
 import com.zwo.pls.modules.system.vo.UserVo;
-import io.micrometer.core.instrument.util.StringUtils;
+//import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -15,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +34,9 @@ import java.util.*;
 @RequestMapping("user")
 public class UserController extends BaseController {
 
+    // 用户命名空间
+    private  static  final  String USER_CACHE_NAMESPACE = "system-manager:system:user";
+
     @Autowired
     @Lazy(value=true)
     CompositeCacheManager cacheManger;
@@ -43,9 +48,33 @@ public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
+    @Override
+    protected IBaseService getBaseService() {
+        return userService;
+    }
+
     @GetMapping("test")
     public User test(){
-        User user = userService.selectByPrimaryKey("1");
+        User user = null;
+        Cache cache = null;
+
+        if (cacheManger != null) {
+            cache = cacheManger.getCache("USER_CACHE");
+            if (cache != null) {
+                Cache.ValueWrapper wrapper = cache.get("1");
+                if (wrapper != null) {
+                    user = (User) wrapper.get();
+                }
+
+                if(user  == null){
+                    user = userService.selectByPrimaryKey("1");
+                    cache.put("1",user);
+                }
+            }
+        }else{
+            user = userService.selectByPrimaryKey("1");
+        }
+
         return  user;
     }
 
@@ -57,27 +86,27 @@ public class UserController extends BaseController {
     }
 
     @PreAuthorize("hasAnyAuthority('*', 'sys:user:getLoginName')")
-    @GetMapping("getLoginName")
+    @GetMapping("login-name")
     public String getLoginName(){
        String loginName = super.getLoginUser();
         return  loginName;
     }
 
     @PreAuthorize("hasAnyAuthority('*', 'sys:user:getAuthorities')")
-    @GetMapping("getAuthorities")
+    @GetMapping("authorities")
     public Collection<SimpleGrantedAuthority> getAuthorities(){
         Collection<SimpleGrantedAuthority> authorities = super.getAuthorities();
         return  authorities;
     }
 
-    @GetMapping("getClaims")
+    @GetMapping("claims")
     public String getClaims(@RequestParam String token){
         Jwt jwt = JwtHelper.decode(token);
         String claims = jwt.getClaims();
         return  claims;
     }
 
-    @GetMapping("selectByUserName")
+    @GetMapping("username")
     public UserVo selectByUserName(@RequestParam String loginName) {
         UserVo userVo = null;
 
@@ -118,7 +147,7 @@ public class UserController extends BaseController {
         return userVo;
     }
 
-    @GetMapping("insertBatch")
+    @GetMapping("insert-batch")
     public int insertBatch(){
         int result = -1;
         List<User> list = new ArrayList<User>();
@@ -133,7 +162,7 @@ public class UserController extends BaseController {
         return  result;
     }
 
-    @GetMapping("selectByExamplePage")
+    @GetMapping("example-page")
     List<UserVo> selectByExamplePage(HttpServletRequest request, @RequestParam(required = false,defaultValue = "0") Integer start, @RequestParam(required = false,defaultValue = "10")Integer size){
         UserCriteria example = this.getCriteria(request);
         List<UserVo> list = this.userService.selectByExamplePage(example,start,size);
@@ -146,7 +175,7 @@ public class UserController extends BaseController {
             example = new UserCriteria();
             UserCriteria.Criteria criteria = example.createCriteria();
             String loginName = request.getParameter("loginName");
-            if (StringUtils.isNotEmpty(loginName)) {
+            if (!StringUtils.isEmpty(loginName)) {
                 criteria.andLoginNameLike("%"+loginName+"%");
             }
 //            Date createTime = request.getParameter("createTime");

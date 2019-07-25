@@ -1,0 +1,24 @@
+version: "3"
+services:
+  pls:
+    image: register.myharbor.com/pls_dev/pls_security:${Tag}
+    # 去阿里云拉镜像 registry.cn-shenzhen.aliyuncs.com/zhangzhicheng/zhangzhicheng:micro-cloud-admin-system-0.0.1
+    #container_name: micro-cloud-admin-system
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+    networks:
+      swarm-overlay:
+        aliases:
+          - pls-security-service
+    ports:
+      - 9999:9999
+      # 有值的时候，才能够放开
+      # environment:
+      # 在Dockerfile文件里面定义的参数可以在这里输入
+      #- PROFILE=dev
+networks:
+  swarm-overlay:
+    external:
+      name: swarm-overlay

@@ -5,7 +5,10 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.4.RELEASE</version>
+        <version>2.0.1.RELEASE</version>
+        <!--<version>2.0.1.RELEASE</version>--><!--用该低版本是为了兼容web service-->
+        <!--<version>2.0.5.RELEASE</version>-->
+        <!--<version>2.1.4.RELEASE</version>-->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.zwo</groupId>
@@ -21,6 +24,7 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
         <rocketmq-client.version>3.6.2.Final</rocketmq-client.version>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -83,6 +87,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- freemarker -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+
         <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -92,6 +102,18 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
     </dependencies>
 
@@ -157,5 +179,7 @@
         <module>security</module>
         <module>core</module>
         <module>system-manager</module>
+        <module>javacv</module>
+        <module>javagenerator</module>
     </modules>
 </project>

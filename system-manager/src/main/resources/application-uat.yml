@@ -1,11 +1,15 @@
 server:
-  port: 10002
+  port: 9999
+#jasypt:
+#  encryptor:
+#    password: EWRREWRERWECCCXC
+#    algorithm: PBEWithMD5AndDES
 spring:
   datasource:
     druid:
-      url: jdbc:mysql://172.16.106.31:33060/pls_dev?characterEncoding=utf-8
-      username: root
-      password: abc123
+      url: jdbc:mysql://172.16.106.9:30060/pls_dev?characterEncoding=utf-8
+      username: root #ENC(2k8q52zaqcBOkSyj1NVOvg==) #root
+      password: abc123 #ENC(BqHQrbzTYCTaQRzonzHpYA==) #abc123
       validation-query: SELECT 1 FROM DUAL
       validation-query-timeout: 60000
       driver-class-name: com.mysql.jdbc.Driver
@@ -42,3 +46,13 @@ spring:
         enabled: true
         exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
         url-pattern: /*
+  redis:
+    host: 172.16.234.154
+    port: 6379
+    password:
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+
+#  redis:
+#    cluster:
+#      nodes: 172.16.108.29:6379,172.16.108.29:6380,172.16.108.29:6381,172.16.108.29:6382,172.16.108.29:6383,172.16.108.29:6384
