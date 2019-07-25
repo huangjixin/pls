@@ -13,7 +13,8 @@ public class TestUserWebService {
     public static void main(String[] args) {
         //创建动态客户端
         JaxWsDynamicClientFactory factory = JaxWsDynamicClientFactory.newInstance();
-        Client client = factory.createClient("http://localhost:9999/cxf/userWebService?wsdl");
+//        Client client = factory.createClient("http://localhost:9999/cxf/userWebService?wsdl");
+        Client client = factory.createClient("http://172.16.234.153:8999/cxf/userWebService?wsdl");
         // 需要密码的情况需要加上用户名和密码
 //        client.getOutInterceptors().add(new ClientLoginInterceptor("admin","pass"));
         HTTPConduit conduit = (HTTPConduit) client.getConduit();
