@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
   security:
     image: register.myharbor.com/pls_dev/pls_security:${Tag}
