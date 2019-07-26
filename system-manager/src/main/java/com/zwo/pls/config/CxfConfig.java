@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.xml.ws.Endpoint;
 
-@Configuration
+//@Configuration
 public class CxfConfig {
 
     @Autowired
