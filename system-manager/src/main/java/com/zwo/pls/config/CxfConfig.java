@@ -15,7 +15,7 @@ import javax.xml.ws.Endpoint;
 //@Configuration
 public class CxfConfig {
 
-    @Autowired
+    /*@Autowired
     private Bus bus;
     @Autowired
     private ITestWebService testWebService;
@@ -44,5 +44,5 @@ public class CxfConfig {
     @Bean
     public ServletRegistrationBean dispatcherServlet() {
         return new ServletRegistrationBean(new CXFServlet(), "/cxf/*");
-    }
+    }*/
 }

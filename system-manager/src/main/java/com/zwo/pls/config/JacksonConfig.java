@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +20,7 @@ import java.io.IOException;
 @Configuration
 public class JacksonConfig {
     @Bean
-    public ObjectMapper serializingObjectMapper() {
+    public ObjectMapper serializingObjectMapper(@Qualifier("javaTimeModule") JavaTimeModule javaTimeModule) {
         ObjectMapper objectMapper = new ObjectMapper();
         // 缩放排列输出，默认false
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
@@ -31,7 +32,7 @@ public class JacksonConfig {
         /*objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);*/
 
         // new module, NOT JSR310Module
-        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.registerModule(javaTimeModule);
         objectMapper.registerModule(new ParameterNamesModule());
         objectMapper.registerModule(new Jdk8Module());
 
