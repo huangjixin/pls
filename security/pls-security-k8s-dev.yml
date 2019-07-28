@@ -30,6 +30,8 @@ spec:                        # spec 包括一些容器、存储、volume和其�
           ports:
             - containerPort: 9999       # pod（容器）端口
       restartPolicy: Always        # 重启策略：Always / Never / OnFailure
+      imagePullSecrets:
+        - name: harbor-secret
 
 ---
 apiVersion: v1
