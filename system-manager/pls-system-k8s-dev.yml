@@ -8,7 +8,7 @@ spec:                        # spec 包括一些容器、存储、volume和其�
   selector:                  # 选择器
     matchLabels:             # 匹配标签,必须与下面的template.metadata.labels相对应,与service的selector相对于
       app: pls-system
-  replicas: 1                # 副本数量
+  replicas: 2                # 副本数量
   strategy:                  # 策略
     rollingUpdate:           # 若replicas为3,则整个升级,pod个数在1-3个之间
       maxSurge: 1            # 滚动升级时会先启动1个pod
