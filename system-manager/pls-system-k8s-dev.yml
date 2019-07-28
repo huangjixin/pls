@@ -21,7 +21,7 @@ spec:                        # spec 包括一些容器、存储、volume和其�
     spec:                    # spec 包括一些容器、存储、volume和其他参数，如重启策略
       containers:
         - name: pls-system                   # 容器名
-          image:                        # 使用的镜像
+          image: register.myharbor.com/pls_dev/pls_system:${Tag}                        # 使用的镜像
           imagePullPolicy: IfNotPresent # 镜像拉取策略  Always / Never / IfNotPresent ，默认为IfNotPresent，只有镜像不存在时，才会进行镜像拉取，但latest标签的镜像默认为Always
           resources:                    # 容器资源限制
             limits:
