@@ -74,10 +74,11 @@
 </div>
 <!-- End of easyui-dialog -->
 <script type="text/javascript">
-    // var baseUrl = "";
-    $(function(){
-        // baseUrl = window.baseUrl;
-        // alert(baseUrl);
+    $(function() {
+        var token = sessionStorage.getItem("token");
+        if (token == undefined) {
+            top.location = "../login.html";
+        }
     })
     /**
      * Name 添加记录
