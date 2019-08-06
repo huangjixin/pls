@@ -1,0 +1,36 @@
+nodes:
+  - address: mes-tomcat-4.pacific-textiles.com
+    user: rancher
+    role: [controlplane,etcd,worker]
+  - address: mes-tomcat-5.pacific-textiles.com
+    user: rancher
+    role: [controlplane,etcd,worker]
+  - address: mes-tomcat-6.pacific-textiles.com
+    user: rancher
+    role: [controlplane,etcd,worker]
+  - address: mes-tomcat-1.pacific-textiles.com
+    user: rancher
+    role: [worker]
+  - address: mes-tomcat-2.pacific-textiles.com
+    user: rancher
+    role: [worker]
+  - address: mes-tomcat-3.pacific-textiles.com
+    user: rancher
+    role: [worker]
+
+cluster_name: ptl-k8s
+ignore_docker_version: true
+
+#private_registries:
+#    - url: registry.pacific-textiles.com
+
+services:
+  kube-api:
+    service_cluster_ip_range: 100.101.0.0/16
+  kube-controller:
+    cluster_cidr: 100.100.0.0/16
+    service_cluster_ip_range: 100.101.0.0/16
+  kubelet:
+    cluster_dns_server: 100.101.0.10
+    extra_binds:
+      - "/lib/modules:/lib/modules"
