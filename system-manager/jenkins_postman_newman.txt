@@ -1,0 +1,11 @@
+需要安装nodejs，并配置好环境
+打开控制台，运行：npm install -g newman
+校验是否安装成功，运行：newman --version
+cnpm install newman-reporter-html
+newman run C:\soft\Award.postman_collection.json --reporters cli,html,json,junit --reporter-json-export jsonOut.json --reporter-junit-export xmlOut.xml --reporter-html-export htmlOut.html
+
+## Jenkins job
+source ~/.bashrc
+echo '使用postman和newman实现自动化测试接口开始'
+newman run system-manager/src/test/resource/Award.postman_collection.json --reporters cli,html,json,junit --reporter-json-export /tmp/system-manager-jsonOut.json --reporter-junit-export /tmp/system-manager-xmlOut.xml --reporter-html-export /tmp/system-manager-htmlOut.html
+echo '使用postman和newman实现自动化测试接口结束'
