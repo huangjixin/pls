@@ -31,7 +31,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("user")
-public class UserController extends BaseController {
+public class UserController extends BaseController<User> {
 
     // 用户命名空间
     private  static  final  String USER_CACHE_NAMESPACE = "system-manager:system:user";

@@ -5,7 +5,6 @@ import com.zwo.pls.core.service.IBaseService;
 import com.zwo.pls.core.utils.ExcelUtil;
 import com.zwo.pls.core.vo.Message;
 import org.apache.poi.util.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -32,7 +31,7 @@ import java.util.List;
  *
  * @author Tony（黄记新） 2019.03.19
  */
-public abstract class BaseController {
+public abstract class BaseController<T> {
     // 基础服务
     protected abstract IBaseService getBaseService();
 
@@ -77,6 +76,7 @@ public abstract class BaseController {
      * @param file
      * @return
      */
+
     @PostMapping(value = "import-excel")
     protected  Message importExcel(@RequestParam("file") MultipartFile file){
         Message message = new Message();
@@ -149,18 +149,24 @@ public abstract class BaseController {
     }
 
     /**
-     * 插一条记录
+     * 新增记录
      * @param record
      * @return
      */
     @PostMapping
-    public Message insert(@RequestBody Object record) {
+    public Message insert(@RequestBody T record,HttpServletRequest request,HttpServletResponse response) {
         Message message = new Message();
         return  message;
     }
 
+    /**
+     * 更新记录
+     * @param id
+     * @param record
+     * @return
+     */
     @PutMapping(value = {"/{id}"})
-    public Message update(@PathVariable("id") String id,@RequestBody Object record){
+    public Message update(@PathVariable("id") String id,@RequestBody T record,HttpServletRequest request,HttpServletResponse response){
         Message message = new Message();
         int result = this.getBaseService().updateByPrimaryKeySelective(record);
         if(result == 0){
@@ -171,12 +177,12 @@ public abstract class BaseController {
     }
 
     /**
-     * 删除一条记录。
+     * 删除记录。
      * @param id
      * @return
      */
     @DeleteMapping(value = {"/{id}"})
-    public Message delete(@PathVariable("id") String id) {
+    public Message delete(@PathVariable("id") String id,HttpServletRequest request,HttpServletResponse response) {
         Message message = new Message();
         int result = this.getBaseService().deleteByPrimaryKey(id);
         if(result == 0){
@@ -186,9 +192,8 @@ public abstract class BaseController {
         return  message;
     }
 
-
-    @GetMapping
-    public Message list(HttpServletRequest request,@RequestParam(required = false, defaultValue = "1") Integer pageNum,
+    @GetMapping("list")
+    public Message list(HttpServletRequest request,HttpServletResponse response,@RequestParam(required = false, defaultValue = "1") Integer pageNum,
                                       @RequestParam(required = false, defaultValue = "50") Integer pageSize) {
         Message message = new Message();
         PageInfo pageInfo =  this.getBaseService().selectByExample(null,pageNum,pageSize);
@@ -196,8 +201,13 @@ public abstract class BaseController {
         return  message;
     }
 
-    @GetMapping("list-all")
-    public Message list(HttpServletRequest request) {
+    /**
+     * 默认查询所有列表。
+     * @param request
+     * @return
+     */
+    @GetMapping
+    public Message listAll(HttpServletRequest request,HttpServletResponse response) {
         Message message = new Message();
         List list = this.getBaseService().selectByExample(null);
         message.setData(list);
