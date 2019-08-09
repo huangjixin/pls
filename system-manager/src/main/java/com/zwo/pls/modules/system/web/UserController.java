@@ -6,6 +6,7 @@ import com.zwo.pls.modules.system.domain.User;
 import com.zwo.pls.modules.system.domain.UserCriteria;
 import com.zwo.pls.modules.system.service.IUserService;
 import com.zwo.pls.modules.system.vo.UserVo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -29,6 +30,7 @@ import java.util.*;
  * 一句话描述该类功能：
  * Created by Tony(黄记新) in 2019/4/30
  */
+@Api(value = "user", tags="用户模块增删改查")
 @RestController
 @RequestMapping("user")
 public class UserController extends BaseController<User> {

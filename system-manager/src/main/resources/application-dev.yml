@@ -15,17 +15,17 @@ spring:
       validation-query: SELECT 1 FROM DUAL
       validation-query-timeout: 60000
       driver-class-name: com.mysql.jdbc.Driver
-      filter:
-        stat:
-          db-type: mysql
-          log-slow-sql: true
-          slow-sql-millis: 5000
-        wall:
-          config:
-            delete-allow: false
-            drop-table-allow: false
-          db-type: mysql
-          enabled: true
+#      filter:
+#        stat:
+#          db-type: mysql
+#          log-slow-sql: true
+#          slow-sql-millis: 5000
+#        wall:
+#          config:
+#            delete-allow: false
+#            drop-table-allow: false
+#          db-type: mysql
+#          enabled: true
       initial-size: 5
       max-active: 100
       max-pool-prepared-statement-per-connection-size: 20
@@ -33,21 +33,22 @@ spring:
       min-evictable-idle-time-millis: 100000
       min-idle: 5
       pool-prepared-statements: true
-      stat-view-servlet:
-        allow: 172.30.20.106
-        enabled: true
-        login-password: admin
-        login-username: admin
-        reset-enable: false
-        url-pattern: /druid/*
-      test-on-borrow: false
-      test-on-return: false
-      test-while-idle: true
-      time-between-eviction-runs-millis: 60000
-      web-stat-filter:
-        enabled: true
-        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
-        url-pattern: /*
+#      stat-view-servlet:
+#        allow: 172.30.20.106
+#        enabled: true
+#        login-password: admin
+#        login-username: admin
+#        reset-enable: false
+#        url-pattern: /druid/*
+#      test-on-borrow: false
+#      test-on-return: false
+#      test-while-idle: true
+#      time-between-eviction-runs-millis: 60000
+#      web-stat-filter:
+#        enabled: true
+#        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+#        url-pattern: /*
+#        multiStatementAllow: true
 
   redis:
     host: 172.16.234.154

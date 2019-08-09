@@ -7,6 +7,7 @@ import com.zwo.pls.core.vo.Message;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -156,6 +157,11 @@ public abstract class BaseController<T> {
     @PostMapping
     public Message insert(@RequestBody T record,HttpServletRequest request,HttpServletResponse response) {
         Message message = new Message();
+        int result = this.getBaseService().insertSelective(record);
+        if(result == 0){
+            message.setCode("400");
+            message.setMsg("新增失败");
+        }
         return  message;
     }
 
@@ -173,6 +179,25 @@ public abstract class BaseController<T> {
             message.setCode("400");
             message.setMsg("修改失败");
         }
+        return  message;
+    }
+
+
+    /**
+     * @param id
+     * @param request
+     * @param response
+     * @return
+     */
+    @GetMapping(value = {"/{id}"})
+    public Message getById(@PathVariable("id") String id,HttpServletRequest request,HttpServletResponse response){
+        Message message = new Message();
+        T result = (T) this.getBaseService().selectByPrimaryKey(id);
+        if(result == null){
+            message.setCode(HttpStatus.NOT_FOUND.value()+"");
+            message.setMsg("查询不到");
+        }
+        message.setData(result);
         return  message;
     }
 

@@ -19,8 +19,8 @@ import java.io.OutputStream;
  * @author Yuanquan.Liu
  * @date 2019/8/9
  */
-@RestController
-@RequestMapping("/download")
+//@RestController
+//@RequestMapping("/download")
 public abstract class DownloadController extends BaseController {
     @GetMapping(value = {"/excel/{fileName}"})
     public void downloadTemplate(@PathVariable(name = "fileName") String fileName, HttpServletRequest request, HttpServletResponse response) {
