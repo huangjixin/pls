@@ -1,0 +1,1668 @@
+{
+	"info": {
+		"name": "award",
+		"_postman_id": "24b85351-0dc5-1965-9b17-b817440e48ee",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"description": "",
+			"item": [
+				{
+					"name": "auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "19c3e7dc-468c-4ac6-97af-e2b002f82d4a",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"返回结果中包含access_token字段\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"access_token\");",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var accessToken = jsonData.access_token;",
+									"",
+									"tests[\"access_token 不为空\"] = accessToken !== null;",
+									"",
+									"postman.setEnvironmentVariable(\"Authorization\",accessToken);",
+									"",
+									"postman.setNextRequest('department_tree');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic c2VjdXJpdHktc2VydmljZToxMjM0NTY="
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "artisan012",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/award/oauth/token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"oauth",
+								"token"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "department",
+			"description": "",
+			"item": [
+				{
+					"name": "department_tree",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ad06b7d-9f41-4142-a837-e1cca3ed7d3d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"data不为空\"] = data.length !== 0;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('add_department');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/department?tree=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"department"
+							],
+							"query": [
+								{
+									"key": "tree",
+									"value": "true",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "add_department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "01da10dc-432e-467c-af6d-8304cd18dbbe",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"tests[\"data不为空\"] = data.length !== 0;",
+									"",
+									"if (data.length !== 0) {",
+									"    postman.setEnvironmentVariable(\"dept_id\",data.id);",
+									"}else {",
+									"    postman.setEnvironmentVariable(\"dept_id\",\"\");",
+									"}",
+									"",
+									"postman.setNextRequest('update_department');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"T1车间\",\"parentId\":76,\"description\":\"\",\"code\":\"\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/department",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"department"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update_department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0162c352-95e3-4d98-a3b7-68440b22b614",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('position');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"T1车间1\",\"parentId\":76,\"description\":\"\",\"code\":\"\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/department/{{dept_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"department",
+								"{{dept_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete_department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "93668524-2a0d-4168-af60-6e1821e48ff7",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"postman.setNextRequest('');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/department/{{dept_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"department",
+								"{{dept_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "position",
+			"description": "",
+			"item": [
+				{
+					"name": "position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e65f1de0-9981-4078-8f21-d857978c122e",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('add_position');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/v2/position?pageNum=1&pageSize=10&deptId=&isAdditional=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"v2",
+								"position"
+							],
+							"query": [
+								{
+									"key": "pageNum",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "pageSize",
+									"value": "10",
+									"equals": true
+								},
+								{
+									"key": "deptId",
+									"value": "",
+									"equals": true
+								},
+								{
+									"key": "isAdditional",
+									"value": "true",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "add_position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6ccc4bf-9f54-435d-b4b4-b37b9a66dcff",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"tests[\"data不为空\"] = data.length !== 0;",
+									"",
+									"if (data.length !== 0) {",
+									"    postman.setEnvironmentVariable(\"post_id\",data.id);",
+									"}else {",
+									"    postman.setEnvironmentVariable(\"post_id\",\"\");",
+									"}",
+									"",
+									"postman.setNextRequest('update_position');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"test001\",\"deptId\":{{dept_id}},\"description\":\"test001\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/v2/position",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"v2",
+								"position"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update_position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b059e9f5-7f85-4bb8-a32d-db06792856a1",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('employee');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"test0002\",\"deptId\":{{dept_id}},\"description\":\"test0002\",\"posiRate\":1}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/v2/position/{{post_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"v2",
+								"position",
+								"{{post_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete_position",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "735278df-f327-498c-bbda-3503ed6bfb81",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('delete_department');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/v2/position?ids={{post_id}}&isReal=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"v2",
+								"position"
+							],
+							"query": [
+								{
+									"key": "ids",
+									"value": "{{post_id}}",
+									"equals": true
+								},
+								{
+									"key": "isReal",
+									"value": "true",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "employee",
+			"description": "",
+			"item": [
+				{
+					"name": "employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "979d70bc-fbe3-445b-afa8-9d649ec31685",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"tests[\"data不为空\"] = data.length !== 0;",
+									"",
+									"",
+									"postman.setNextRequest('idcard');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/v2/employee?empId=&empName=&joinStartDate=&joinEndDate=&idCard=&pageNum=1&pageSize=10&status=1&deptId=&isRetired=&positionId=&isAdditional=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"v2",
+								"employee"
+							],
+							"query": [
+								{
+									"key": "empId",
+									"value": "",
+									"equals": true
+								},
+								{
+									"key": "empName",
+									"value": "",
+									"equals": true
+								},
+								{
+									"key": "joinStartDate",
+									"value": "",
+									"equals": true
+								},
+								{
+									"key": "joinEndDate",
+									"value": "",
+									"equals": true
+								},
+								{
+									"key": "idCard",
+									"value": "",
+									"equals": true
+								},
+								{
+									"key": "pageNum",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "pageSize",
+									"value": "10",
+									"equals": true
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "deptId",
+									"value": "",
+									"equals": true
+								},
+								{
+									"key": "isRetired",
+									"value": "",
+									"equals": true
+								},
+								{
+									"key": "positionId",
+									"value": "",
+									"equals": true
+								},
+								{
+									"key": "isAdditional",
+									"value": "true",
+									"equals": true
+								}
+							]
+						},
+						"description": "查询员工档案"
+					},
+					"response": []
+				},
+				{
+					"name": "idcard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e88bfeed-d17a-4841-9efb-f3bb48a82b8f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"tests[\"data不为空\"] = data.length !== 0;",
+									"",
+									"",
+									"postman.setNextRequest('add_employee');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/v2/employee/idcard/372922198012224773",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"v2",
+								"employee",
+								"idcard",
+								"372922198012224773"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "add_employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d2fc7b4d-bb64-4e77-8ef7-ec47840665d2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"tests[\"data不为空\"] = data.length !== 0;",
+									"",
+									"",
+									"postman.setNextRequest('update_employee');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"empId\":\"{{emp_id}}\",\"empName\":\"test001\",\"phone\":\"17122171717\",\"placardNums\":0,\"isRejoin\":0,\"isSpec\":0,\"deptId\":{{dept_id}},\"positionIds\":[{{post_id}}],\"birthday\":\"1980-12-22\",\"idCard\":\"372922198012224773\",\"emergencyContact\":\"test001\",\"emergencyPhone\":\"17122171717\",\"domicilePlace\":\"山東省\",\"resignReason\":\"test001\",\"joinDate\":\"2018-01-01\",\"leaveDate\":\"2020-01-01\",\"shift\":\"A班\",\"gender\":\"0\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/v2/employee",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"v2",
+								"employee"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update_employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "643fccbc-164d-47f7-9b27-5cb35883e398",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('attendance');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"empName\":\"test002\",\"phone\":\"17122171718\",\"isRejoin\":1,\"isSpec\":1,\"deptId\":\"77\",\"positionIds\":[18],\"birthday\":\"1980-12-23\",\"idCard\":\"372922198012224773\",\"emergencyContact\":\"test002\",\"emergencyPhone\":\"17122171718\",\"domicilePlace\":\"山東省\",\"resignReason\":\"test002\",\"joinDate\":\"2018-01-02\",\"leaveDate\":\"2020-01-02\",\"shift\":\"B班\",\"gender\":\"1\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/v2/employee/{{emp_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"v2",
+								"employee",
+								"{{emp_id}}"
+							]
+						},
+						"description": "更新员工档案"
+					},
+					"response": []
+				},
+				{
+					"name": "delete_employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b1fce983-a67f-477a-9fe7-9fff01e800bf",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('delete_position');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/v2/employee?empIds={{emp_id}}&isReal=false",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"v2",
+								"employee"
+							],
+							"query": [
+								{
+									"key": "empIds",
+									"value": "{{emp_id}}",
+									"equals": true
+								},
+								{
+									"key": "isReal",
+									"value": "false",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "attendance",
+			"description": "",
+			"item": [
+				{
+					"name": "attendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1a990251-a56c-4709-8240-6c81b66272c1",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('add_attendance');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/form?pageNum=1&pageSize=10&type=0&deptId=49",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"form"
+							],
+							"query": [
+								{
+									"key": "pageNum",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "pageSize",
+									"value": "10",
+									"equals": true
+								},
+								{
+									"key": "type",
+									"value": "0",
+									"equals": true
+								},
+								{
+									"key": "deptId",
+									"value": "49",
+									"equals": true
+								}
+							]
+						},
+						"description": "查询考勤清单"
+					},
+					"response": []
+				},
+				{
+					"name": "add_attendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "97eb43c4-e78e-48fb-9347-7edce0969934",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"pm.test(\"状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"tests[\"data不为空\"] = data.length !== 0;",
+									"",
+									"if (data.length !== 0) {",
+									"    postman.setEnvironmentVariable(\"atten_id\",data.id);",
+									"}else {",
+									"    postman.setEnvironmentVariable(\"atten_id\",\"\");",
+									"}",
+									"",
+									"postman.setNextRequest('delete_attendance');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"code\":\"1\",\"type\":0,\"empId\":\"{{emp_id}}\",\"restStartTime\":\"2019-06-27 00:00:00\",\"workStartTime\":\"2019-06-30 00:00:00\",\"shift\":\"早\"}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/form",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"form"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete_attendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eb4df5ee-9a76-4f12-a7ca-c60b67d1574c",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"",
+									"postman.setNextRequest('train_project');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/form/{{atten_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"form",
+								"{{atten_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "train_project",
+			"description": "",
+			"item": [
+				{
+					"name": "train_project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e6953a4d-30ae-4acd-9fe7-39aea8bc67f7",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('add_train_project');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/train/project?page=1&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"train",
+								"project"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "pageSize",
+									"value": "10",
+									"equals": true
+								}
+							]
+						},
+						"description": "查询培训项目"
+					},
+					"response": []
+				},
+				{
+					"name": "add_train_project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a6c5a6bb-8e5a-4442-b3b4-5a620d83b9e1",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"var dataStatus = jsonData.status;",
+									"",
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"tests[\"data不为空\"] = data.length !== 0;",
+									"",
+									"if (data.length !== 0) {",
+									"    postman.setEnvironmentVariable(\"project_id\",data.id);",
+									"}else {",
+									"    postman.setEnvironmentVariable(\"project_id\",\"\");",
+									"}",
+									"",
+									"",
+									"postman.setNextRequest('update_train_project');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"deptId\":\"{{dept_id}}\",\"title\":\"培训项目测试\",\"address\":\"车间内\",\"teacher\":\"test001\",\"description\":\"自动化测试使用\",\"code\":\"test001\",\"trainDate\":\"2019-06-28\",\"trainWay\":\"現場指導\",\"checkWay\":\"平時觀察\",\"classTypeNum\":\"test001\",\"classHour\":0.5}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/train/project",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"train",
+								"project"
+							]
+						},
+						"description": "新增培训项目"
+					},
+					"response": []
+				},
+				{
+					"name": "update_train_project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2483bf2-8953-46c9-a928-7369442716a5",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"",
+									"postman.setNextRequest('train_record');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"deptId\":{{dept_id}},\"title\":\"培训项目测试\",\"address\":\"车间内1\",\"teacher\":\"test002\",\"description\":\"自动化测试使用1\",\"code\":\"test002\",\"trainDate\":\"2019-06-29\",\"trainWay\":\"現場指導1\",\"checkWay\":\"平時觀察1\",\"classTypeNum\":\"test002\",\"classHour\":0.6}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/train/project/{{project_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"train",
+								"project",
+								"{{project_id}}"
+							]
+						},
+						"description": "更新培训项目"
+					},
+					"response": []
+				},
+				{
+					"name": "delete_train_project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "49f2526a-ac68-49ff-935c-cb9f37b51484",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"if (dataStatus === 200) {",
+									"    postman.setEnvironmentVariable(\"project_id\",\"\");",
+									"}",
+									"",
+									"",
+									"postman.setNextRequest('delete_employee');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/train/project/{{project_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"train",
+								"project",
+								"{{project_id}}"
+							]
+						},
+						"description": "删除培训项目"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "train_record",
+			"description": "",
+			"item": [
+				{
+					"name": "train_record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0050e301-b3a8-4a6c-ac26-b80f6945f833",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"postman.setNextRequest('add_train_record');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/train-record?page=1&pageSize=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"train-record"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "pageSize",
+									"value": "10",
+									"equals": true
+								}
+							]
+						},
+						"description": "查询员工培训记录"
+					},
+					"response": []
+				},
+				{
+					"name": "add_train_record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71990c6c-6e54-4981-8547-bf3ee2b052b3",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var data = jsonData.data;",
+									"",
+									"",
+									"tests[\"data不为空\"] = data.length !== 0;",
+									"",
+									"if (data.length !== 0) {",
+									"    postman.setEnvironmentVariable(\"record_id\",data.id);",
+									"}else {",
+									"    postman.setEnvironmentVariable(\"record_id\",\"\");",
+									"}",
+									"",
+									"postman.setNextRequest('delete_train_record');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"trainProjectId\":\"{{project_id}}\",\"deptId\":\"{{dept_id}}\",\"trainDate\":\"2019-06-28\",\"empList\":[{\"employeeId\":\"{{emp_id}}\"}],\"classHour\":0.5}"
+						},
+						"url": {
+							"raw": "{{base_url}}/award/train-record",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"train-record"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete_train_record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34513576-9815-432e-b407-8fffa7b1a6c6",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"请求状态码为 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"var dataStatus = jsonData.status;",
+									"",
+									"tests[\"status 参数为 200\"] = dataStatus === 200;",
+									"",
+									"",
+									"",
+									"postman.setNextRequest('delete_train_project');"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Authorization}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{base_url}}/award/train-record/{{record_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"award",
+								"train-record",
+								"{{record_id}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c94ada64-fdf8-486e-b1be-8050ed719f6c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e0e5d61f-78fa-4de3-8adb-3aca1361f217",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
