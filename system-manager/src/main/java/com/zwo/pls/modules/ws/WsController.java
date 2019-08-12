@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
 
-@Controller
+//@Controller
 public class WsController {
  
-    @Autowired
+    /*@Autowired
     private SimpMessagingTemplate messagingTemplate;//通过SimpMessagingTemplate向浏览器发送消息
  
     @MessageMapping("/chat")
@@ -30,5 +30,5 @@ public class WsController {
                     "/queue/notifications", principal.getName() + "-send:"
                             + msg);
         }
-    }
+    }*/
 }
