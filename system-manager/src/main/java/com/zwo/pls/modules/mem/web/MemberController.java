@@ -63,7 +63,7 @@ public class MemberController extends BaseController<Member> {
      * @param record
      * @return
      */
-    @ApiImplicitParam(name = "record",value = "用户详细实体")
+//    @ApiImplicitParam(name = "record",value = "用户详细实体")
     @ApiOperation(value = "新增记录",notes = "根据实体对象新增记录",response = Message.class)
     @Override
     @PostMapping
@@ -83,7 +83,7 @@ public class MemberController extends BaseController<Member> {
      * @param record
      * @return
      */
-    @ApiImplicitParam(name = "record",value = "用户详细实体")
+//    @ApiImplicitParam(name = "record",value = "用户详细实体")
     @ApiOperation(value = "更新记录",notes = "更新记录",response = Message.class)
     @Override
     @PutMapping(value = {"/{id}"})
@@ -102,7 +102,7 @@ public class MemberController extends BaseController<Member> {
      * @param id
      * @return
      */
-    @ApiImplicitParam(name = "id",value = "ID唯一标识符")
+//    @ApiImplicitParam(name = "id",value = "ID唯一标识符")
     @ApiOperation(value = "删除记录",notes = "删除记录",response = Message.class)
     @Override
     @DeleteMapping(value = {"/{id}"})
