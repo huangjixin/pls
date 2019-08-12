@@ -95,7 +95,7 @@
     </dependencies>
 
     <build>
-        <finalName>security</finalName>
+        <finalName>pls-security</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
