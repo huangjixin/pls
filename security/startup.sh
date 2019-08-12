@@ -1,0 +1,1 @@
+nohup java -jar target/pls-security.war -Dspring.profiles.active="dev" &
