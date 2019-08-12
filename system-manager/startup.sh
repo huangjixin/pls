@@ -8,4 +8,4 @@ if [ -n "$system_pid" ];then
 	kill -9 $system_pid
 fi
 #-Dhudson.util.ProcessTree.disable=true
-setsid java -jar target/pls-system-manager.jar -Dspring.profiles.active="dev" -Dhudson.util.ProcessTree.disable=true &
+setsid java -jar target/pls-system-manager.jar --spring.profiles.active="dev" -Dhudson.util.ProcessTree.disable=true &

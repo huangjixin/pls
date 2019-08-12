@@ -8,4 +8,4 @@ if [ -n "$security_pid" ];then
 	kill -9 $security_pid
 fi
 #-Dhudson.util.ProcessTree.disable=true
-setsid java -jar target/pls-security.war --spring.profiles.active="dev"  &
+setsid java -jar target/pls-security.war --spring.profiles.active="dev" --hudson.util.ProcessTree.disable=true &
