@@ -8,4 +8,4 @@ if [ -n "$security_pid" ];then
 	kill -9 $security_pid
 fi
 
-nohup java -jar target/pls-security.war -Dspring.profiles.active="dev" &
+nohup java -jar target/pls-security.war -Dspring.profiles.active="dev" -Dhudson.util.ProcessTree.disable=true &
