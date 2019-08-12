@@ -113,6 +113,12 @@
             <artifactId>rocketmq-client</artifactId>
             <version>4.3.0</version>
         </dependency>
+
+        <!--集成web socket-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,4 +1,3 @@
-#!/bin/bash
 #echo 'maven 构建开始'
 #mvn clean package -Dmaven.test.skip=true
 #echo 'maven 构建结束'
@@ -8,4 +7,4 @@ if [ -n "$security_pid" ];then
 	kill -9 $security_pid
 fi
 #-Dhudson.util.ProcessTree.disable=true
-nohup java -jar target/pls-security.war --spring.profiles.active="dev" &
+java -jar target/pls-security.war --spring.profiles.active="dev"
