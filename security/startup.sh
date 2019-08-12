@@ -7,5 +7,5 @@ security_pid=$(ps -ef | grep pls-security | grep -v grep | awk '{print $2}')
 if [ -n "$security_pid" ];then
 	kill -9 $security_pid
 fi
-
-nohup java -jar target/pls-security.war -Dspring.profiles.active="dev" -Dhudson.util.ProcessTree.disable=true &
+#-Dhudson.util.ProcessTree.disable=true
+setsid java -jar target/pls-security.war --spring.profiles.active="dev"  &

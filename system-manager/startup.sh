@@ -7,4 +7,5 @@ system_pid=$(ps -ef | grep pls-system-manager | grep -v grep | awk '{print $2}')
 if [ -n "$system_pid" ];then
 	kill -9 $system_pid
 fi
-nohup java -jar target/pls-system-manager.jar -Dspring.profiles.active="dev" -Dhudson.util.ProcessTree.disable=true &
+#-Dhudson.util.ProcessTree.disable=true
+setsid java -jar target/pls-system-manager.jar -Dspring.profiles.active="dev" -Dhudson.util.ProcessTree.disable=true &
