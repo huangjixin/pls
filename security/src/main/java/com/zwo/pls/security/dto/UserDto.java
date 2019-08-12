@@ -4,8 +4,10 @@ import com.zwo.pls.security.domain.Permission;
 import com.zwo.pls.security.domain.Role;
 import com.zwo.pls.security.domain.User;
 import lombok.Data;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.GrantedAuthority;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
@@ -40,7 +42,26 @@ public class UserDto extends User implements Serializable, UserDetails  {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
+
+        if (CollectionUtils.isNotEmpty(this.permissions)) {
+            GrantedAuthority grantedAuthority;
+            for (Permission authority : this.permissions) {
+                grantedAuthority = new SimpleGrantedAuthority(authority.getCode());
+                auths.add(grantedAuthority);
+            }
+        }
+
+        /*if (CollectionUtils.isNotEmpty(this.roles)) {
+            GrantedAuthority roleAuth;
+            for (String roleValue : this.roles) {
+                roleAuth = new SimpleGrantedAuthority(roleValue);
+                auths.add(roleAuth);
+            }
+        }*/
+
+
+        return auths;
     }
 
     @Override
