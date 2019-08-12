@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -71,6 +72,8 @@ public class MemberController extends BaseController<Member> {
     @PostMapping
     @PreAuthorize("hasAnyAuthority('*', 'pls:member:create')")
     public Message insert(@RequestBody Member record, HttpServletRequest request, HttpServletResponse response) {
+        record.setCreateTime(new Date());
+        record.setCreateBy(super.getLoginUser());
         Message message = new Message();
         if(StringUtils.isEmpty(record.getId())){
             record.setId(UUID.randomUUID().toString().replaceAll("-",""));
@@ -93,6 +96,9 @@ public class MemberController extends BaseController<Member> {
     @PreAuthorize("hasAnyAuthority('*', 'pls:member:update')")
     public Message update(@PathVariable("id") String id, @RequestBody Member record, HttpServletRequest request, HttpServletResponse response){
         Message message = new Message();
+        record.setUpdateTime(new Date());
+        record.setUpdateBy(super.getLoginUser());
+
         int result = this.getBaseService().updateByPrimaryKeySelective(record);
         if(result == 0){
             message.setCode("400");
