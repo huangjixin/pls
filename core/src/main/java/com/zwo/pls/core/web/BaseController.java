@@ -15,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -155,7 +154,7 @@ public abstract class BaseController<T> {
      * @return
      */
     @PostMapping
-    public Message insert(@RequestBody T record,HttpServletRequest request,HttpServletResponse response) {
+    public Message insert(@RequestBody T record, HttpServletRequest request, HttpServletResponse response) {
         Message message = new Message();
         int result = this.getBaseService().insertSelective(record);
         if(result == 0){

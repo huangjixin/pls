@@ -3,8 +3,6 @@ package com.zwo.pls.security;
 import com.zwo.pls.core.utils.TreeHelper;
 import com.zwo.pls.core.vo.Node;
 import com.zwo.pls.security.domain.Permission;
-import com.zwo.pls.security.domain.Role;
-import com.zwo.pls.security.domain.User;
 import com.zwo.pls.security.dto.UserDto;
 import com.zwo.pls.security.service.IUserService;
 import org.junit.Test;
@@ -29,7 +27,7 @@ public class SecurityApplicationTests {
 
     @Test
     public void testTreeHelp(){
-        User user = userService.selectByUserName("1");
+        UserDto user = userService.selectByUserName("1");
         List<Node> nodes = new ArrayList<Node>();
         List<Permission> permissionList =  user.getPermissions();
         List permissions = new ArrayList( );

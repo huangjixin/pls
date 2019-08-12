@@ -2,6 +2,7 @@ package com.zwo.pls.security.mapper;
 
 import com.zwo.pls.security.domain.User;
 import com.zwo.pls.security.domain.UserCriteria;
+import com.zwo.pls.security.dto.UserDto;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -14,5 +15,5 @@ public interface UserMapper extends Mapper<User> {
      * @param loginName 用户名
      * @return User
      */
-    User selectByUserName(@Param(value = "loginName") String loginName);
+    UserDto selectByUserName(@Param(value = "loginName") String loginName);
 }
