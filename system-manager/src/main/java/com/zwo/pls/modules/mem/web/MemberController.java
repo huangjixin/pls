@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
 import org.springframework.util.StringUtils;
@@ -47,6 +48,7 @@ public class MemberController extends BaseController<Member> {
     @ApiOperation(value = "根据ID查询记录",notes = "根据ID查询记录",response = Message.class)
     @Override
     @GetMapping(value = {"/{id}"})
+    @PreAuthorize("hasAnyAuthority('*', 'pls:member:select')")
     public Message getById(@PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response){
         Message message = new Message();
         Member result = (Member) this.getBaseService().selectByPrimaryKey(id);
@@ -67,6 +69,7 @@ public class MemberController extends BaseController<Member> {
     @ApiOperation(value = "新增记录",notes = "根据实体对象新增记录",response = Message.class)
     @Override
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('*', 'pls:member:create')")
     public Message insert(@RequestBody Member record, HttpServletRequest request, HttpServletResponse response) {
         Message message = new Message();
         if(StringUtils.isEmpty(record.getId())){
@@ -87,6 +90,7 @@ public class MemberController extends BaseController<Member> {
     @ApiOperation(value = "更新记录",notes = "更新记录",response = Message.class)
     @Override
     @PutMapping(value = {"/{id}"})
+    @PreAuthorize("hasAnyAuthority('*', 'pls:member:update')")
     public Message update(@PathVariable("id") String id, @RequestBody Member record, HttpServletRequest request, HttpServletResponse response){
         Message message = new Message();
         int result = this.getBaseService().updateByPrimaryKeySelective(record);
@@ -106,6 +110,7 @@ public class MemberController extends BaseController<Member> {
     @ApiOperation(value = "删除记录",notes = "删除记录",response = Message.class)
     @Override
     @DeleteMapping(value = {"/{id}"})
+    @PreAuthorize("hasAnyAuthority('*', 'pls:member:delete')")
     public Message delete(@PathVariable("id") String id,HttpServletRequest request,HttpServletResponse response) {
         Message message = new Message();
         int result = this.getBaseService().deleteByPrimaryKey(id);
