@@ -8,21 +8,17 @@ import com.zwo.pls.core.web.BaseController;
 import com.zwo.pls.modules.mem.domain.Member;
 import com.zwo.pls.modules.mem.service.IMemberService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 一句话描述该类功能：
@@ -54,7 +50,7 @@ public class MemberController extends BaseController<Member> {
         Message message = new Message();
         Member result = (Member) this.getBaseService().selectByPrimaryKey(id);
         if(result == null){
-            message.setCode(HttpStatus.NOT_FOUND.value()+"");
+            message.setCode(HttpStatus.NOT_FOUND.value());
             message.setMsg("查询不到");
         }
         message.setData(result);
@@ -72,14 +68,7 @@ public class MemberController extends BaseController<Member> {
     @PostMapping
     @PreAuthorize("hasAnyAuthority('*', 'pls:member:create')")
     public Message insert(@RequestBody Member record, HttpServletRequest request, HttpServletResponse response) {
-        record.setCreateTime(new Date());
-        record.setCreateBy(super.getLoginUser());
-        Message message = new Message();
-        if(StringUtils.isEmpty(record.getId())){
-            record.setId(UUID.randomUUID().toString().replaceAll("-",""));
-        }
-        int result = this.getBaseService().insertSelective(record);
-        message.setData(result);
+        Message message = super.insert(record, request, response);
         return  message;
     }
 
@@ -95,15 +84,7 @@ public class MemberController extends BaseController<Member> {
     @PutMapping(value = {"/{id}"})
     @PreAuthorize("hasAnyAuthority('*', 'pls:member:update')")
     public Message update(@PathVariable("id") String id, @RequestBody Member record, HttpServletRequest request, HttpServletResponse response){
-        Message message = new Message();
-        record.setUpdateTime(new Date());
-        record.setUpdateBy(super.getLoginUser());
-
-        int result = this.getBaseService().updateByPrimaryKeySelective(record);
-        if(result == 0){
-            message.setCode("400");
-            message.setMsg("修改失败");
-        }
+        Message message = super.update(id, record, request, response);
         return  message;
     }
 
@@ -118,12 +99,7 @@ public class MemberController extends BaseController<Member> {
     @DeleteMapping(value = {"/{id}"})
     @PreAuthorize("hasAnyAuthority('*', 'pls:member:delete')")
     public Message delete(@PathVariable("id") String id,HttpServletRequest request,HttpServletResponse response) {
-        Message message = new Message();
-        int result = this.getBaseService().deleteByPrimaryKey(id);
-        if(result == 0){
-            message.setCode("400");
-            message.setMsg("修改失败");
-        }
+        Message message = super.delete(id, request, response);
         return  message;
     }
 

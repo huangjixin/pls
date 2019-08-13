@@ -14,7 +14,7 @@ public class Message implements Serializable {
     private Object data;
     private List dataList;
     private String msg ="success";
-    private String code = "200";
+    private int code = 200;
 
     public Object getData() {
         return data;
@@ -32,11 +32,11 @@ public class Message implements Serializable {
         this.msg = msg;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

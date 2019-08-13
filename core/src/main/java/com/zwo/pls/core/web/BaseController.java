@@ -86,13 +86,13 @@ public abstract class BaseController<T> {
         Message message = new Message();
         if (file.isEmpty()) {
             message.setMsg("此文件数据为空！");
-            message.setCode("400");
+            message.setCode(400);
             return message;
         }
         String originalFilename = file.getOriginalFilename();
         if (!ExcelUtil.isExcel2003(originalFilename) && !ExcelUtil.isExcel2007(originalFilename)) {
             message.setMsg("文件类型错误，仅支持.xlsx和.xls格式");
-            message.setCode("400");
+            message.setCode(400);
             return message;
         }
 
@@ -168,9 +168,9 @@ public abstract class BaseController<T> {
                 setId.invoke(record, generateId());
             }
 
-            Method setCreateTime = recordClass.getMethod("setCreateTime");
+            Method setCreateTime = recordClass.getMethod("setCreateTime",Date.class);
             setCreateTime.invoke(record, new Date());
-            Method setCreateBy = recordClass.getMethod("setCreateBy");
+            Method setCreateBy = recordClass.getMethod("setCreateBy",String.class);
             setCreateBy.invoke(record, getLoginUser());
 
         }catch (NoSuchMethodException e){
@@ -184,7 +184,7 @@ public abstract class BaseController<T> {
         Message message = new Message();
         int result = this.getBaseService().insertSelective(record);
         if(result == 0){
-            message.setCode("400");
+            message.setCode(400);
             message.setMsg("新增失败");
         }
         return  message;
@@ -200,9 +200,9 @@ public abstract class BaseController<T> {
     public Message update(@PathVariable("id") String id,@RequestBody T record,HttpServletRequest request,HttpServletResponse response){
         try {
             Class<?> recordClass = record.getClass();
-            Method setUpdateTime = recordClass.getMethod("setUpdateTime");
+            Method setUpdateTime = recordClass.getMethod("setUpdateTime",Date.class);
             setUpdateTime.invoke(record, new Date());
-            Method setUpdateBy = recordClass.getMethod("setUpdateBy");
+            Method setUpdateBy = recordClass.getMethod("setUpdateBy",String.class);
             setUpdateBy.invoke(record, getLoginUser());
         }catch (NoSuchMethodException e){
             e.printStackTrace();
@@ -215,7 +215,7 @@ public abstract class BaseController<T> {
         Message message = new Message();
         int result = this.getBaseService().updateByPrimaryKeySelective(record);
         if(result == 0){
-            message.setCode("400");
+            message.setCode(400);
             message.setMsg("修改失败");
         }
         return  message;
@@ -233,7 +233,7 @@ public abstract class BaseController<T> {
         Message message = new Message();
         T result = (T) this.getBaseService().selectByPrimaryKey(id);
         if(result == null){
-            message.setCode(HttpStatus.NOT_FOUND.value()+"");
+            message.setCode(HttpStatus.NOT_FOUND.value());
             message.setMsg("查询不到");
         }
         message.setData(result);
@@ -250,8 +250,8 @@ public abstract class BaseController<T> {
         Message message = new Message();
         int result = this.getBaseService().deleteByPrimaryKey(id);
         if(result == 0){
-            message.setCode("400");
-            message.setMsg("修改失败");
+            message.setCode(400);
+            message.setMsg("删除失败");
         }
         return  message;
     }
@@ -278,6 +278,10 @@ public abstract class BaseController<T> {
         return  message;
     }
 
+    /**
+     * 生成随机数ID。
+     * @return
+     */
     protected String generateId(){
         return  UUID.randomUUID().toString().replaceAll("-","");
     }
