@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,10 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 基类控制器，将控制器行为做一个抽象
@@ -155,6 +159,28 @@ public abstract class BaseController<T> {
      */
     @PostMapping
     public Message insert(@RequestBody T record, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Class<?> recordClass = record.getClass();
+            Method getId = recordClass.getMethod("getId");
+            Object id = getId.invoke(record);
+            if(StringUtils.isEmpty(id)){
+                Method setId = recordClass.getMethod("setId");
+                setId.invoke(record, generateId());
+            }
+
+            Method setCreateTime = recordClass.getMethod("setCreateTime");
+            setCreateTime.invoke(record, new Date());
+            Method setCreateBy = recordClass.getMethod("setCreateBy");
+            setCreateBy.invoke(record, getLoginUser());
+
+        }catch (NoSuchMethodException e){
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
         Message message = new Message();
         int result = this.getBaseService().insertSelective(record);
         if(result == 0){
@@ -172,6 +198,20 @@ public abstract class BaseController<T> {
      */
     @PutMapping(value = {"/{id}"})
     public Message update(@PathVariable("id") String id,@RequestBody T record,HttpServletRequest request,HttpServletResponse response){
+        try {
+            Class<?> recordClass = record.getClass();
+            Method setUpdateTime = recordClass.getMethod("setUpdateTime");
+            setUpdateTime.invoke(record, new Date());
+            Method setUpdateBy = recordClass.getMethod("setUpdateBy");
+            setUpdateBy.invoke(record, getLoginUser());
+        }catch (NoSuchMethodException e){
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
         Message message = new Message();
         int result = this.getBaseService().updateByPrimaryKeySelective(record);
         if(result == 0){
@@ -238,4 +278,7 @@ public abstract class BaseController<T> {
         return  message;
     }
 
+    protected String generateId(){
+        return  UUID.randomUUID().toString().replaceAll("-","");
+    }
 }
