@@ -1,0 +1,301 @@
+{
+	"info": {
+		"name": "pls_dev",
+		"_postman_id": "79057b24-72af-4faa-b125-aabe6bb34238",
+		"description": "奖金计算系统",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "登录",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "508cac4f-4f34-4720-8585-227a5969ceff",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var token = jsonData.access_token;",
+									"var refresh_token = jsonData.refresh_token;",
+									"",
+									"tests['登录以后Token有值'] = token!==undefined && token!== null;",
+									"tests['登录以后refresh_token有值'] = refresh_token!==undefined && refresh_token!== null",
+									"",
+									"",
+									"postman.setNextRequest(\"添加会员\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization-login}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://172.30.20.210:9999/oauth/token",
+							"protocol": "http",
+							"host": [
+								"172",
+								"30",
+								"20",
+								"210"
+							],
+							"port": "9999",
+							"path": [
+								"oauth",
+								"token"
+							]
+						},
+						"description": "登录测试接口，获取token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "member",
+			"description": "会员添加，修改，删除",
+			"item": [
+				{
+					"name": "添加会员",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "656707cd-b0ce-4063-ba9e-dd67b3dadcc8",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var code = jsonData.code;",
+									"",
+									"tests['添加会员成功'] = code===\"200\";",
+									"",
+									"postman.setNextRequest(\"更改会员\");//如果没有设置为空，那么工作流将继续往下运行；"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbInNlcnZpY2UiXSwiZXhwIjozMjA1ODY1NzI2LCJ1c2VyIjp7ImlkIjoiMSIsImxvZ2luTmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmEkMTAkanJlNm1iMXNOTlVxVUdiWlRpVU1VZTlhQno3NzRtNzc3bldjQUJCRWowZmVBUnVkeUlVdXUiLCJyZWFsTmFtZSI6IiIsImlzRXhwaXJlZCI6MCwiaXNMb2NrZWQiOjAsImlzRW5hYmxlZCI6MSwidHlwZSI6bnVsbCwic3RhdHVzIjpudWxsLCJjcmVhdGVCeSI6IiIsImNyZWF0ZVRpbWUiOjE1NTgyOTE1NTEwMDAsInVwZGF0ZUJ5IjoiIiwidXBkYXRlVGltZSI6MTU2MTI1NzI3MTAwMCwiZW5OYW1lIjoiIiwiZW1haWwiOiIiLCJzZXgiOm51bGwsIm1vYmlsZSI6IiIsInBlcm1pc3Npb25zIjpbeyJpZCI6IjEiLCJwYXJlbnRJZCI6bnVsbCwibmFtZSI6ImFkbWluIiwiY2hpbGRyZW4iOltdLCJwYXJlbnQiOm51bGwsImxldmVsIjowLCJpc0V4cGlyZWQiOjAsImlzTG9ja2VkIjowLCJpc0VuYWJsZWQiOjEsInR5cGUiOm51bGwsInN0YXR1cyI6bnVsbCwiY3JlYXRlQnkiOm51bGwsImNyZWF0ZVRpbWUiOjE1NTgyOTE1OTgwMDAsInVwZGF0ZUJ5IjpudWxsLCJ1cGRhdGVUaW1lIjoxNTU4MjkxNTk4MDAwLCJlbk5hbWUiOiIxIiwiY29kZSI6IioiLCJhdXRob3JpdHkiOiIqIiwicm9vdCI6dHJ1ZSwibGVhZiI6dHJ1ZX1dLCJyb2xlcyI6W10sImVuYWJsZWQiOnRydWUsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiIqIn1dLCJ1c2VybmFtZSI6ImFkbWluIiwiYWNjb3VudE5vbkV4cGlyZWQiOnRydWUsImFjY291bnROb25Mb2NrZWQiOnRydWUsImNyZWRlbnRpYWxzTm9uRXhwaXJlZCI6dHJ1ZX0sImF1dGhvcml0aWVzIjpbIioiXSwianRpIjoiMDRhZWY3ZTYtZWJkZS00ZTc0LWFkNTgtZTY1ODJjNjFjMjBlIiwiY2xpZW50X2lkIjoic2VjdXJpdHktc2VydmljZSJ9.UPcp0oR9Ub1MPWFp_gmVqA69roopaB8fUFx3l75zIITPn3k6QULKzP5ZdvNWKFaK11ULbDKCtm-Z72as3NFBiU-E4Ws2PtoSLNujHvkq6Gh6ZVvDD3-mb34o0dypEq0xqM9MeQaSD9wwIz8KOxx0adHlvws9peTM71ApxBXaOFa60-9V9NqcW2aCGzMXFcaDwQVBVvYBlo2l__hLqVz28yZIvzbsBfwpEao4rtaU3rkg0XnZZ1JpXoK6apWDMsBFlyMqkQGdJDyxUXxokBbu8sBfkuGu2SZu70ZyKLzO_h4LSbuhlDtqAmbWSML1ge-ztUabqamYS4KtmUD1guyqew"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"517714860@qq.com\",\r\n  \"enName\": \"Tony\",\r\n  \"id\": \"1234567890\",\r\n  \"idCard\": \"445202198510308359\",\r\n  \"isEnabled\": 1,\r\n  \"isExpired\": 0,\r\n  \"isLocked\": 0,\r\n  \"loginName\": \"huangjixin\",\r\n  \"mobile\": \"13926205227\",\r\n  \"name\": \"黄记新\",\r\n  \"nickName\": \"Tony\",\r\n  \"sex\": 1,\r\n  \"status\": 1,\r\n  \"type\": 0\r\n}"
+						},
+						"url": {
+							"raw": "http://172.30.20.210:8999/member",
+							"protocol": "http",
+							"host": [
+								"172",
+								"30",
+								"20",
+								"210"
+							],
+							"port": "8999",
+							"path": [
+								"member"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "更改会员",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ab80e7e8-f275-4cb0-8775-a6a0ffa65d88",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var code = jsonData.code;",
+									"",
+									"tests['更改会员成功'] = code===\"200\";",
+									"",
+									"postman.setNextRequest(\"查询会员\");//如果没有设置为空，那么工作流将继续往下运行；"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"517714860@qq.com\",\r\n  \"enName\": \"Tony\",\r\n  \"id\": \"1234567890\",\r\n  \"idCard\": \"445202198510308359\",\r\n  \"isEnabled\": 1,\r\n  \"isExpired\": 0,\r\n  \"isLocked\": 0,\r\n  \"loginName\": \"huangjixin\",\r\n  \"mobile\": \"13926205227\",\r\n  \"name\": \"黄记新\",\r\n  \"nickName\": \"Tony\",\r\n  \"sex\": 1,\r\n  \"status\": 1,\r\n  \"type\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.30.20.210:8999/member/1",
+							"protocol": "http",
+							"host": [
+								"172",
+								"30",
+								"20",
+								"210"
+							],
+							"port": "8999",
+							"path": [
+								"member",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "查询会员",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ccbad8b9-bca3-4090-acfa-4913144dbc96",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var code = jsonData.code;",
+									"",
+									"tests['查询会员成功'] = code===\"200\";",
+									"",
+									"postman.setNextRequest(\"会员删除\");//如果没有设置为空，那么工作流将继续往下运行；"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization-token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://172.30.20.210:8999/member/1234567890",
+							"protocol": "http",
+							"host": [
+								"172",
+								"30",
+								"20",
+								"210"
+							],
+							"port": "8999",
+							"path": [
+								"member",
+								"1234567890"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "会员删除",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "80e874cd-d0f5-4a56-83b8-4d4391b70b59",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"var code = jsonData.code;",
+									"",
+									"tests['删除会员成功'] = code===\"200\";",
+									"",
+									"//postman.setNextRequest(\"查询会员\");//如果没有设置为空，那么工作流将继续往下运行；"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization-token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://172.30.20.210:8999/member/1234567890",
+							"protocol": "http",
+							"host": [
+								"172",
+								"30",
+								"20",
+								"210"
+							],
+							"port": "8999",
+							"path": [
+								"member",
+								"1234567890"
+							]
+						},
+						"description": "会员删除"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
