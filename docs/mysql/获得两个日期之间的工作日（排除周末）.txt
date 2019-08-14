@@ -1,0 +1,74 @@
+1.获得两个工作日之间应该上班的天数，即排除周末；该函数在考勤方面非常有用。
+2.
+参数：`datefrom` date,`dateto` date
+返回类型：int(20)
+类型：FUNCTION
+BEGIN
+  	declare days int default 1;
+  	if (datefrom > dateto  or year(datefrom) != year(dateto)) then
+  	   return -1;
+  	end if;
+
+  	set days =
+  	   case
+  	   when week(dateto)-week(datefrom) = 0 then
+  	        dayofweek(dateto) - dayofweek(datefrom) + 1
+  		  - case
+  		    when (dayofweek(datefrom) > 1 and dayofweek(dateto) < 7) then 0
+  		    when (dayofweek(datefrom) = 1 and dayofweek(dateto) =7) then 2
+  		    else 1
+  		    end
+  	   else (week(dateto)-week(datefrom)-1) * 5
+  	      + case
+  		    when dayofweek(datefrom) = 1 then 5
+  			when dayofweek(datefrom) = 7 then 0
+  		    else 7 - dayofweek(datefrom)
+  			end
+  		  + case
+  		    when dayofweek(dateto) = 1 then 0
+  			when dayofweek(dateto) = 7 then 5
+  			else dayofweek(dateto) - 1
+  			end
+  	   end;
+
+
+  	   return days;
+  end
+
+
+  3.获取两个工作日之间应该上班的天数，即排除周末和法定节假日（维护在一个表当中，周末不写）。
+  参数：`datefrom` date,`dateto` date
+  返回类型：int(20)
+  类型：FUNCTION
+  BEGIN
+  	declare days,spec_days int ;
+  	SET days = 1, spec_days = 0;
+  	if (datefrom > dateto  or year(datefrom) != year(dateto)) then
+  	   return -1;
+  	end if;
+
+  	set days =
+  	   case
+  	   when week(dateto)-week(datefrom) = 0 then
+  	        dayofweek(dateto) - dayofweek(datefrom) + 1
+  		  - case
+  		    when (dayofweek(datefrom) > 1 and dayofweek(dateto) < 7) then 0
+  		    when (dayofweek(datefrom) = 1 and dayofweek(dateto) =7) then 2
+  		    else 1
+  		    end
+  	   else (week(dateto)-week(datefrom)-1) * 5
+  	      + case
+  		    when dayofweek(datefrom) = 1 then 5
+  			when dayofweek(datefrom) = 7 then 0
+  		    else 7 - dayofweek(datefrom)
+  			end
+  		  + case
+  		    when dayofweek(dateto) = 1 then 0
+  			when dayofweek(dateto) = 7 then 5
+  			else dayofweek(dateto) - 1
+  			end
+  	   end;
+  			SELECT COUNT(a.id) as out_days FROM ntbl_holiday as a WHERE a.out_date BETWEEN datefrom AND dateto INTO spec_days;
+
+  	   return days-spec_days;
+  end

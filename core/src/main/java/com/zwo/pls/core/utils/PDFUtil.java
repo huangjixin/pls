@@ -1,11 +1,12 @@
 package com.zwo.pls.core.utils;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import com.lowagie.text.pdf.BaseFont;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -40,7 +41,7 @@ public class PDFUtil {
      * freemarker 引擎渲染 html
      *
      * @param dataMap      传入 html 模板的 Map 数据
-     * @param 模板文件相对路径(相对于 resources路径,路径 + 文件名)
+     * @param fileName 模板文件相对路径(相对于 resources路径,路径 + 文件名)
      *                     eg: "templates/pdf_export_demo.ftl"
      * @return
      */
@@ -145,21 +146,28 @@ public class PDFUtil {
             String name = localDate.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + ".pdf";
             String outPdf = PDFUtil.class.getClassLoader().getResource(".").getPath() + "ftl//" + name;
 //            String outPdf = PDFUtil.class.getClassLoader().getResource(".").getPath()+"ftl//myPdf.pdf";
+            //            parseHTML2PDFFile2("D://myPdf.pdf", string);
             parseHTML2PDFFile2(outPdf, string);
-//            parseHTML2PDFFile2("D://myPdf.pdf", string);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public static void parseHTML2PDFFile2(String pdfFile, String html)
             throws DocumentException, IOException {
         Document document = new Document();
         PdfWriter writer = PdfWriter.getInstance(document,
                 new FileOutputStream(pdfFile));
+        Rectangle rect = new Rectangle(36, 54, 559, 788);
+        rect.setBorderColor(BaseColor.BLACK);
+        writer.setBoxSize("art", rect);
+        HeaderFooter header= new HeaderFooter();
+        writer.setPageEvent(header);
 
         InputStream inputStream = null;
         Charset charset = Charset.forName("UTF-8");
+        InputStream cssInputStream = null;
         try {
             document.open();
             inputStream = new ByteArrayInputStream(html.getBytes("UTF-8"));
