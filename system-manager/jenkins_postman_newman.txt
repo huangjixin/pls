@@ -5,7 +5,13 @@ cnpm install newman-reporter-html
 newman run C:\soft\Award.postman_collection.json --reporters cli,html,json,junit --reporter-json-export jsonOut.json --reporter-junit-export xmlOut.xml --reporter-html-export htmlOut.html
 
 ## Jenkins job
+#!/bin/bash -ilex
 source ~/.bashrc
+
 echo '使用postman和newman实现自动化测试接口开始'
-newman run system-manager/src/test/resource/Award.postman_collection.json --reporters cli,html,json,junit --reporter-json-export /tmp/system-manager-jsonOut.json --reporter-junit-export /tmp/system-manager-xmlOut.xml --reporter-html-export /tmp/system-manager-htmlOut.html
+newman run system-manager/src/test/resource/pls_dev.postman_collection.json --environment system-manager/src/test/resource/pls_env.postman_environment.json --reporters cli,html,json,junit --reporter-html-template system-manager/src/test/resource/htmlreqres.hbs --reporter-json-export system-manager-jsonOut.json --reporter-junit-export system-manager-xmlOut.xml --reporter-html-export system-manager-htmlOut.html
 echo '使用postman和newman实现自动化测试接口结束'
+
+
+
+

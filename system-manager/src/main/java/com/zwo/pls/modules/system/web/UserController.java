@@ -79,21 +79,21 @@ public class UserController extends BaseController<User> {
         return  user;
     }
 
-    @PreAuthorize("hasAnyAuthority('*', 'sys:user:test')")
+    @PreAuthorize("hasAnyAuthority('*', 'pls:system:user:test')")
     @GetMapping("testoauth")
     public String testoauth(){
         User user = userService.selectByPrimaryKey("1");
         return  "你已经成功进入受保护的方法，得到user："+user.toString();
     }
 
-    @PreAuthorize("hasAnyAuthority('*', 'sys:user:getLoginName')")
+    @PreAuthorize("hasAnyAuthority('*', 'pls:system:user:getLoginName')")
     @GetMapping("login-name")
     public String getLoginName(){
        String loginName = super.getLoginUser();
         return  loginName;
     }
 
-    @PreAuthorize("hasAnyAuthority('*', 'sys:user:getAuthorities')")
+    @PreAuthorize("hasAnyAuthority('*', 'pls:system:user:getAuthorities')")
     @GetMapping("authorities")
     public Collection<SimpleGrantedAuthority> getAuthorities(){
         Collection<SimpleGrantedAuthority> authorities = super.getAuthorities();
@@ -199,4 +199,16 @@ public class UserController extends BaseController<User> {
     public String testChange(){
         return  "A";
     }
+
+    /**
+     * 刷新密钥
+     *
+     * @param authorization 原密钥
+     * @return 新密钥
+     * @throws AuthenticationException 错误信息
+     */
+//    @GetMapping(value = "/refreshToken")
+//    public String refreshToken(@RequestHeader String authorization) throws AuthenticationException {
+//        return userService.refreshToken(authorization);
+//    }
 }
