@@ -1,6 +1,8 @@
 需要安装nodejs，并配置好环境
 打开控制台，运行：npm install -g newman
 校验是否安装成功，运行：newman --version
+Jenkins需要安装插件：Publish HTML Report,Publish JUnit test result report
+
 cnpm install newman-reporter-html
 newman run C:\soft\Award.postman_collection.json --reporters cli,html,json,junit --reporter-json-export jsonOut.json --reporter-junit-export xmlOut.xml --reporter-html-export htmlOut.html
 
