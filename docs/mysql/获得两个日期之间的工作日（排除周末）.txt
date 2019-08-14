@@ -72,3 +72,5 @@ BEGIN
 
   	   return days-spec_days;
   end
+
+  用法：SELECT workdaynum2('2019-08-01','2019-08-31') as workday
