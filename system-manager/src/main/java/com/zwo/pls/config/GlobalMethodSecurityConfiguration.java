@@ -16,7 +16,7 @@ public class GlobalMethodSecurityConfiguration {
      * 添加加密类。
      * @return
      */
-    @Bean
+    @Bean(name="serverBCryptPasswordEncoder")
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
