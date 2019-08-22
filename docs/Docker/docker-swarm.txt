@@ -1,0 +1,337 @@
+1.安装docker。因操作系统是centos，故按照该方法进行安装：https://docs.docker.com/install/linux/docker-ce/centos/
+
+ sudo systemctl enable docker
+ sudo systemctl start docker
+
+
+2.使用swarm建立集群：docker swarm init --advertise-addr 172.16.234.153
+得到命令：
+docker swarm join --token SWMTKN-1-2ua4z10m8usmt6ucbcwmas7jo6vomgnqhq0i7lc0m35z4six1d-2dprhen54ld1pu79n8ap8ay1b 172.16.234.153:2377
+
+（升级管理員请用：docker swarm join-token manager）
+
+3.创建网络：
+docker network create  -d overlay --attachable swarm-overlay
+
+// 此处把指定子网和子网网关略去，因为暂时不知道有什么作用 --subnet 10.254.3.0/24 --gateway 10.254.3.1
+
+4.搭建Rancher/server：
+启动
+	docker run -d --restart=unless-stopped \
+    -p 18080:8080 \
+    rancher/server:stable
+http://IP:18080页面
+http://172.16.234.153:18080
+admin abc123
+
+5.搭建Portainer。
+应用商店里面搜索：portainer
+记住：http://rancher-server:8080/r/projects/1a5/portainer/
+
+对应于本次配置，访问的地址是：http://172.16.234.153:18080/r/projects/1a5/portainer/#/endpoints/
+
+6.安装docker-compose编排工具：sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+7.搭建Harbor
+下载
+下载地址：https://github.com/goharbor/harbor/releases
+
+
+解压tar -xf harbor-offline-installer-<version>.tgz
+
+配置
+vi harbor.yml
+
+hostname: <IP>
+http:
+  port: 8888
+harbor_admin_password: abc123ABC   #初始登录密码
+
+安装
+运行命令
+./prepare
+./install.sh
+
+创建项目
+登录http://IP
+
+用户密码
+huangjixin
+517741860@qq.com
+123456qwertyQWERTY
+
+备注：修改vi harbor.yml，必须重新执行其install.sh文件才能生效。
+docker rm -f $(docker ps -a | grep harbor | awk '{print $1}')
+
+
+推送/拉取镜像
+在需要推送或拉去镜像的机器配置
+（1）vi /etc/hosts
+添加内容
+<HARBOR_HOST_IP> register.myharbor.com
+172.16.234.154 register.myharbor.com
+（2）vi /etc/docker/daemon.json
+添加内容
+{
+  "insecure-registries": ["register.myharbor.com"]
+}
+
+（3）重启docker
+systemctl restart docker
+
+（4）修改镜像名
+docker tag SOURCE_IMAGE[:TAG] register.myharbor.com/项目名/IMAGE[:TAG]
+
+（5）推送
+	docker push register.myharbor.com/项目名/IMAGE[:TAG]
+
+/repositories​/{repo_name}​/tags
+pls_dev%2Fpls_security  标红处表示“/”
+
+Jenkins构建任务：
+1.必须在所在的机器编辑hosts文件，如上步骤，使用docker login http://ip 或者域名认证一次。
+
+
+pls-security-docker-swarm-dev.yml
+
+任务构建实例，此处的作用是推送到镜像仓库，从管理角色节点处拉取镜像，更新整个集群。
+--------------------------------------------------------
+Tag="0.0.$BUILD_NUMBER" #BUILD_NUMBER为内置的构建次数
+
+cd security
+docker build -t register.myharbor.com/pls_dev/pls_dev:$Tag -f src/main/docker/Dockerfile --no-cache .
+docker push register.myharbor.com/pls_dev/pls_dev:$Tag
+
+docker rmi -f register.myharbor.com/pls_dev/pls_dev:$Tag
+#ssh 172.16.106.25 "cp -f /u06/user/pkg/apache-tomcat-8.5.34/webapps/security.war /u06/user/pkg/apache-tomcat-8.5.34/"
+#scp ./security/target/security.war 172.16.106.25:/u06/user/pkg/apache-tomcat-8.5.34/webapps/
+
+scp ./pls-security-docker-swarm-dev.yml 172.16.234.153:/tmp/
+ssh 172.16.234.153 "export Tag=$Tag && docker stack deploy -c /tmp/pls-security-docker-swarm-dev.yml --with-registry-auth pls"
+
+# 只需要在manager角色运行yml就可以了，集群自动就会更新。
+# scp ./pls-security-docker-swarm-dev.yml 172.16.234.154:/tmp/
+# ssh 172.16.234.154 "export Tag=$Tag && docker stack deploy -c /tmp/pls-security-docker-swarm-dev.yml --with-registry-auth pls"
+--------------------------------------------------------
+
+2.编写项目回滚的Job，安装参数化构建过程插件：Extended Choice Parameter
+
+
+
+
+
+第一个脚本（红色字体根据实际情况更改）：
+import groovy.json.JsonSlurper
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+def sort = { a1 ->
+    for (int i = 0; i < a1.size() - 1; i++) {
+        for (int j = 1; j < a1.size() - i; j++) {
+            def array = a1.get(j - 1).split("\\.")
+            def array1 = a1.get(j).split("\\.")
+            for (int n = 0; n < array.size(); n++) {
+                if (n < 3 && Integer.parseInt(array1[n]) > Integer.parseInt(array[n])) {
+                    def a = a1.get(j - 1)
+                    a1.set(j - 1, a1.get(j))
+                    a1.set(j, a)
+                    break
+                }
+            }
+        }
+    }
+    return a1
+}
+
+try {
+    List<String> artifacts = new ArrayList<String>()
+    def artifactsUrl = "http://172.16.234.154/api/repositories/pls_dev%2Fpls_dev/tags"
+    def artifactsObjectRaw = ["curl", "-u", "admin:abc123ABC", "-s", "-H", "accept: application/json", "-k", "--url", "${artifactsUrl}"].execute().text
+    def jsonSlurper = new JsonSlurper()
+    def artifactsJsonObject = jsonSlurper.parseText(artifactsObjectRaw)
+    def dataArray = artifactsJsonObject
+    for (item in dataArray) {
+            artifacts.add(item.name)
+    }
+    return sort(artifacts)
+} catch (Exception e) {
+    print "There was a problem fetching the artifacts"
+}
+
+
+
+第二个groovy脚本（红色字体根据实际情况更改）：
+
+import groovy.json.JsonSlurper
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+def sort = { a1 ->
+    for (int i = 0; i < a1.size() - 1; i++) {
+        for (int j = 1; j < a1.size() - i; j++) {
+            if (a1.get(j - 1).compareTo(a1.get(j)) < 0) {
+                def a = a1.get(j - 1)
+                a1.set(j - 1, a1.get(j))
+                a1.set(j, a)
+            }
+        }
+    }
+    return a1
+}
+
+try {
+    List<String> artifacts = new ArrayList<String>()
+    def artifactsUrl = "http://172.16.234.154/api/repositories/pls_dev%2Fpls_dev/tags"
+    def artifactsObjectRaw = ["curl", "-u", "admin:abc123", "-s", "-H", "accept: application/json", "-k", "--url", "${artifactsUrl}"].execute().text
+    def jsonSlurper = new JsonSlurper()
+    def artifactsJsonObject = jsonSlurper.parseText(artifactsObjectRaw)
+    def dataArray = artifactsJsonObject
+    for (item in dataArray) {
+            def timeString = item.created.replaceAll("T", " ").replaceAll("Z", "")
+            def formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nnnnnnnnn")
+            def date = LocalDateTime.parse(timeString.toString(), formatter).plusHours(8)
+            def formatter1 = DateTimeFormatter.ofPattern("HH:mm:ss")
+            def newDate = date.toLocalDate().toString() + " " + date.toLocalTime().format(formatter1).toString()
+            artifacts.add(newDate)
+    }
+    return sort(artifacts)
+} catch (Exception e) {
+    e.printStackTrace()
+}
+
+
+
+执行脚本：
+scp ./pls-security-docker-swarm-dev.yml 172.16.234.153:/tmp/
+ssh 172.16.234.153 "export Tag=$version && docker stack deploy -c /tmp/pls-security-docker-swarm-dev.yml --with-registry-auth pls"
+
+
+
+ELK的：
+访问http://172.16.234.153:15601
+搭建ELK
+创建数据卷
+在节点1创建数据卷
+docker volume create esdata
+设置虚拟内存区域的数量
+每个节点运行：
+	sysctl -w vm.max_map_count=262144
+
+创建logstash.conf配置文件
+在实践当中，使用vi工具的时候，要先按一下“i”，进入编辑模式，否则将出现拷贝文件不完整的情况！
+配置文件内容：
+input {
+  udp {
+    port  => 5000
+    codec => json
+  }
+}
+filter {
+  if [docker][image] =~ /logstash/ {
+    drop { }
+  }
+}
+output {
+  elasticsearch { hosts => ["elasticsearch:9200"] }
+  stdout { codec => rubydebug }
+}
+
+将配置文件拷贝到所有节点同一目录下，该文件是用于日志收集之用，所以必须
+
+docker stack deploy -c <fileName.yml> elk
+
+yml文件如下：
+version: '3.3'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.0
+    networks:
+     - swarm-overlay
+    volumes:
+     - esdata:/usr/share/elasticsearch/data
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == mes-redis-1.pacific-textiles.com
+    ports:
+     - "19200:9200"
+     - "19300:9300"
+    environment:
+     - "ES_JAVA_OPTS=-Xmx256m -Xms256m"
+     - "cluster.name=docker-cluster"
+     - "network.host=0.0.0.0"
+     - "discovery.zen.minimum_master_nodes=1"
+     - "discovery.type=single-node"
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.1.0
+    ports:
+      - "15000:5000"
+      - "19600:9600"
+    networks:
+     - swarm-overlay
+    volumes:
+      - /u06/user/pkg/elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+     - "LS_JAVA_OPTS=-Xmx256m -Xms256m"
+     - "http.host=0.0.0.0"
+     - "path.config=/usr/share/logstash/pipeline"
+
+  logspout:
+    image: bekt/logspout-logstash
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+     - swarm-overlay
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+    environment:
+     - "ROUTE_URIS=logstash://logstash:5000"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.1.0
+    ports:
+     - "15601:5601"
+    networks:
+     - swarm-overlay
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+     - "server.name=kibana"
+     - "server.host=0"
+     - "elasticsearch.url=http://elasticsearch:9200"
+
+networks:
+  swarm-overlay:
+    external:
+      name: swarm-overlay
+volumes:
+  esdata:
+
+
+
+
+
+docker rm -f $(docker ps -a | grep pls_pls| awk '{print $1}')
+
+如果需要用docker swarm进行镜像拉取，那么使用如下方法登录验证：docker login register.myharbor.com
+
+docker-logzio
+https://logz.io/platform/
