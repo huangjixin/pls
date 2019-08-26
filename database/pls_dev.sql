@@ -1,47 +1,19 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : percona1 172.16.106.9 30062 root abc123（Manager角色）
+Source Server         : percona 172.16.106.9 30060 root abc123（Manager角色）
 Source Server Version : 50725
-Source Host           : 172.16.106.9:30062
+Source Host           : 172.16.106.9:30060
 Source Database       : pls_dev
 
 Target Server Type    : MYSQL
 Target Server Version : 50725
 File Encoding         : 65001
 
-Date: 2019-05-23 15:00:56
+Date: 2019-08-26 13:33:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for file
--- ----------------------------
-DROP TABLE IF EXISTS `file`;
-CREATE TABLE `file` (
-  `ID` varchar(32) NOT NULL,
-  `NAME` varchar(32) DEFAULT NULL,
-  `IS_EXPIRED` tinyint(4) DEFAULT '0',
-  `IS_LOCKED` tinyint(4) DEFAULT '0',
-  `IS_ENABLED` tinyint(4) DEFAULT '1',
-  `TYPE` int(11) DEFAULT NULL,
-  `STATUS` int(11) DEFAULT NULL,
-  `CREATE_BY` varchar(32) DEFAULT NULL,
-  `CREATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
-  `UPDATE_BY` varchar(32) DEFAULT NULL,
-  `UPDATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
-  `PATH` varchar(512) DEFAULT NULL COMMENT '文件路径',
-  `USER_ID` varchar(32) DEFAULT NULL COMMENT '系统用户',
-  `MEMBER_ID` varchar(32) DEFAULT NULL COMMENT '普通用户',
-  PRIMARY KEY (`ID`),
-  KEY `FK_FILE_TO_USER` (`USER_ID`),
-  KEY `FK_FILE_TO_MEMBER` (`MEMBER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文件表';
-
--- ----------------------------
--- Records of file
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for mem_department
@@ -68,6 +40,11 @@ CREATE TABLE `mem_department` (
 -- ----------------------------
 -- Records of mem_department
 -- ----------------------------
+INSERT INTO `mem_department` VALUES ('1', '1', '0', '0', '1', null, null, '', '2019-04-30 11:10:14', '', '2019-04-30 11:10:14', '', '');
+INSERT INTO `mem_department` VALUES ('2', '2', '0', '0', '1', null, null, null, '2019-06-30 02:59:43', null, '2019-06-30 02:59:43', null, '1');
+INSERT INTO `mem_department` VALUES ('3', '3', '0', '0', '1', null, null, null, '2019-06-30 03:22:42', null, '2019-06-30 03:22:42', null, '1');
+INSERT INTO `mem_department` VALUES ('4', '4', '0', '0', '1', null, null, null, '2019-06-30 03:25:02', null, '2019-06-30 03:25:02', null, '1');
+INSERT INTO `mem_department` VALUES ('5', '5', '0', '0', '1', null, null, null, '2019-06-30 03:25:13', null, '2019-06-30 03:25:13', null, '3');
 
 -- ----------------------------
 -- Table structure for mem_member
@@ -101,7 +78,7 @@ CREATE TABLE `mem_member` (
 -- ----------------------------
 -- Records of mem_member
 -- ----------------------------
-INSERT INTO `mem_member` VALUES ('2', '2', '0', '0', '1', null, null, null, '2019-05-21 01:17:32', null, '2019-05-21 01:17:32', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `mem_member` VALUES ('1', '1', '0', '0', '1', null, null, '', '2019-04-30 11:09:55', '', '2019-04-30 11:09:55', '', '', '', '', null, '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for mem_member_position
@@ -119,9 +96,8 @@ CREATE TABLE `mem_member_position` (
 -- ----------------------------
 -- Records of mem_member_position
 -- ----------------------------
-INSERT INTO `mem_member_position` VALUES ('2', '1', '2');
-INSERT INTO `mem_member_position` VALUES ('3', '1', '3');
-INSERT INTO `mem_member_position` VALUES ('4', '1', '4');
+INSERT INTO `mem_member_position` VALUES ('1', '1', '1');
+INSERT INTO `mem_member_position` VALUES ('5', '2', '1');
 
 -- ----------------------------
 -- Table structure for mem_member_role
@@ -167,43 +143,21 @@ CREATE TABLE `mem_postion` (
 -- ----------------------------
 -- Records of mem_postion
 -- ----------------------------
-INSERT INTO `mem_postion` VALUES ('2', '2', '0', '0', '1', null, null, null, '2019-05-20 03:26:47', null, '2019-05-20 03:26:47', null, null, null);
-INSERT INTO `mem_postion` VALUES ('3', '3', '0', '0', '1', null, null, null, '2019-05-20 03:26:52', null, '2019-05-20 03:26:52', null, null, null);
-INSERT INTO `mem_postion` VALUES ('4', '4', '0', '0', '1', null, null, null, '2019-05-20 03:26:58', null, '2019-05-20 03:26:58', null, null, null);
+INSERT INTO `mem_postion` VALUES ('1', '1', '0', '0', '1', null, null, '', '2019-04-30 11:10:02', '', '2019-04-30 11:10:02', '', '', '1');
 
 -- ----------------------------
--- Table structure for order_master
+-- Table structure for mycat_sequence
 -- ----------------------------
-DROP TABLE IF EXISTS `order_master`;
-CREATE TABLE `order_master` (
-  `ID` varchar(32) NOT NULL,
-  `ORDER_SN` varchar(64) DEFAULT NULL COMMENT '订单编号，yyyymmddHHmmss',
-  `MEMBER_ID` varchar(32) DEFAULT NULL COMMENT '用户ID',
-  `SHIPPING_USER` varchar(32) DEFAULT NULL COMMENT '寄货人姓名',
-  `RECEIVE_USER` varchar(32) DEFAULT NULL COMMENT '发件人',
-  `SHIPPING_TIME` datetime(4) DEFAULT NULL COMMENT '发货时间',
-  `RECEIVE_TIME` datetime(4) DEFAULT NULL COMMENT '到货时间',
-  `TYPE` int(11) DEFAULT NULL,
-  `STATUS` int(11) DEFAULT NULL,
-  `CREATE_BY` varchar(32) DEFAULT NULL,
-  `CREATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
-  `UPDATE_BY` varchar(32) DEFAULT NULL,
-  `UPDATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
-  `PROVINCE` varchar(32) DEFAULT NULL COMMENT '省',
-  `CITY` varchar(64) DEFAULT NULL COMMENT '市',
-  `REGION` varchar(32) DEFAULT NULL,
-  `ADDRESS` varchar(128) NOT NULL COMMENT '具体地址',
-  `MOBILE` varchar(15) DEFAULT NULL COMMENT '电话',
-  `SHIPPING_SN` varchar(32) DEFAULT NULL COMMENT '快递单号',
-  `PAY_WAY` int(11) DEFAULT '0' COMMENT '支付方式：0微信,1支付宝,2到付，3平台余额兑付',
-  `SHIPPING_MONEY` decimal(10,0) DEFAULT '0' COMMENT '运费金额',
-  `DISCOUNT_MONEY` decimal(10,0) DEFAULT '0' COMMENT '优惠金额',
-  `PARENT_ID` varchar(32) DEFAULT '0' COMMENT '父亲节点，用于拼单之用',
-  PRIMARY KEY (`ID`)
+DROP TABLE IF EXISTS `mycat_sequence`;
+CREATE TABLE `mycat_sequence` (
+  `name` varchar(50) NOT NULL,
+  `current_value` bigint(20) NOT NULL,
+  `increment` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of order_master
+-- Records of mycat_sequence
 -- ----------------------------
 
 -- ----------------------------
@@ -281,21 +235,6 @@ CREATE TABLE `pro_product` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pro_property
--- ----------------------------
-DROP TABLE IF EXISTS `pro_property`;
-CREATE TABLE `pro_property` (
-  `ID` varchar(32) NOT NULL,
-  `NAME` varchar(32) DEFAULT NULL,
-  `EN_NAME` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='属性表';
-
--- ----------------------------
--- Records of pro_property
--- ----------------------------
-
--- ----------------------------
 -- Table structure for sys_login_log
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_login_log`;
@@ -334,8 +273,8 @@ CREATE TABLE `sys_menu` (
   `UPDATE_BY` varchar(32) DEFAULT NULL,
   `UPDATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
   `EN_NAME` varchar(32) DEFAULT NULL,
-  `PARENT_ID` varchar(32) DEFAULT NULL COMMENT '父类ID',
-  `CODE` varchar(32) DEFAULT NULL,
+  `PARENT_ID` varchar(32) DEFAULT '0' COMMENT '父类ID',
+  `CODE` varchar(32) DEFAULT '0',
   PRIMARY KEY (`ID`),
   KEY `FK_SYS_MENU_TO_SYS_MENU` (`PARENT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -393,33 +332,7 @@ CREATE TABLE `sys_permission` (
 -- ----------------------------
 -- Records of sys_permission
 -- ----------------------------
-INSERT INTO `sys_permission` VALUES ('1', '1', '0', '0', '1', null, null, null, '2019-05-20 02:46:38', null, '2019-05-20 02:46:38', '1', null, '*');
-
--- ----------------------------
--- Table structure for sys_permission_file
--- ----------------------------
-DROP TABLE IF EXISTS `sys_permission_file`;
-CREATE TABLE `sys_permission_file` (
-  `ID` varchar(32) NOT NULL,
-  `IS_EXPIRED` tinyint(4) DEFAULT '0',
-  `IS_LOCKED` tinyint(4) DEFAULT '0',
-  `IS_ENABLED` tinyint(4) DEFAULT '1',
-  `TYPE` int(11) DEFAULT NULL,
-  `STATUS` int(11) DEFAULT NULL,
-  `CREATE_BY` varchar(32) DEFAULT NULL,
-  `CREATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
-  `UPDATE_BY` varchar(32) DEFAULT NULL,
-  `UPDATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `FILE_ID` varchar(32) DEFAULT NULL COMMENT '文件ID',
-  `PERMISSION_ID` varchar(32) DEFAULT NULL COMMENT '权限ID',
-  PRIMARY KEY (`ID`),
-  KEY `FK_SYS_PERMISSION_FILE_TO_FILE` (`FILE_ID`),
-  KEY `FK_SYS_PERMISSION_FILE_TO_SYS_PERMISSION` (`PERMISSION_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文件表与权限中间表';
-
--- ----------------------------
--- Records of sys_permission_file
--- ----------------------------
+INSERT INTO `sys_permission` VALUES ('1', 'admin', '0', '0', '1', null, null, null, '2019-05-20 02:46:38', null, '2019-05-20 02:46:38', '1', null, '*');
 
 -- ----------------------------
 -- Table structure for sys_permission_menu
@@ -437,6 +350,7 @@ CREATE TABLE `sys_permission_menu` (
 -- ----------------------------
 -- Records of sys_permission_menu
 -- ----------------------------
+INSERT INTO `sys_permission_menu` VALUES ('1', '1', '1');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -480,7 +394,6 @@ CREATE TABLE `sys_role_permission` (
 -- Records of sys_role_permission
 -- ----------------------------
 INSERT INTO `sys_role_permission` VALUES ('1', '1', '1');
-INSERT INTO `sys_role_permission` VALUES ('4', '4', '1');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -510,14 +423,13 @@ CREATE TABLE `sys_user` (
   KEY `SYS_USER_EMAIL_INDEX` (`EMAIL`) USING BTREE,
   KEY `SYS_USER_MOBILE_INDEX` (`MOBILE`) USING BTREE,
   KEY `SYS_USER_SORT_INDEX` (`SORT`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('2', '2', '$2a$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-21 01:45:06', null, '2019-05-21 01:45:13', null, null, null, null, '26');
-INSERT INTO `sys_user` VALUES ('3', '3', '$2a$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-21 01:45:21', null, '2019-05-21 01:45:21', null, null, null, null, '28');
-INSERT INTO `sys_user` VALUES ('4', '4', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-21 08:52:11', null, '2019-05-21 08:52:15', null, null, null, null, '29');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '$2a$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', '', '0', '0', '1', null, null, '', '2019-05-20 02:45:51', '', '2019-06-23 10:34:31', '', '', null, '', '24');
+INSERT INTO `sys_user` VALUES ('5', '5', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-21 08:53:01', null, '2019-05-21 08:53:14', null, null, null, null, '26');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -536,3 +448,140 @@ CREATE TABLE `sys_user_role` (
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
+INSERT INTO `sys_user_role` VALUES ('2', '2', '1');
+INSERT INTO `sys_user_role` VALUES ('3', '3', '1');
+
+-- ----------------------------
+-- Function structure for getChildrenMemDepartment
+-- ----------------------------
+DROP FUNCTION IF EXISTS `getChildrenMemDepartment`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` FUNCTION `getChildrenMemDepartment`(id VARCHAR(120)) RETURNS varchar(4000) CHARSET utf8
+BEGIN
+	DECLARE
+		oTemp VARCHAR (4000);
+
+DECLARE
+	oTempChild VARCHAR (4000);
+
+
+SET oTemp = '';
+
+
+SET oTempChild = CAST(id AS CHAR);
+
+
+WHILE oTempChild IS NOT NULL DO
+
+SET oTemp = CONCAT(oTemp, ',', oTempChild);
+
+SELECT
+	GROUP_CONCAT(id) INTO oTempChild
+FROM
+	mem_department
+WHERE
+	FIND_IN_SET(parent_id, oTempChild) > 0;
+
+END
+WHILE;
+
+RETURN oTemp;
+
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Function structure for mycat_seq_currval
+-- ----------------------------
+DROP FUNCTION IF EXISTS `mycat_seq_currval`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` FUNCTION `mycat_seq_currval`(seq_name VARCHAR(50)) RETURNS varchar(64) CHARSET utf8
+    DETERMINISTIC
+BEGIN
+DECLARE retval VARCHAR(64);
+SET retval="-999999999,null";
+SELECT CONCAT(CAST(current_value AS CHAR),",",CAST(increment AS
+CHAR) ) INTO retval
+FROM MYCAT_SEQUENCE WHERE NAME = seq_name;
+RETURN retval ;
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Function structure for mycat_seq_nextval
+-- ----------------------------
+DROP FUNCTION IF EXISTS `mycat_seq_nextval`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` FUNCTION `mycat_seq_nextval`(seq_name VARCHAR(50)) RETURNS varchar(64) CHARSET utf8
+    DETERMINISTIC
+BEGIN
+UPDATE MYCAT_SEQUENCE SET current_value = current_value + increment
+WHERE NAME = seq_name;
+RETURN mycat_seq_currval(seq_name);
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Function structure for mycat_seq_setval
+-- ----------------------------
+DROP FUNCTION IF EXISTS `mycat_seq_setval`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` FUNCTION `mycat_seq_setval`(seq_name VARCHAR(50),value INTEGER) RETURNS varchar(64) CHARSET utf8
+    DETERMINISTIC
+BEGIN
+UPDATE MYCAT_SEQUENCE
+SET current_value = value
+WHERE name = seq_name;
+RETURN mycat_seq_currval(seq_name);
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Function structure for queryChildrenMemDepartment
+-- ----------------------------
+DROP FUNCTION IF EXISTS `queryChildrenMemDepartment`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` FUNCTION `queryChildrenMemDepartment`(departmentId VARCHAR(120)) RETURNS varchar(4000) CHARSET utf8
+BEGIN
+DECLARE sTemp VARCHAR(4000);
+DECLARE sTempChd VARCHAR(4000);
+
+SET sTemp='$';
+SET sTempChd = CAST(departmentId AS CHAR);
+
+WHILE sTempChd IS NOT NULL DO
+SET sTemp= CONCAT(sTemp,',',sTempChd);
+SELECT GROUP_CONCAT(id) INTO sTempChd FROM mem_department WHERE FIND_IN_SET(parent_Id,sTempChd)>0;
+END WHILE;
+RETURN sTemp;
+END
+;;
+DELIMITER ;
+
+-- ----------------------------
+-- Function structure for queryParentsMemDepartment
+-- ----------------------------
+DROP FUNCTION IF EXISTS `queryParentsMemDepartment`;
+DELIMITER ;;
+CREATE DEFINER=`root`@`%` FUNCTION `queryParentsMemDepartment`(areaId VARCHAR(120)) RETURNS varchar(4000) CHARSET utf8
+BEGIN
+DECLARE sTemp VARCHAR(4000);
+DECLARE sTempChd VARCHAR(4000);
+
+SET sTemp='$';
+SET sTempChd = CAST(areaId AS CHAR);
+SET sTemp = CONCAT(sTemp,',',sTempChd);
+
+SELECT parent_Id INTO sTempChd FROM mem_department WHERE id = sTempChd;
+WHILE sTempChd <> 0 DO
+SET sTemp = CONCAT(sTemp,',',sTempChd);
+SELECT parent_Id INTO sTempChd FROM mem_department WHERE id = sTempChd;
+END WHILE;
+RETURN sTemp;
+END
+;;
+DELIMITER ;
