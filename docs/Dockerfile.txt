@@ -1,0 +1,22 @@
+FROM tomcat:latest
+
+
+ARG hostname
+ARG envAct
+ENV extdnsname=${hostname}
+ENV envAct=${envAct}
+COPY conf/tomcat-users.xml /usr/local/tomcat/conf/
+COPY conf/context.xml /usr/local/tomcat/conf/
+COPY conf/manager.xml /usr/local/tomcat/conf/Catalina/localhost/
+COPY updateDNS.sh /tmp/updateDNS.sh
+COPY libsapjco3.jnilib $CATALINA_HOME/lib/
+COPY libsapjco3.so $CATALINA_HOME/lib/
+COPY sapjco3.jar $CATALINA_HOME/lib/
+COPY setenv.sh $CATALINA_HOME/bin/
+RUN echo 'export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active='${envAct}'"' >>$CATALINA_HOME/bin/setenv.sh
+RUN mv $CATALINA_HOME/webapps/ROOT $CATALINA_HOME/webapps/ROOT.BAK
+RUN ln -s /usr/local/tomcat/webapps/QC /usr/local/tomcat/webapps/ROOT
+RUN chmod 755 /tmp/updateDNS.sh
+RUN chmod 755 $CATALINA_HOME/bin/setenv.sh
+
+CMD sh -c '/tmp/updateDNS.sh ${extdnsname} && /usr/local/tomcat/bin/catalina.sh run'

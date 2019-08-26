@@ -1,0 +1,8 @@
+1. 修改 /etc/rc.d/rc.local 文件
+vi /etc/rc.d/rc.local
+
+2. 添加启动命令或脚本
+/u06/user/pkg/tomcat/apache-tomcat-8.5.34/bin/catalina.sh start
+
+3. 授权/etc/rc.d/rc.local
+chmod +x /etc/rc.d/rc.local

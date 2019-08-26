@@ -1,0 +1,201 @@
+2019-08-21 16:14:54:552 [main] INFO  o.s.b.t.context.SpringBootTestContextBootstrapper(AbstractTestContextBootstrapper.java 308) -Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.zwo.pls.modules.system.SystemManagerApplicationTests], using SpringBootContextLoader
+2019-08-21 16:14:54:582 [main] INFO  o.s.test.context.support.AbstractContextLoader(AbstractContextLoader.java 264) -Could not detect default resource locations for test class [com.zwo.pls.modules.system.SystemManagerApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+2019-08-21 16:14:54:584 [main] INFO  o.s.t.c.support.AnnotationConfigContextLoaderUtils(AnnotationConfigContextLoaderUtils.java 83) -Could not detect default configuration classes for test class [com.zwo.pls.modules.system.SystemManagerApplicationTests]: SystemManagerApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2019-08-21 16:14:54:848 [main] INFO  o.s.b.t.context.SpringBootTestContextBootstrapper(SpringBootTestContextBootstrapper.java 244) -Found @SpringBootConfiguration com.zwo.pls.SystemManagerApplication for test class com.zwo.pls.modules.system.SystemManagerApplicationTests
+2019-08-21 16:14:55:029 [main] INFO  o.s.b.t.context.SpringBootTestContextBootstrapper(AbstractTestContextBootstrapper.java 248) -Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener]
+2019-08-21 16:14:55:228 [main] INFO  o.s.b.t.context.SpringBootTestContextBootstrapper(AbstractTestContextBootstrapper.java 177) -Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@34b9f960, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@43015c69, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@19b89d4, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@4bbf6d0e, org.springframework.test.context.support.DirtiesContextTestExecutionListener@30b6ffe0, org.springframework.test.context.transaction.TransactionalTestExecutionListener@791d1f8b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2415fc55, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@14f232c4, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@13bc8645, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@24c22fe, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@93081b6, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@cd1e646, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@7ba8c737, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@1890516e]
+2019-08-21 16:14:55:946 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationEnvironmentPreparedEvent
+2019-08-21 16:14:56:173 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationPreparedEvent
+2019-08-21 16:14:56:173 [main] INFO  o.s.c.a.AnnotationConfigApplicationContext(AbstractApplicationContext.java 590) -Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@db57326: startup date [Wed Aug 21 16:14:56 CST 2019]; root of context hierarchy
+2019-08-21 16:14:56:575 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 48) -Post-processing PropertySource instances
+2019-08-21 16:14:56:692 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-08-21 16:14:56:693 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource bootstrap [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:14:56:694 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:14:56:694 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:14:56:695 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:14:56:695 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-08-21 16:14:56:695 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:14:56:803 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker(PostProcessorRegistrationDelegate.java 328) -Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$82d26611] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 16:14:56:943 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationPreparedEvent
+2019-08-21 16:14:56:943 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationPreparedEvent
+2019-08-21 16:14:56:945 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ContextRefreshedEvent
+2019-08-21 16:14:56:945 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ContextRefreshedEvent
+2019-08-21 16:14:56:959 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationStartedEvent
+2019-08-21 16:14:56:960 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationStartedEvent
+2019-08-21 16:14:56:962 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationReadyEvent
+2019-08-21 16:14:56:962 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationReadyEvent
+2019-08-21 16:14:57:723 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationEnvironmentPreparedEvent
+2019-08-21 16:14:57:766 [main] INFO  c.u.j.c.EnableEncryptablePropertiesConfiguration(EnableEncryptablePropertiesConfiguration.java 70) -Bootstraping jasypt-string-boot auto configuration in context: application-1
+2019-08-21 16:14:57:767 [main] INFO  c.z.p.modules.system.SystemManagerApplicationTests(SpringApplication.java 659) -No active profile set, falling back to default profiles: default
+2019-08-21 16:14:57:788 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationPreparedEvent
+2019-08-21 16:14:57:793 [main] INFO  o.s.w.context.support.GenericWebApplicationContext(AbstractApplicationContext.java 590) -Refreshing org.springframework.web.context.support.GenericWebApplicationContext@133e019b: startup date [Wed Aug 21 16:14:57 CST 2019]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@db57326
+2019-08-21 16:14:59:720 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\mem\mapper\DepartmentMapper.class]
+2019-08-21 16:14:59:722 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\mem\mapper\MemberMapper.class]
+2019-08-21 16:14:59:722 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\mem\mapper\MemberPositionMapper.class]
+2019-08-21 16:14:59:723 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\mem\mapper\PostionMapper.class]
+2019-08-21 16:14:59:723 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\system\mapper\MenuMapper.class]
+2019-08-21 16:14:59:724 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\system\mapper\PermissionMapper.class]
+2019-08-21 16:14:59:725 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\system\mapper\PermissionMenuMapper.class]
+2019-08-21 16:14:59:726 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\system\mapper\RoleMapper.class]
+2019-08-21 16:14:59:726 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\system\mapper\RolePermissionMapper.class]
+2019-08-21 16:14:59:727 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\system\mapper\UserMapper.class]
+2019-08-21 16:14:59:728 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathScanningCandidateComponentProvider.java 437) -Identified candidate component class: file [C:\workspace\pls\system-manager\target\classes\com\zwo\pls\modules\system\mapper\UserRoleMapper.class]
+2019-08-21 16:14:59:729 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'departmentMapper' and 'com.zwo.pls.modules.mem.mapper.DepartmentMapper' mapperInterface
+2019-08-21 16:14:59:729 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'departmentMapper'.
+2019-08-21 16:14:59:730 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'memberMapper' and 'com.zwo.pls.modules.mem.mapper.MemberMapper' mapperInterface
+2019-08-21 16:14:59:730 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'memberMapper'.
+2019-08-21 16:14:59:730 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'memberPositionMapper' and 'com.zwo.pls.modules.mem.mapper.MemberPositionMapper' mapperInterface
+2019-08-21 16:14:59:730 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'memberPositionMapper'.
+2019-08-21 16:14:59:731 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'postionMapper' and 'com.zwo.pls.modules.mem.mapper.PostionMapper' mapperInterface
+2019-08-21 16:14:59:731 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'postionMapper'.
+2019-08-21 16:14:59:731 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'menuMapper' and 'com.zwo.pls.modules.system.mapper.MenuMapper' mapperInterface
+2019-08-21 16:14:59:732 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2019-08-21 16:14:59:732 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'permissionMapper' and 'com.zwo.pls.modules.system.mapper.PermissionMapper' mapperInterface
+2019-08-21 16:14:59:732 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'permissionMapper'.
+2019-08-21 16:14:59:733 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'permissionMenuMapper' and 'com.zwo.pls.modules.system.mapper.PermissionMenuMapper' mapperInterface
+2019-08-21 16:14:59:735 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'permissionMenuMapper'.
+2019-08-21 16:14:59:736 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'roleMapper' and 'com.zwo.pls.modules.system.mapper.RoleMapper' mapperInterface
+2019-08-21 16:14:59:736 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'roleMapper'.
+2019-08-21 16:14:59:737 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'rolePermissionMapper' and 'com.zwo.pls.modules.system.mapper.RolePermissionMapper' mapperInterface
+2019-08-21 16:14:59:737 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'rolePermissionMapper'.
+2019-08-21 16:14:59:737 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'userMapper' and 'com.zwo.pls.modules.system.mapper.UserMapper' mapperInterface
+2019-08-21 16:14:59:738 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'userMapper'.
+2019-08-21 16:14:59:738 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 180) -Creating MapperFactoryBean with name 'userRoleMapper' and 'com.zwo.pls.modules.system.mapper.UserRoleMapper' mapperInterface
+2019-08-21 16:14:59:739 [main] DEBUG tk.mybatis.spring.mapper.ClassPathMapperScanner(ClassPathMapperScanner.java 216) -Enabling autowire by type for MapperFactoryBean with name 'userRoleMapper'.
+2019-08-21 16:15:00:281 [main] INFO  o.s.beans.factory.xml.XmlBeanDefinitionReader(XmlBeanDefinitionReader.java 316) -Loading XML bean definitions from class path resource [META-INF/cxf/cxf.xml]
+2019-08-21 16:15:00:809 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate(RepositoryConfigurationDelegate.java 163) -Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-21 16:15:01:486 [main] INFO  o.springframework.cloud.context.scope.GenericScope(GenericScope.java 294) -BeanFactory id=e099f3f2-74f6-3a04-858f-f5fe49930f83
+2019-08-21 16:15:01:586 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 48) -Post-processing PropertySource instances
+2019-08-21 16:15:01:617 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2019-08-21 16:15:01:618 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource Inlined Test Properties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:15:01:619 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource systemProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:15:01:620 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:15:01:621 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2019-08-21 16:15:01:622 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:15:01:623 [main] INFO  c.u.j.EncryptablePropertySourceConverter(EncryptablePropertySourceConverter.java 38) -Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2019-08-21 16:15:01:835 [main] DEBUG org.apache.cxf.common.logging.LogUtils(LogUtils.java 137) -Using org.apache.cxf.common.logging.Slf4jLogger for logging.
+2019-08-21 16:15:02:056 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker(PostProcessorRegistrationDelegate.java 328) -Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$b502813] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 16:15:02:160 [main] INFO  o.s.w.s.a.server.AnnotationActionEndpointMapping(AbstractAddressingEndpointMapping.java 236) -Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2019-08-21 16:15:02:282 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker(PostProcessorRegistrationDelegate.java 328) -Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$ff662b4e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 16:15:02:348 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker(PostProcessorRegistrationDelegate.java 328) -Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$66b86314] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 16:15:02:476 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker(PostProcessorRegistrationDelegate.java 328) -Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 16:15:02:488 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker(PostProcessorRegistrationDelegate.java 328) -Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4087c7fc' of type [org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 16:15:02:503 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker(PostProcessorRegistrationDelegate.java 328) -Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$243ace00] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 16:15:02:527 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker(PostProcessorRegistrationDelegate.java 328) -Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 16:15:02:560 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker(PostProcessorRegistrationDelegate.java 328) -Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$82d26611] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-08-21 16:15:02:632 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure(DruidDataSourceAutoConfigure.java 56) -Init DruidDataSource
+2019-08-21 16:15:02:723 [main] WARN  o.s.w.context.support.GenericWebApplicationContext(AbstractApplicationContext.java 558) -Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.cloud.autoconfigure.RefreshAutoConfiguration$JpaInvokerConfiguration': Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [com/alibaba/druid/spring/boot/autoconfigure/DruidDataSourceAutoConfigure.class]: Invocation of init method failed; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+2019-08-21 16:15:02:726 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationFailedEvent
+2019-08-21 16:15:02:741 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener(ConditionEvaluationReportLoggingListener.java 101) -
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2019-08-21 16:15:02:742 [main] DEBUG c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor(EnableEncryptablePropertiesBeanFactoryPostProcessor.java 61) -Application Event Raised: ApplicationFailedEvent
+2019-08-21 16:15:02:748 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter(LoggingFailureAnalysisReporter.java 42) -
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to auto-configure a DataSource: 'spring.datasource.url' is not specified and no embedded datasource could be auto-configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2019-08-21 16:15:02:755 [main] ERROR o.springframework.test.context.TestContextManager(TestContextManager.java 250) -Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@34b9f960] to prepare test instance [com.zwo.pls.modules.system.SystemManagerApplicationTests@45b32dfe]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:125)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:108)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:190)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:132)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:246)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:227)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:289)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:291)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:246)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:97)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:190)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:365)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:273)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:159)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:379)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:340)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:125)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:413)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.cloud.autoconfigure.RefreshAutoConfiguration$JpaInvokerConfiguration': Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [com/alibaba/druid/spring/boot/autoconfigure/DruidDataSourceAutoConfigure.class]: Invocation of init method failed; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:138)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:422)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1694)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:501)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1089)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:859)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:395)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:327)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:138)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117)
+	... 27 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker': Invocation of init method failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [com/alibaba/druid/spring/boot/autoconfigure/DruidDataSourceAutoConfigure.class]: Invocation of init method failed; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1702)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:501)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.cloud.autoconfigure.RefreshAutoConfiguration$JpaInvokerConfiguration.init(RefreshAutoConfiguration.java:86)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleElement.invoke(InitDestroyAnnotationBeanPostProcessor.java:365)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:308)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:135)
+	... 44 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [com/alibaba/druid/spring/boot/autoconfigure/DruidDataSourceAutoConfigure.class]: Invocation of init method failed; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1702)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:579)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:501)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:317)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:228)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:251)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1138)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory$DependencyObjectProvider.getIfUnique(DefaultListableBeanFactory.java:1708)
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker.getDataSourceInitializer(DataSourceInitializerInvoker.java:100)
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceInitializerInvoker.afterPropertiesSet(DataSourceInitializerInvoker.java:62)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1761)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1698)
+	... 58 common frames omitted
+Caused by: org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.determineDriverClassName(DataSourceProperties.java:236)
+	at org.springframework.boot.autoconfigure.jdbc.DataSourceProperties.determineUsername(DataSourceProperties.java:333)
+	at com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper.afterPropertiesSet(DruidDataSourceWrapper.java:40)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1761)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1698)
+	... 71 common frames omitted

@@ -1,0 +1,364 @@
+---
+#  创建命名空间
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: elk
+   labels:
+     name: elk
+
+---
+# 创建3个configMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kibana-yml
+  namespace: elk
+data:
+  kibana.yml: |
+    #
+    # ** THIS IS AN AUTO-GENERATED FILE **
+    #
+
+    # Default Kibana configuration for docker target
+    server.name: kibana
+    server.host: "0"
+    elasticsearch.hosts: [ "http://100.100.1.1:9200" ]
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-conf
+  namespace: elk
+data:
+  logstash.conf: |
+    input {
+      udp {
+        port  => 5000
+        codec => json
+      }
+    }
+    filter {
+      if [docker][image] =~ /logstash/ {
+        drop { }
+      }
+    }
+    output {
+      elasticsearch { hosts => ["100.100.1.1:9200"] }
+      stdout { codec => rubydebug }
+    }
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-yml
+  namespace: elk
+data:
+  logstash.yml: |
+    http.host: 0.0.0.0
+    path.config: /usr/share/logstash/pipeline
+    xpack.monitoring.elasticsearch.hosts:
+    - http://100.100.1.1:9200
+    
+
+# 创建deployment
+---
+apiVersion: apps/v1beta2
+kind: Deployment           # 资源类型（Pod、Deployment、Job、Ingress、Service等）
+metadata:                  # 一个Pod封装一个应用容器（也可以有多个容器），存储资源、一个独立的网络IP以及管理控制容器运行方式的策略选项。
+  name: elasticsearch             # Deployment 名，全局唯一
+  namespace: elk
+spec:                     # spec 包括一些容器、存储、volume和其他参数，如重启策略
+  selector:
+    matchLabels:
+      app: elasticsearch
+  replicas: 1             # 副本数量
+  strategy:                        # 策略
+    rollingUpdate:            # 若replicas为3,则整个升级,pod个数在1-3个之间
+      maxSurge: 1            # 滚动升级时会先启动1个pod
+      maxUnavailable: 1  # 滚动升级时允许的最大Unavailable的pod个数
+    type: RollingUpdate
+  template:                 # 以此为模版创建pod实例
+    metadata:
+      labels:
+        app: elasticsearch      # pod的标签，与容器名类似，可与service关联
+    spec:                   # spec 包括一些容器、存储、volume和其他参数，如重启策略
+      containers:
+        - name: elasticsearch            # 容器名
+          image: docker.elastic.co/elasticsearch/elasticsearch:7.1.0      # 使用的镜像
+          imagePullPolicy: IfNotPresent     # 镜像拉取策略  Always / Never / IfNotPresent ，默认为IfNotPresent，只有镜像不存在时，才会进行镜像拉取，但latest标签的镜像默认为Always
+          resources:                    # 容器资源限制
+            limits:
+              cpu: "2.0"
+              memory: "800Mi"
+          ports:
+            - containerPort: 9200         # pod（容器）端口
+            - containerPort: 9300
+          volumeMounts:
+            - mountPath: /usr/share/elasticsearch/data
+              name: es-data
+          env:                                # 环境变量
+            - name: ES_JAVA_OPTS
+              value: "-Xmx256m -Xms256m"
+            - name: cluster.name
+              value: "docker-cluster"
+            - name: network.host
+              value: "0.0.0.0"
+            - name: discovery.zen.minimum_master_nodes
+              value: "1"
+            - name: discovery.type
+              value: "single-node"
+      restartPolicy: Always        # 重启策略：Always / Never / OnFailure
+      volumes:
+        - name: es-data
+          hostPath:
+            path: /data/elasticsearch
+
+
+---
+apiVersion: apps/v1beta2
+kind: Deployment           # 资源类型（Pod、Deployment、Job、Ingress、Service等）
+metadata:                  # 一个Pod封装一个应用容器（也可以有多个容器），存储资源、一个独立的网络IP以及管理控制容器运行方式的策略选项。
+  name: logstash             # Deployment 名，全局唯一
+  namespace: elk
+spec:                     # spec 包括一些容器、存储、volume和其他参数，如重启策略
+  selector:
+    matchLabels:
+      app: logstash
+  replicas: 1             # 副本数量
+  strategy:                        # 策略
+    rollingUpdate:            # 若replicas为3,则整个升级,pod个数在1-3个之间
+      maxSurge: 1            # 滚动升级时会先启动1个pod
+      maxUnavailable: 1  # 滚动升级时允许的最大Unavailable的pod个数
+    type: RollingUpdate
+  template:                 # 以此为模版创建pod实例
+    metadata:
+      labels:
+        app: logstash      # pod的标签，与容器名类似，可与service关联
+    spec:                   # spec 包括一些容器、存储、volume和其他参数，如重启策略
+      containers:
+        - name: logstash            # 容器名
+          image: docker.elastic.co/logstash/logstash:7.1.0      # 使用的镜像
+          imagePullPolicy: IfNotPresent     # 镜像拉取策略  Always / Never / IfNotPresent ，默认为IfNotPresent，只有镜像不存在时，才会进行镜像拉取，但latest标签的镜像默认为Always
+          resources:                    # 容器资源限制
+            limits:
+              cpu: "2.0"
+              memory: "800Mi"
+          ports:
+            - containerPort: 5000         # pod（容器）端口
+            - containerPort: 9600
+          volumeMounts:
+            - name: logstash-conf
+              mountPath: /usr/share/logstash/pipeline/logstash.conf
+              subPath: logstash.conf
+            - name: logstash-yml
+              mountPath: /usr/share/logstash/config/logstash.yml
+              subPath: logstash.yml
+          env:                                # 环境变量
+            - name: ES_JAVA_OPTS
+              value: "-Xmx256m -Xms256m"
+      restartPolicy: Always        # 重启策略：Always / Never / OnFailure
+      volumes:
+        - name: logstash-conf
+          configMap:
+            name: logstash-conf        #指定创建configMap的名称
+        - name: logstash-yml
+          configMap:
+            name: logstash-yml        #指定创建configMap的名称
+        
+
+
+---
+apiVersion: apps/v1beta2
+kind: Deployment           # 资源类型（Pod、Deployment、Job、Ingress、Service等）
+metadata:                  # 一个Pod封装一个应用容器（也可以有多个容器），存储资源、一个独立的网络IP以及管理控制容器运行方式的策略选项。
+  name: logspout             # Deployment 名，全局唯一
+  namespace: elk
+spec:                     # spec 包括一些容器、存储、volume和其他参数，如重启策略
+  selector:
+    matchLabels:
+      app: logspout
+  replicas: 6             # 副本数量,多少个节点多少个
+  strategy:                        # 策略
+    rollingUpdate:            # 若replicas为3,则整个升级,pod个数在1-3个之间
+      maxSurge: 1            # 滚动升级时会先启动1个pod
+      maxUnavailable: 1  # 滚动升级时允许的最大Unavailable的pod个数
+    type: RollingUpdate
+  template:                 # 以此为模版创建pod实例
+    metadata:
+      labels:
+        app: logspout      # pod的标签，与容器名类似，可与service关联
+    spec:                   # spec 包括一些容器、存储、volume和其他参数，如重启策略
+      affinity:             # 节点亲和性和反亲和性,这里的设置为同一个节点,不能有相同的带有app: logspout标签的pod
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - logspout
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+        - name: logspout            # 容器名
+          image: bekt/logspout-logstash      # 使用的镜像
+          imagePullPolicy: IfNotPresent     # 镜像拉取策略  Always / Never / IfNotPresent ，默认为IfNotPresent，只有镜像不存在时，才会进行镜像拉取，但latest标签的镜像默认为Always
+          resources:                    # 容器资源限制
+            limits:
+              cpu: "2.0"
+              memory: "800Mi"
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: docker-sock
+          env:                                # 环境变量
+            - name: ROUTE_URIS
+              value: "logstash://100.100.1.2:5000"
+      restartPolicy: Always        # 重启策略：Always / Never / OnFailure
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+
+---
+apiVersion: apps/v1beta2
+kind: Deployment           # 资源类型（Pod、Deployment、Job、Ingress、Service等）
+metadata:                  # 一个Pod封装一个应用容器（也可以有多个容器），存储资源、一个独立的网络IP以及管理控制容器运行方式的策略选项。
+  name: kibana             # Deployment 名，全局唯一
+  namespace: elk
+spec:                     # spec 包括一些容器、存储、volume和其他参数，如重启策略
+  selector:
+    matchLabels:
+      app: kibana
+  replicas: 1             # 副本数量
+  strategy:                        # 策略
+    rollingUpdate:            # 若replicas为3,则整个升级,pod个数在1-3个之间
+      maxSurge: 1            # 滚动升级时会先启动1个pod
+      maxUnavailable: 1  # 滚动升级时允许的最大Unavailable的pod个数
+    type: RollingUpdate
+  template:                 # 以此为模版创建pod实例
+    metadata:
+      labels:
+        app: kibana      # pod的标签，与容器名类似，可与service关联
+    spec:                   # spec 包括一些容器、存储、volume和其他参数，如重启策略
+      containers:
+        - name: kibana            # 容器名
+          image: docker.elastic.co/kibana/kibana:7.1.0      # 使用的镜像
+          imagePullPolicy: IfNotPresent     # 镜像拉取策略  Always / Never / IfNotPresent ，默认为IfNotPresent，只有镜像不存在时，才会进行镜像拉取，但latest标签的镜像默认为Always
+          resources:                    # 容器资源限制
+            limits:
+              cpu: "2.0"
+              memory: "800Mi"
+          volumeMounts:
+            - name: kibana-yml
+              mountPath: /usr/share/kibana/config/kibana.yml
+              subPath: kibana.yml
+          ports:
+            - containerPort: 5601         # pod（容器）端口
+          env:                                # 环境变量
+            - name: server.name
+              value: "kibana"
+            - name: server.host
+              value: "0"
+      restartPolicy: Always        # 重启策略：Always / Never / OnFailure
+      volumes:
+        - name: kibana-yml
+          configMap:
+            name: kibana-yml        #指定创建configMap的名称
+
+
+
+
+# 创建service
+---
+apiVersion: v1
+kind: Service           # 资源类型（Pod、Deployment、Job、Ingress、Service等）
+metadata:           # 一个Pod封装一个应用容器（也可以有多个容器），存储资源、一个独立的网络IP以及管理控制容器运行方式的策略选项。
+  name: elasticsearch-server         # service 名，全局唯一
+  namespace: elk
+  labels:               # labels 可以附加到任何对象上，如Pod、Service等，并且可以定义多个
+    app: elasticsearch-server
+spec:                   # spec 包括一些容器、存储、volume和其他参数，如重启策略
+  selector:                          # pod筛选
+      app: elasticsearch     # 与deployment中的spec.template.metadata.labels相对应
+  type: NodePort      # 服务类型，ClusterIP：默认服务类型，通过集群的内部IP暴露服务，服务只能够在集群内部可以访问；NodePort：通过每个结点上的IP和端口(NodePort)暴露服务；LoadBalancer：通过云提供商的负载均衡器，向外暴露服务；ExternalName：通过返回 CNAME 和它的值，可以将服务映射到 externalName 字段的内容（例如， foo.bar.example.com）。
+  clusterIP: 100.100.1.1   # 此 IP:port（ports.port) 用于集群中访问pod（容器）服务,注意apiserver子网范围
+  ports:
+     - name: es-port # 端口名称
+       protocol: TCP       # 端口协议(TCP/UDP)，默认为TCP
+       port: 9200              # 监听的端口号
+       targetPort: 9200    # Pod端口号，与容器端口相似
+       nodePort: 19200      # 映射物理机的端口号
+     - name: es-cluster-port # 端口名称
+       protocol: TCP       # 端口协议(TCP/UDP)，默认为TCP
+       port: 9300              # 监听的端口号
+       targetPort: 9300    # Pod端口号，与容器端口相似
+       nodePort: 19300      # 映射物理机的端口号
+
+
+---
+apiVersion: v1
+kind: Service           # 资源类型（Pod、Deployment、Job、Ingress、Service等）
+metadata:           # 一个Pod封装一个应用容器（也可以有多个容器），存储资源、一个独立的网络IP以及管理控制容器运行方式的策略选项。
+  name: logstash-server         # service 名，全局唯一
+  namespace: elk
+  labels:               # labels 可以附加到任何对象上，如Pod、Service等，并且可以定义多个
+    app: logstash-server
+spec:                   # spec 包括一些容器、存储、volume和其他参数，如重启策略
+  selector:                          # pod筛选
+      app: logstash     # 与deployment中的spec.template.metadata.labels相对应
+  type: NodePort      # 服务类型，ClusterIP：默认服务类型，通过集群的内部IP暴露服务，服务只能够在集群内部可以访问；NodePort：通过每个结点上的IP和端口(NodePort)暴露服务；LoadBalancer：通过云提供商的负载均衡器，向外暴露服务；ExternalName：通过返回 CNAME 和它的值，可以将服务映射到 externalName 字段的内容（例如， foo.bar.example.com）。
+  clusterIP: 100.100.1.2   # 此 IP:port（ports.port) 用于集群中访问pod（容器）服务,注意apiserver子网范围
+  ports:
+     - name: es-port-udp # 端口名称
+       protocol: UDP       # 端口协议(TCP/UDP)，默认为TCP
+       port: 5000              # 监听的端口号
+       targetPort: 5000    # Pod端口号，与容器端口相似
+     - name: es-port-tcp # 端口名称
+       protocol: TCP       # 端口协议(TCP/UDP)，默认为TCP
+       port: 5000              # 监听的端口号
+       targetPort: 5000    # Pod端口号，与容器端口相似
+     - name: es-cluster-port # 端口名称
+       protocol: TCP       # 端口协议(TCP/UDP)，默认为TCP
+       port: 9600              # 监听的端口号
+       targetPort: 9600    # Pod端口号，与容器端口相似
+
+---
+apiVersion: v1
+kind: Service           # 资源类型（Pod、Deployment、Job、Ingress、Service等）
+metadata:           # 一个Pod封装一个应用容器（也可以有多个容器），存储资源、一个独立的网络IP以及管理控制容器运行方式的策略选项。
+  name: logspout-server         # service 名，全局唯一
+  namespace: elk
+  labels:               # labels 可以附加到任何对象上，如Pod、Service等，并且可以定义多个
+    app: logspout-server
+spec:                   # spec 包括一些容器、存储、volume和其他参数，如重启策略
+  selector:                          # pod筛选
+      app: logspout     # 与deployment中的spec.template.metadata.labels相对应
+  type: ClusterIP      # 服务类型，ClusterIP：默认服务类型，通过集群的内部IP暴露服务，服务只能够在集群内部可以访问；NodePort：通过每个结点上的IP和端口(NodePort)暴露服务；LoadBalancer：通过云提供商的负载均衡器，向外暴露服务；ExternalName：通过返回 CNAME 和它的值，可以将服务映射到 externalName 字段的内容（例如， foo.bar.example.com）。
+  ports:
+     - name: es-port # 端口名称
+       protocol: TCP       # 端口协议(TCP/UDP)，默认为TCP
+       port: 9200
+       targetPort: 9200    # Pod端口号，与容器端口相似
+       
+
+---
+apiVersion: v1
+kind: Service           # 资源类型（Pod、Deployment、Job、Ingress、Service等）
+metadata:           # 一个Pod封装一个应用容器（也可以有多个容器），存储资源、一个独立的网络IP以及管理控制容器运行方式的策略选项。
+  name: kibana-server         # service 名，全局唯一
+  namespace: elk
+  labels:               # labels 可以附加到任何对象上，如Pod、Service等，并且可以定义多个
+    app: kibana-server
+spec:                   # spec 包括一些容器、存储、volume和其他参数，如重启策略
+  selector:                          # pod筛选
+      app: kibana     # 与deployment中的spec.template.metadata.labels相对应
+  type: NodePort      # 服务类型，ClusterIP：默认服务类型，通过集群的内部IP暴露服务，服务只能够在集群内部可以访问；NodePort：通过每个结点上的IP和端口(NodePort)暴露服务；LoadBalancer：通过云提供商的负载均衡器，向外暴露服务；ExternalName：通过返回 CNAME 和它的值，可以将服务映射到 externalName 字段的内容（例如， foo.bar.example.com）。
+  clusterIP: 100.100.1.3   # 此 IP:port（ports.port) 用于集群中访问pod（容器）服务,注意apiserver子网范围
+  ports:
+     - name: kibana-port # 端口名称
+       protocol: TCP       # 端口协议(TCP/UDP)，默认为TCP
+       port: 15601              # 监听的端口号
+       targetPort: 5601    # Pod端口号，与容器端口相似
+       nodePort: 15601      # 映射物理机的端口号

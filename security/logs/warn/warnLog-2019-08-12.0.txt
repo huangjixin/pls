@@ -1,0 +1,1 @@
+2019-08-12 11:28:56:585 [main] WARN  o.s.b.a.freemarker.FreeMarkerAutoConfiguration(FreeMarkerAutoConfiguration.java 79) -Cannot find template location(s): [classpath:/templates/] (please add some templates, check your FreeMarker configuration, or set spring.freemarker.checkTemplateLocation=false)
