@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : percona1 172.16.106.9 30062 root abc123（Manager角色）
-Source Server Version : 50725
-Source Host           : 172.16.106.9:30062
+Source Server         : localhost
+Source Server Version : 50723
+Source Host           : localhost:3307
 Source Database       : pls_dev
 
 Target Server Type    : MYSQL
-Target Server Version : 50725
+Target Server Version : 50723
 File Encoding         : 65001
 
-Date: 2019-05-17 14:00:18
+Date: 2019-09-03 22:06:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -164,6 +164,8 @@ CREATE TABLE `sys_menu` (
   `EN_NAME` varchar(32) DEFAULT NULL,
   `PARENT_ID` varchar(32) DEFAULT NULL COMMENT '父类ID',
   `CODE` varchar(32) DEFAULT NULL,
+  `URL` varchar(45) DEFAULT NULL COMMENT '界面URL地址',
+  `ICON` varchar(45) DEFAULT NULL COMMENT '图标',
   PRIMARY KEY (`ID`),
   KEY `FK_SYS_MENU_TO_SYS_MENU` (`PARENT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -171,7 +173,12 @@ CREATE TABLE `sys_menu` (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1', 'test', '0', '0', '1', null, null, '', '2019-04-30 10:14:25', '', '2019-04-30 10:14:25', 'test', '', 'test');
+INSERT INTO `sys_menu` VALUES ('1', 'test', '0', '0', '1', null, null, '', '2019-04-30 10:14:25', '', '2019-04-30 10:14:25', 'test', '', 'test', null, null);
+INSERT INTO `sys_menu` VALUES ('2', '系统管理', '0', '0', '1', null, null, null, '2019-09-03 19:53:08', null, '2019-09-03 19:53:08', null, null, 'system_manage', null, null);
+INSERT INTO `sys_menu` VALUES ('3', '用户管理', '0', '0', '1', null, null, null, '2019-09-03 19:53:08', null, '2019-09-03 19:53:08', null, '2', 'user manage', null, null);
+INSERT INTO `sys_menu` VALUES ('4', '角色管理', '0', '0', '1', null, null, null, '2019-09-03 19:53:08', null, '2019-09-03 19:53:08', null, '2', 'role manage', null, null);
+INSERT INTO `sys_menu` VALUES ('5', '权限管理', '0', '0', '1', null, null, null, '2019-09-03 20:45:40', null, '2019-09-03 20:45:40', null, '2', 'permission manage', null, null);
+INSERT INTO `sys_menu` VALUES ('6', '菜单管理', '0', '0', '1', null, null, null, '2019-09-03 20:45:57', null, '2019-09-03 20:45:57', null, '2', 'menu manage', null, null);
 
 -- ----------------------------
 -- Table structure for sys_ope_log
@@ -222,7 +229,28 @@ CREATE TABLE `sys_permission` (
 -- ----------------------------
 -- Records of sys_permission
 -- ----------------------------
-INSERT INTO `sys_permission` VALUES ('1', '', '0', '0', '1', null, null, '', '2019-04-27 15:50:12', '', '2019-04-27 15:50:12', '', '', '*');
+INSERT INTO `sys_permission` VALUES ('1', '测试', '0', '0', '1', null, null, '', '2019-04-27 15:50:12', '', '2019-04-27 15:50:12', '', '', '*');
+INSERT INTO `sys_permission` VALUES ('10', '系统管理-角色管理-添加', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '8', 'system:role:add');
+INSERT INTO `sys_permission` VALUES ('11', '系统管理-角色管理-修改', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '8', 'system:role:update');
+INSERT INTO `sys_permission` VALUES ('12', '系统管理-角色管理-删除', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '8', 'system:role:delete');
+INSERT INTO `sys_permission` VALUES ('13', '系统管理-权限管理', '0', '0', '1', '1', null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '2', '');
+INSERT INTO `sys_permission` VALUES ('14', '系统管理-权限管理-查询', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '13', 'system:permission:select');
+INSERT INTO `sys_permission` VALUES ('15', '系统管理-权限管理-添加', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '13', 'system:permission:add');
+INSERT INTO `sys_permission` VALUES ('16', '系统管理-权限管理-修改', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '13', 'system:permission:update');
+INSERT INTO `sys_permission` VALUES ('17', '系统管理-权限管理-删除', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '13', 'system:permission:delete');
+INSERT INTO `sys_permission` VALUES ('18', '系统管理-菜单管理', '0', '0', '1', '1', null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '2', '');
+INSERT INTO `sys_permission` VALUES ('19', '系统管理-菜单管理-查询', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '18', 'system:menu:select');
+INSERT INTO `sys_permission` VALUES ('2', '系统管理', '0', '0', '1', '1', null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, null, '');
+INSERT INTO `sys_permission` VALUES ('20', '系统管理-菜单管理-添加', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '18', 'system:menu:add');
+INSERT INTO `sys_permission` VALUES ('21', '系统管理-菜单管理-修改', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '18', 'system:menu:update');
+INSERT INTO `sys_permission` VALUES ('22', '系统管理-菜单管理-删除', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '18', 'system:menu:delete');
+INSERT INTO `sys_permission` VALUES ('3', '系统管理-用户管理', '0', '0', '1', '1', null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '2', '');
+INSERT INTO `sys_permission` VALUES ('4', '系统管理-用户管理-查询', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '3', 'system:user:select');
+INSERT INTO `sys_permission` VALUES ('5', '系统管理-用户管理-添加', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '3', 'system:user:add');
+INSERT INTO `sys_permission` VALUES ('6', '系统管理-用户管理-修改', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '3', 'system:user:update');
+INSERT INTO `sys_permission` VALUES ('7', '系统管理-用户管理-删除', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '3', 'system:user:delete');
+INSERT INTO `sys_permission` VALUES ('8', '系统管理-角色管理', '0', '0', '1', '1', null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '2', '');
+INSERT INTO `sys_permission` VALUES ('9', '系统管理-角色管理-查询', '0', '0', '1', null, null, null, '2019-09-03 20:00:16', null, '2019-09-03 20:00:16', null, '8', 'system:role:select');
 
 -- ----------------------------
 -- Table structure for sys_permission_menu
@@ -241,6 +269,11 @@ CREATE TABLE `sys_permission_menu` (
 -- Records of sys_permission_menu
 -- ----------------------------
 INSERT INTO `sys_permission_menu` VALUES ('1', '1', '1');
+INSERT INTO `sys_permission_menu` VALUES ('10', '5', '13');
+INSERT INTO `sys_permission_menu` VALUES ('11', '6', '18');
+INSERT INTO `sys_permission_menu` VALUES ('2', '2', '2');
+INSERT INTO `sys_permission_menu` VALUES ('8', '3', '3');
+INSERT INTO `sys_permission_menu` VALUES ('9', '4', '8');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -266,6 +299,7 @@ CREATE TABLE `sys_role` (
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', '', '0', '0', '1', null, null, '', '2019-04-27 15:50:06', '', '2019-04-27 15:50:06', '');
+INSERT INTO `sys_role` VALUES ('2', '资料员', '0', '0', '1', null, null, null, '2019-09-03 21:20:02', null, '2019-09-03 21:20:02', null);
 
 -- ----------------------------
 -- Table structure for sys_role_permission
@@ -284,6 +318,11 @@ CREATE TABLE `sys_role_permission` (
 -- Records of sys_role_permission
 -- ----------------------------
 INSERT INTO `sys_role_permission` VALUES ('1', '1', '1');
+INSERT INTO `sys_role_permission` VALUES ('2', '3', '2');
+INSERT INTO `sys_role_permission` VALUES ('3', '8', '2');
+INSERT INTO `sys_role_permission` VALUES ('4', '13', '2');
+INSERT INTO `sys_role_permission` VALUES ('5', '18', '2');
+INSERT INTO `sys_role_permission` VALUES ('8', '2', '2');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -313,7 +352,7 @@ CREATE TABLE `sys_user` (
   KEY `SYS_USER_EMAIL_INDEX` (`EMAIL`) USING BTREE,
   KEY `SYS_USER_MOBILE_INDEX` (`MOBILE`) USING BTREE,
   KEY `SYS_USER_SORT_INDEX` (`SORT`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
@@ -329,6 +368,7 @@ INSERT INTO `sys_user` VALUES ('20', '20', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m77
 INSERT INTO `sys_user` VALUES ('23', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 04:06:29', null, '2019-05-04 04:06:29', null, null, null, null, '9');
 INSERT INTO `sys_user` VALUES ('24', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 04:06:32', null, '2019-05-04 04:06:32', null, null, null, null, '10');
 INSERT INTO `sys_user` VALUES ('27', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 04:06:43', null, '2019-05-04 04:06:43', null, null, null, null, '11');
+INSERT INTO `sys_user` VALUES ('28', 'ziliaoyuan', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-09-03 21:20:35', null, '2019-09-03 21:20:47', null, null, null, null, '16');
 INSERT INTO `sys_user` VALUES ('3', '3', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:20', null, '2019-05-04 01:59:20', null, null, null, null, '12');
 INSERT INTO `sys_user` VALUES ('4', '5', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:25', null, '2019-05-04 01:59:25', null, null, null, null, '13');
 INSERT INTO `sys_user` VALUES ('7', '7', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:36', null, '2019-05-04 01:59:36', null, null, null, null, '14');
@@ -352,3 +392,4 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
 INSERT INTO `sys_user_role` VALUES ('2', '2', '1');
+INSERT INTO `sys_user_role` VALUES ('3', '28', '2');
