@@ -1,0 +1,23 @@
+.th{
+    width: auto;
+}
+
+.td{
+    text-align: center;
+    width: 40px;
+}
+
+.name_td{
+    text-align: center;
+    width: 50px;
+}
+
+.work_td{
+    text-align: center;
+    width: 80px;
+}
+
+.machine_no{
+    word-break:break-all;
+    width: 100px;
+}

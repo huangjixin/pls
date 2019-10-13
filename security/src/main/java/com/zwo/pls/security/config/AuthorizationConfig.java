@@ -70,7 +70,13 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(
                 new ClassPathResource("fzp-jwt.jks"),
                 "fzp123".toCharArray());
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        CoreJwtAccessTokenConverter converter = new CoreJwtAccessTokenConverter();
+        CoreAccessTokenConverter coreAccessTokenConverter = new CoreAccessTokenConverter();
+        CoreUserAuthenticationConverter coreUserAuthenticationConverter = new CoreUserAuthenticationConverter();
+
+        coreAccessTokenConverter.setUserTokenConverter(coreUserAuthenticationConverter);
+        converter.setAccessTokenConverter(coreAccessTokenConverter);
+
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("fzp-jwt"));
         return converter;
     }

@@ -1,0 +1,8 @@
+# dev 开发环境   test 测试环境   prod 生产环境
+spring:
+  profiles:
+    active: dev
+#management:
+#  health:
+#    ldap:
+#      enabled: false

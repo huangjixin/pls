@@ -1,6 +1,7 @@
 package com.zwo.pls.security.service;
 
-import com.zwo.pls.security.domain.User;
+import com.zwo.pls.security.dto.UserDto;
+
 /**
  * 一句话描述该类功能：
  * Created by Tony(黄记新) in 2019/4/27
@@ -12,5 +13,5 @@ public interface IUserService {
      * @param loginName 用户名
      * @return User
      */
-    User selectByUserName(String loginName);
+    UserDto selectByUserName(String loginName);
 }

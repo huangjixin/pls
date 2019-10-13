@@ -9,7 +9,6 @@ Source Database       : pls_dev
 Target Server Type    : MYSQL
 Target Server Version : 50723
 File Encoding         : 65001
-
 Date: 2019-09-03 22:06:49
 */
 

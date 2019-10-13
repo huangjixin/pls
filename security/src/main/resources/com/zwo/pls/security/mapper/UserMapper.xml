@@ -94,7 +94,7 @@
     ID, LOGIN_NAME, PASSWORD, REAL_NAME, IS_EXPIRED, IS_LOCKED, IS_ENABLED, TYPE, STATUS, 
     CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, EN_NAME, EMAIL, SEX, MOBILE
   </sql>
-  <resultMap id="UserDtoMap" type="com.zwo.pls.security.domain.User" extends="BaseResultMap">
+  <resultMap id="UserDtoMap" type="com.zwo.pls.security.dto.UserDto" extends="BaseResultMap">
     <collection property="permissions"
                 ofType="com.zwo.pls.security.domain.Permission">
       <id column="PERMISSION_ID" jdbcType="VARCHAR" property="id" />

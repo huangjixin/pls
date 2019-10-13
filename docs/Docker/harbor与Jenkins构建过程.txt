@@ -1,0 +1,85 @@
+去官网https://github.com/goharbor/harbor/releases下载最新版本，使用wget命令下载，例如：wget https://storage.googleapis.com/harbor-releases/release-1.8.0/harbor-offline-installer-v1.8.2-rc2.tgz。（如果需要翻墙，请使用已经下载到硬盘的harbor）
+
+安装docker-compose编排工具：sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+3.解压文件：tar -xvf harbor-offline-installer-v1.8.2-rc2.tgz
+
+4.使用cd命令跳转到解压的目录，编辑文件： vi harbor.yml
+修改一下主机名称和端口号
+hostname: tony.myharbor.com
+http:
+  port: 8800
+harbor_admin_password: abc123ABC
+
+
+5. 修改一下 prepare权限：chmod +x  prepare install.sh,然后先后运行：“./prepare”和“./install.sh”，前者主要是拉相关镜像。
+
+6.访问172.16.234.154:8800 用户名密码：admin abc123ABC
+建立项目：awardproj
+
+7.编辑镜像加速文件：
+vi /etc/docker/daemon.json
+
+{
+  "registry-mirrors": ["https://nhus5fex.mirror.aliyuncs.com"],
+  "insecure-registries": ["register.myharbor.com","tony.myharbor.com:8800"]
+}
+
+在所有目标机器上面加上名字，使得它可以用http进行登录，否则就要用https了。
+重启docker：systemctl restart docker
+
+vi /etc/hosts添加IP与域名的映射，具体本机器，使用
+172.16.234.154 tony.myharbor.com
+
+8.登录验证是否成功
+docker login http://tony.myharbor.com:8800
+
+9.为镜像打标签（从Harbor的项目当中获取）：
+docker tag SOURCE_IMAGE[:TAG] tony.myharbor.com:8800/awardproj/IMAGE[:TAG]
+
+10.推送
+docker push tony.myharbor.com:8800/awardproj/IMAGE[:TAG]
+
+遇到的问题：用Jenkins的时候，用户是jenkins，必须切换到jenkins用户登录认证。
+su - jenkins
+docker login http://tony.myharbor.com:8800
+再切换回去root，密码：!QWEasd2
+
+备注:配置完成以后如有防火墙应该，开端口；使用harbor的服务器，都要用客户端登录认证一下先,容器先打标签
+
+Jenkins构建1：
+Tag="0.0.$BUILD_NUMBER" #BUILD_NUMBER为内置的构建次数
+docker build -t tony.myharbor.com:8800/awardproj/award:$Tag -f src/main/docker/Dockerfile --no-cache .
+docker push tony.myharbor.com:8800/awardproj/award:$Tag
+
+scp src/main/docker/award-docker-swarm-dev.yml 172.16.234.153:/tmp/
+ssh 172.16.234.153 "export Tag=$Tag && docker stack deploy -c /tmp/award-docker-swarm-dev.yml --with-registry-auth security"
+
+docker rmi -f tony.myharbor.com:8800/awardproj/award:$Tag
+
+
+Jenkins构建2：
+Tag="0.0.$BUILD_NUMBER" #BUILD_NUMBER为内置的构建次数
+#security/pom.xml
+#构建安全模块
+cd security
+docker build -t register.myharbor.com/pls_dev/pls_security:$Tag -f src/main/docker/Dockerfile --no-cache .
+docker push register.myharbor.com/pls_dev/pls_security:$Tag
+
+scp ./pls-security-docker-swarm-dev.yml 172.16.234.153:/tmp/
+ssh 172.16.234.153 "export Tag=$Tag && docker stack deploy -c /tmp/pls-security-docker-swarm-dev.yml --with-registry-auth security"
+
+#构建系统模块
+cd ../system-manager
+docker build -t register.myharbor.com/pls_dev/pls_system:$Tag -f src/main/docker/Dockerfile --no-cache .
+docker push register.myharbor.com/pls_dev/pls_system:$Tag
+
+scp ./pls-system-docker-swarm-dev.yml 172.16.234.153:/tmp/
+ssh 172.16.234.153 "export Tag=$Tag && docker stack deploy -c /tmp/pls-system-docker-swarm-dev.yml --with-registry-auth system"
+
+sleep 10s
+
+docker rmi -f register.myharbor.com/pls_dev/pls_security:$Tag
+docker rmi -f register.myharbor.com/pls_dev/pls_system:$Tag

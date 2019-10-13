@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <!--<properties resource="application.yml"/>-->
+
+  <context id="MariaDB" targetRuntime="MyBatis3">
+    <!-- 为sql关键字添加分隔符 -->
+    <property name="autoDelimitKeywords" value="true"/>
+    <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+    <property name="beginningDelimiter" value="`"/>
+    <property name="endingDelimiter" value="`"/>
+
+    <!--mapper继承接口-->
+    <!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+      <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+    </plugin>-->
+    <!--模型重写Equals和Hash方法-->
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+    <!--模型类添加序列化接口-->
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin">
+      <property name="suppressJavaInterface" value="false"/>
+    </plugin>
+    <!--模型重写一个toString方法-->
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <!--Example类中生成大小写敏感的LIKE方法-->
+    <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+    <!-- 想要mybaits代码生成器生成Example类换个名字，是通过插件实现的，即下面的这个插件配置参数很关键。 -->
+    <!--<plugin
+            type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+        <property name="searchString" value="Example$" />
+        <property name="replaceString" value="Criteria" />
+    </plugin>-->
+
+    <commentGenerator>
+      <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+      <property name="suppressAllComments" value="true"/>
+      <!-- 是否添加字段注释 true:是 false：否 -->
+      <!--<property name="addRemarkComments" value="false" />-->
+    </commentGenerator>
+
+    <!--数据源配置-->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                    connectionURL="jdbc:mysql://172.16.234.150:3306/wages_dev"
+                    userId="root"
+                    password="abc123">
+    </jdbcConnection>
+
+    <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                    connectionURL="jdbc:mysql://172.16.106.38:3306/P40"
+                    userId="mes"
+                    password="YG2VAzu#1">
+    </jdbcConnection>-->
+
+    <!--<jdbcConnection driverClass="org.postgresql.Driver"
+                    connectionURL="jdbc:postgresql://172.16.234.84:5432/zkeco_db20141126"
+                    userId="postgres"
+                    password="q1w2e3">
+    </jdbcConnection>-->
+
+    <javaTypeResolver>
+      <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+          NUMERIC 类型解析为java.math.BigDecimal -->
+      <property name="forceBigDecimals" value="false"/>
+      <!-- This property is used to specify whether MyBatis Generator should force the use of JSR-310 data types for DATE, TIME,
+            and TIMESTAMP fields, rather than using java.util.Date -->
+      <property name="useJSR310Types" value="true"/>
+    </javaTypeResolver>
+
+    <!-- targetProject:生成PO类的位置 -->
+    <javaModelGenerator targetPackage="com.pt.award.modules.employee.model"
+                        targetProject="./src/main/java">
+      <!-- enableSubPackages:是否让schema作为包的后缀 -->
+      <property name="enableSubPackages" value="false"/>
+      <!-- 从数据库返回的值被清理前后的空格 -->
+      <property name="trimStrings" value="true"/>
+    </javaModelGenerator>
+    <!-- targetProject:mapper映射文件生成的位置 -->
+    <sqlMapGenerator targetPackage="com.pt.award.modules.employee.mapper"
+      targetProject="./src/main/resources">
+      <!-- enableSubPackages:是否让schema作为包的后缀 -->
+      <property name="enableSubPackages" value="false"/>
+    </sqlMapGenerator>
+    <!-- targetPackage：mapper接口生成的位置 -->
+    <javaClientGenerator type="XMLMAPPER"
+                         targetPackage="com.pt.award.modules.employee.mapper"
+                         targetProject="./src/main/java">
+      <!-- enableSubPackages:是否让schema作为包的后缀 -->
+      <property name="enableSubPackages" value="false"/>
+    </javaClientGenerator>
+
+    <!--<table tableName="ntbl_department" domainObjectName="Department" delimitIdentifiers="true"/>-->
+    <table tableName="ntbl_position" domainObjectName="NPosition" delimitIdentifiers="true"/>
+    <!--<table tableName="ntbl_employee_postion" domainObjectName="EmployeePosition" delimitIdentifiers="true"/>-->
+
+    <!--<table tableName="ntbl_form" domainObjectName="Form" delimitIdentifiers="true"/>-->
+    <!--<table tableName="ntbl_form_assets" domainObjectName="FormAssets" delimitIdentifiers="true"/>-->
+    <!--<table tableName="ntbl_code" domainObjectName="Code" delimitIdentifiers="true"/>-->
+
+    <!--<table tableName="ntbl_train_project" domainObjectName="TrainProject" delimitIdentifiers="true"/>
+    <table tableName="ntbl_train_record" domainObjectName="TrainRecord" delimitIdentifiers="true">
+      <columnOverride column="train_date" javaType="java.time.LocalDate"/>
+    </table>-->
+
+    <!--<table tableName="ntbl_shift_exchange" domainObjectName="ShiftExchange" delimitIdentifiers="true">
+      <columnOverride column="exshift_date" javaType="java.time.LocalDate"/>
+    </table>-->
+
+    <!--<table tableName="ntbl_part_time" domainObjectName="PartTime"/>-->
+
+    <!--<table tableName="tbl_employee_allowance" domainObjectName="EmployeeAllowance"/>-->
+    <!--<table tableName="QC_INSPECTION_HEADER"/>-->
+
+    <!--<table tableName="QC_INSPECTION_HEADER_20190524"/>-->
+
+    <!--<table tableName="tbl_allowance" domainObjectName="Allowance" delimitIdentifiers="true" delimitAllColumns="true">
+      <columnOverride column="date_from" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="date_to" javaType="java.time.LocalDateTime"/>
+    </table>-->
+    <!--<table tableName="tbl_allowance_master" domainObjectName="AllowanceMaster"/>-->
+    <!--<table tableName="tbl_deduction" domainObjectName="Deduction">
+      <columnOverride column="date" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="date_from" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="date_to" javaType="java.time.LocalDateTime"/>
+    </table>-->
+
+    <!--<table tableName="tbl_attendance" domainObjectName="Attendance" >
+      <columnOverride column="date" javaType="java.time.LocalDate"/>
+    </table>-->
+
+    <!--<table tableName="tbl_user_info" domainObjectName="UserInfo" delimitIdentifiers="true" delimitAllColumns="true">
+      <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="modify_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+    <!--<table tableName="tbl_role" domainObjectName="Role" delimitIdentifiers="true">
+      <columnOverride column="gmt_create" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="gmt_modify" javaType="java.time.LocalDateTime"/>
+    </table>-->
+    <!--<table tableName="tbl_user_role" domainObjectName="UserRole" delimitIdentifiers="true" delimitAllColumns="true"/>
+    <table tableName="tbl_role_permission" domainObjectName="RolePermission" delimitIdentifiers="true"
+           delimitAllColumns="true"/>
+    <table tableName="tbl_permission" domainObjectName="Permission">
+      <columnOverride column="gmt_create" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="gmt_modify" javaType="java.time.LocalDateTime"/>
+    </table>
+
+    <table tableName="tbl_ng_menu" domainObjectName="NgMenu" delimitIdentifiers="true" delimitAllColumns="true">
+      <columnOverride column="gmt_create" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="gmt_modify" javaType="java.time.LocalDateTime"/>
+    </table>
+    <table tableName="tbl_menu_permission" domainObjectName="MenuPermission" delimitIdentifiers="true"
+           delimitAllColumns="true"/>-->
+
+
+    <!--<table tableName="checkinout" domainObjectName="Checkinout" delimitIdentifiers="true" delimitAllColumns="true">
+      <columnOverride column="checktime" javaType="java.time.ZonedDateTime"/>
+    </table>
+
+    <table tableName="userinfo" domainObjectName="Userinfo" delimitIdentifiers="true" delimitAllColumns="true">
+      <columnOverride column="change_time" javaType="java.time.ZonedDateTime"/>
+      <columnOverride column="create_time" javaType="java.time.ZonedDateTime"/>
+      <columnOverride column="delete_time" javaType="java.time.ZonedDateTime"/>
+      <columnOverride column="UTime" javaType="java.time.ZonedDateTime"/>
+    </table>-->
+
+    <!--<table tableName="tbl_iclock_sn_conf" domainObjectName="IClockSnConf" delimitIdentifiers="true" delimitAllColumns="true"/>-->
+
+    <!--<table tableName="tbl_employee" domainObjectName="Employee" delimitIdentifiers="true"/>-->
+    <!--<table tableName="tbl_position" domainObjectName="Position" delimitIdentifiers="true" delimitAllColumns="true">
+      <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="modify_time" javaType="java.time.LocalDateTime"/>
+    </table>
+    <table tableName="tbl_special_conf" domainObjectName="SpecialConf" delimitIdentifiers="true" delimitAllColumns="true">
+      <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+
+
+    <!--<table tableName="tbl_scheduling" domainObjectName="Scheduling" delimitIdentifiers="true"
+           delimitAllColumns="true">
+      <columnOverride column="year_month" javaType="java.time.YearMonth"/>
+      <columnOverride column="edit_date" javaType="java.time.LocalDate"/>
+    </table>
+
+    <table tableName="tbl_scheduling_tpl" domainObjectName="SchedulingTpl" delimitIdentifiers="true"
+           delimitAllColumns="true"/>-->
+
+    <!--<table tableName="ntbl_assess_item" domainObjectName="AssessItem" delimitIdentifiers="true"
+           delimitAllColumns="true">
+      <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+    <!--<table tableName="ntbl_assess_value" domainObjectName="AssessValue" delimitIdentifiers="true"
+           delimitAllColumns="true">
+      <columnOverride column="year_month" javaType="java.time.YearMonth"/>
+      <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+      <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+
+    <!--<table tableName="ntbl_holiday" domainObjectName="Holiday" delimitIdentifiers="true" delimitAllColumns="true">
+      <columnOverride column="out_date" javaType="java.time.LocalDate"/>
+    </table>-->
+
+    <!--表配置，tableName支持%，表示全部生成-->
+    <!-- machine 包 -->
+    <!-- 包装机表 -->
+    <!--<table tableName="ntbl_machine" domainObjectName="Machine" delimitIdentifiers="true" delimitAllColumns="true" >
+        <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+        <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+    <!-- 包装机类型表 -->
+    <!--<table tableName="ntbl_machine_type" domainObjectName="MachineType" delimitIdentifiers="true" delimitAllColumns="true" >
+        <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+        <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+
+
+    <!-- prize 包 -->
+    <!-- 部门日总产量表 -->
+    <!--<table tableName="ntbl_daily_output" domainObjectName="DailyOutput" delimitIdentifiers="true" delimitAllColumns="true" >
+        <columnOverride column="output_date" javaType="java.time.LocalDate"/>
+        <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+        <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+    <!-- 日产量表 -->
+    <!--<table tableName="ntbl_output" domainObjectName="Output" delimitIdentifiers="true" delimitAllColumns="true" >
+        <columnOverride column="output_date" javaType="java.time.LocalDate"/>
+        <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+        <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+    <!-- 部门月总产量表 -->
+    <!--<table tableName="ntbl_monthly_output" domainObjectName="MonthlyOutput" delimitIdentifiers="true" delimitAllColumns="true" >
+        <columnOverride column="year_month" javaType="java.time.YearMonth"/>
+        <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+        <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+    <!-- 产量类型表 -->
+    <!--<table tableName="ntbl_output_type" domainObjectName="OutputType" delimitIdentifiers="true" delimitAllColumns="true" >
+        <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+        <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+    <!-- 班制表 -->
+    <!--<table tableName="ntbl_shift" domainObjectName="Shift" delimitIdentifiers="true" delimitAllColumns="true" >
+        <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+        <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+
+
+    <!-- system 包 -->
+    <!-- 登录日志表 -->
+    <!--<table tableName="ntbl_login_log" domainObjectName="LoginLog" delimitIdentifiers="true" delimitAllColumns="true" >
+        <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+        <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>
+    &lt;!&ndash; 系统操作日志表 &ndash;&gt;
+    <table tableName="ntbl_sys_operlog" domainObjectName="SysOperlog" delimitIdentifiers="true" delimitAllColumns="true" >
+        <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+        <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+    </table>-->
+
+
+  </context>
+</generatorConfiguration>

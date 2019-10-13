@@ -17,12 +17,13 @@ import java.io.IOException;
  */
 @Configuration
 public class JwtConfiguration {
-    @Autowired
-    JwtAccessTokenConverter jwtAccessTokenConverter;
+//    @Autowired
+//    JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Bean(name="clientTokenStore")
     public TokenStore tokenStore() {
-        return new JwtTokenStore(jwtAccessTokenConverter);
+//        return new JwtTokenStore(jwtAccessTokenConverter);
+        return new JwtTokenStore(jwtTokenEnhancer());
     }
 
     /* JWT解密 */

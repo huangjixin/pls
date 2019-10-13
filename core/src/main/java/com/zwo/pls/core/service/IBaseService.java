@@ -3,6 +3,7 @@ package com.zwo.pls.core.service;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.session.RowBounds;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -154,4 +155,13 @@ public interface IBaseService<T> {
 	public int updateByPrimaryKey(T record);
 
 	public int updateByPrimaryKeySelective(T record);
+
+	/**
+	 * 提取Excel单元格数据。
+	 * @param fileName
+	 * @param is
+	 * @param creator
+	 * @return
+	 */
+	int insertForExcelSheet(String fileName, InputStream is, String creator);
 }

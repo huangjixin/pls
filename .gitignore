@@ -16,7 +16,7 @@ HELP.md
 *.iws
 *.iml
 *.ipr
-
+target
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -27,3 +27,7 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+
+### react native ###
+#modules

@@ -1,6 +1,5 @@
 package com.zwo.pls.security.service.impl;
 
-import com.zwo.pls.security.domain.User;
 import com.zwo.pls.security.dto.UserDto;
 import com.zwo.pls.security.mapper.UserMapper;
 import com.zwo.pls.security.service.IUserService;
@@ -22,8 +21,8 @@ public class UserServiceImpl implements IUserService {
    @Autowired
    private UserMapper userMapper;
 
-   public User selectByUserName(String loginName){
-       User user = userMapper.selectByUserName(loginName);
+   public UserDto selectByUserName(String loginName){
+       UserDto user = userMapper.selectByUserName(loginName);
        return  user;
    }
 }

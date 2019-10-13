@@ -1,0 +1,67 @@
+javaCV入门指南：调用FFmpeg原生API和JavaCV是如何封装了FFmpeg的音视频操作？
+
+本章将正式开始javaCV之旅，先看一下官方文档里的介绍
+
+JavaCV是计算机视觉领域的开发人员（OpenCV、FFmpeg、libdc1394、PGR FlyCapture、OpenKinect、li.lsense、CL PS3 Eye Driver、videoInput、ARToolKitPlus、flandmark、Leptonica和Tesseract）常用库的JavaCPP预置的包装器，并提供实用的程序类使它们的功能更容易在Java平台上使用，包括Android。
+
+JavaCV还提供了硬件加速的全屏图像显示（CanvasFrame和GLCanvasFrame）、在多核（并行）上并行执行代码的简便方法、照相机和投影机的用户友好的几何和颜色校准（GeometricCalibrator，ProCamometricCalibrato）r，ProCamColorCalibrator），特征点的检测和匹配（ObjectFinder），一组用于实现投影仪-照相机系统的直接图像对齐的类（主要是GNImageAligner、ProjectiveTransformer、ProjectiveColorTransformer、ProCamTransformer和ReflectanceInitializer），一个blob分析包（BLUB），以及JavaCV类中的各种功能。其中一些类还具有OpenCL和OpenGL的对应类，它们的名称以CL结尾或以GL开始，即：JavaCVCL、GLCanvasFrame等。
+
+要了解如何使用API，因为文档目前缺乏，请参考下面的示例用法部分以及示例程序，包括两个用于Android（FACEPREVIEW.Java和ReordActudio.java）的示例程序，它们也在示例目录中找到。您可能还发现参考ProCamCalib和ProCamTracker的源代码以及从OpenCV2 Cookbook和相关联的wiki页面移植的示例很有用。
+
+
+请随时告诉我任何更新或修复你的代码，使我可以将它们集成到下一个版本。谢谢您！如果您遇到软件问题，请随时在邮件列表上提问。我相信这还远远不够完美…（我觉得这个最后一段才是最重要的，所以保留了这一段原话）
+
+既然知道javaCV封装了这么多库，也不啰嗦了，直接开始吧。
+
+支持eguid原创文章，欢迎一起交流讨论：
+
+流媒体技术③群： 556722677（①②群已满，请加③群）
+
+流媒体技术①群： 371249677（已满）
+
+一、什么是JavaCPP
+大家知道FFmpeg是C语言中著名的音视频库（注意，不是c++。使用c++调用ffmpeg库的性能损失与Java方式调用损耗相差并不大）。
+
+JavaCV利用JavaCPP在FFmpeg和Java之间构建了桥梁，我们通过这个桥梁可以方便的调用FFmpeg，当然这并不是没有损失的，性能损失暂且不提，最主要问题在于调用ffmpeg之于jvm是native方法，所以通过ffmpeg创建的结构体实例与常量、方法等等都是使用堆外内存，都需要像C那样手动的释放这些资源（jvm并不会帮你回收这部分），以此来保证不会发生内存溢出/泄露等风险。
+
+Javapp在Java内部提供了对本地C++的高效访问，这与一些C/C++编译器与汇编语言交互的方式不同。不需要发明新的语言，比如SWIG、SIP、C++、CLI、Cython或Rython。相反，类似于CPpyy为Python所做的努力，它利用了Java和C++之间的语法和语义相似性。在引擎盖下，它使用JNI，因此除了Java、SE和RoboVM（指令）之外，它还适用于Java SE的所有实现...
+
+详细描述请参考：https://github.com/bytedeco/javacpp
+
+二、javaCPP直接调用FFmpeg的API
+我们通过《视频拉流解码成YUVJ420P，并保存为jpg图片》作为实例来阐述，实例地址：
+
+https://blog.csdn.net/eguid_1/article/details/81369055
+
+这部分内容主要是如何调用FFmpeg的API，本系列作为JavaCV入门不会讲解FFmpeg的具体用法，如果想要深入学习FFmpeg部分，可以选择通过查看FFmpeg的API手册ffmpeg.org，或者访问雷霄骅的博客详细学习FFmpeg的使用。
+
+ 
+
+三、JavaCV是如何封装了FFmpeg的音视频操作？
+JavaCV通过JavaCPP调用了FFmpeg，并且对FFmpeg复杂的操作进行了封装，把视频处理分成了两大类：“帧抓取器”（FrameGrabber）和“帧录制器”（又叫“帧推流器”，FrameRecorder）以及用于存放音视频帧的Frame（FrameFilter暂且不提）。
+
+整体结构如下：
+
+视频源---->帧抓取器（FrameGabber） ---->抓取视频帧（Frame）---->帧录制器（FrameRecorder）---->推流/录制---->流媒体服务/录像文件
+
+1、帧抓取器（FrameGrabber）
+封装了FFmpeg的检索流信息，自动猜测视频解码格式，音视频解码等具体API，并把解码完的像素数据（可配置像素格式）或音频数据保存到Frame中返回。
+
+2、帧录制器/推流器（FrameRecorder）
+封装了FFmpeg的音视频编码操作和封装操作，把传参过来的Frame中的数据取出并进行编码、封装、发送等操作流程。
+
+3、帧（Frame）
+用于存放音视频帧（图像像素和音频采样数据，如果没有配置FrameGrabber的像素格式和音频格式，那么默认解码后的视频格式是yuv420j，音频则是pcm采样数据）
+
+ 
+
+ 
+
+ 
+
+下一章：帧抓取器(FrameGrabber)的原理与应用
+---------------------
+作者： eguid
+来源：CSDN
+原文：https://blog.csdn.net/eguid_1/article/details/83663035
+版权声明：本文为博主原创文章，转载请附上博文链接！
