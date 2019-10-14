@@ -20,10 +20,10 @@ public class SecurityApplication  extends SpringBootServletInitializer {
         return builder.sources(SecurityApplication.class);
     }
 
-    @Bean
+    /*@Bean
     ServletWebServerFactory servletWebServerFactory(){
         return new TomcatServletWebServerFactory();
-    }
+    }*/
 
     public static void main(String[] args) {
         SpringApplication.run(SecurityApplication.class, args);
