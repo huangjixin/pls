@@ -85,7 +85,7 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
-        
+
         <!--<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
@@ -107,7 +107,7 @@
     </dependencies>
 
     <build>
-        <finalName>pls-security</finalName>
+        <finalName>plssecurity</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -164,7 +164,7 @@ public abstract class BaseController<T> {
             Method getId = recordClass.getMethod("getId");
             Object id = getId.invoke(record);
             if(StringUtils.isEmpty(id)){
-                Method setId = recordClass.getMethod("setId");
+                Method setId = recordClass.getMethod("setId",String.class);
                 setId.invoke(record, generateId());
             }
 
