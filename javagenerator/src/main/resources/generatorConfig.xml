@@ -53,23 +53,34 @@
         
         
 		<javaModelGenerator
-			targetPackage="com.jiashi.domain"
+			targetPackage="com.ccbft.report.backend.system.domain"
 			targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 		<sqlMapGenerator
-			targetPackage="mapper"
+			targetPackage="com.ccbft.report.backend.system.mapper"
 			targetProject="src\main\resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<javaClientGenerator
-			targetPackage="com.jiashi.dao"
+			targetPackage="com.ccbft.report.backend.system.dao"
 			targetProject="src\main\java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
+
+		<table tableName="sys_user" domainObjectName="SysUser">
+		</table>
+		<table tableName="sys_user_role" domainObjectName="SysUserRole">
+		</table>
+		<table tableName="sys_role" domainObjectName="SysRole">
+		</table>
+		<table tableName="sys_role_permission" domainObjectName="SysRolePermission">
+		</table>
+		<table tableName="sys_permission" domainObjectName="SysPermission">
+		</table>
 
 		<!-- <table tableName="user"  enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false">
@@ -91,10 +102,10 @@
 		</table>-->
  <!--<table tableName="system_%"  enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false">
-		</table> -->
+		</table>
 
 		<table tableName="QC_INSPECTION_HEADER" domainObjectName="QcInspectionHeader">
-		</table>
+		</table>-->
 
 		<!--<table tableName="mem_member" domainObjectName="Member">
 		</table>
