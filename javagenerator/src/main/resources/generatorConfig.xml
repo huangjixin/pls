@@ -11,11 +11,11 @@
     <classPathEntry location="${db.driverLocation}"/>
     
 	<context id="Mysql"  targetRuntime="MyBatis3"><!-- targetRuntime="MyBatis3Simple" defaultModelType="flat" -->
-		<!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
 			<property name="mappers"
 				value="tk.mybatis.mapper.common.Mapper" />
 			<property name="caseSensitive" value="true" />
-		</plugin>-->
+		</plugin>
 		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin> 
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin> 
@@ -60,7 +60,7 @@
 		</javaModelGenerator>
 
 		<sqlMapGenerator
-			targetPackage="com.ccbft.report.backend.system.mapper"
+				targetPackage="com.ccbft.report.backend.system.mapper"
 			targetProject="src\main\resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
@@ -104,10 +104,7 @@
             enableDeleteByExample="false" enableSelectByExample="false">
 		</table>
 
-		<table tableName="QC_INSPECTION_HEADER" domainObjectName="QcInspectionHeader">
-		</table>-->
-
-		<!--<table tableName="mem_member" domainObjectName="Member">
+		<table tableName="mem_member" domainObjectName="Member">
 		</table>
 		<table tableName="mem_postion" domainObjectName="Postion">
 		</table>
@@ -126,8 +123,12 @@
 		<table tableName="sys_permission" domainObjectName="Permission">
 		</table>
 		<table tableName="sys_permission_menu" domainObjectName="PermissionMenu">
-		</table>
+		</table>-->
 		<table tableName="sys_menu" domainObjectName="Menu">
+		</table>
+		<!--<table tableName="sys_postion" domainObjectName="Postion">
+		</table>
+		<table tableName="sys_user_postion" domainObjectName="UserPostion">
 		</table>-->
 	</context>
 </generatorConfiguration>

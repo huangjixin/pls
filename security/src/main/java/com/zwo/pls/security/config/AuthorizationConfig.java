@@ -70,6 +70,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(
                 new ClassPathResource("fzp-jwt.jks"),
                 "fzp123".toCharArray());
+        // 耦合用户其它信息
         CoreJwtAccessTokenConverter converter = new CoreJwtAccessTokenConverter();
         CoreAccessTokenConverter coreAccessTokenConverter = new CoreAccessTokenConverter();
         CoreUserAuthenticationConverter coreUserAuthenticationConverter = new CoreUserAuthenticationConverter();
@@ -77,6 +78,8 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
         coreAccessTokenConverter.setUserTokenConverter(coreUserAuthenticationConverter);
         converter.setAccessTokenConverter(coreAccessTokenConverter);
 
+        // 不耦合用户信息。
+//        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("fzp-jwt"));
         return converter;
     }

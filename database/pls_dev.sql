@@ -3,7 +3,7 @@ Navicat MySQL Data Transfer
 
 Source Server         : localhost
 Source Server Version : 50723
-Source Host           : localhost:3307
+Source Host           : localhost:3306
 Source Database       : pls_dev
 
 Target Server Type    : MYSQL
@@ -351,27 +351,25 @@ CREATE TABLE `sys_user` (
   KEY `SYS_USER_EMAIL_INDEX` (`EMAIL`) USING BTREE,
   KEY `SYS_USER_MOBILE_INDEX` (`MOBILE`) USING BTREE,
   KEY `SYS_USER_SORT_INDEX` (`SORT`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:06', null, '2019-05-04 01:59:06', null, null, null, null, '1');
-INSERT INTO `sys_user` VALUES ('10', '10', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:09:38', null, '2019-05-04 02:09:38', null, null, null, null, '2');
-INSERT INTO `sys_user` VALUES ('11', '11', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:09:43', null, '2019-05-04 02:09:43', null, null, null, null, '3');
-INSERT INTO `sys_user` VALUES ('12', '12', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:09:48', null, '2019-05-04 02:09:48', null, null, null, null, '4');
-INSERT INTO `sys_user` VALUES ('15', '15', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:10:01', null, '2019-05-04 02:10:01', null, null, null, null, '5');
-INSERT INTO `sys_user` VALUES ('19', '19', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:11:42', null, '2019-05-04 02:11:42', null, null, null, null, '6');
-INSERT INTO `sys_user` VALUES ('2', '2', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:15', null, '2019-05-04 01:59:15', null, null, null, null, '7');
-INSERT INTO `sys_user` VALUES ('20', '20', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 02:11:48', null, '2019-05-04 02:11:48', null, null, null, null, '8');
-INSERT INTO `sys_user` VALUES ('23', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 04:06:29', null, '2019-05-04 04:06:29', null, null, null, null, '9');
-INSERT INTO `sys_user` VALUES ('24', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 04:06:32', null, '2019-05-04 04:06:32', null, null, null, null, '10');
-INSERT INTO `sys_user` VALUES ('27', '1', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 04:06:43', null, '2019-05-04 04:06:43', null, null, null, null, '11');
-INSERT INTO `sys_user` VALUES ('28', 'ziliaoyuan', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-09-03 21:20:35', null, '2019-09-03 21:20:47', null, null, null, null, '16');
-INSERT INTO `sys_user` VALUES ('3', '3', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:20', null, '2019-05-04 01:59:20', null, null, null, null, '12');
-INSERT INTO `sys_user` VALUES ('4', '5', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:25', null, '2019-05-04 01:59:25', null, null, null, null, '13');
-INSERT INTO `sys_user` VALUES ('7', '7', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:36', null, '2019-05-04 01:59:36', null, null, null, null, '14');
-INSERT INTO `sys_user` VALUES ('9', '9', '$10$jre6mb1sNNUqUGbZTiUMUe9aBz774m777nWcABBEj0feARudyIUuu', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:47', null, '2019-05-04 01:59:47', null, null, null, null, '15');
+INSERT INTO `sys_user` VALUES ('1', '1', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:06', null, '2019-10-14 10:20:09', null, null, null, null, '1');
+INSERT INTO `sys_user` VALUES ('10', '10', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 02:09:38', null, '2019-10-14 10:20:10', null, null, null, null, '2');
+INSERT INTO `sys_user` VALUES ('100', 'admin', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', '', '0', '0', '1', null, null, '', '2019-05-04 01:59:06', '', '2019-10-14 09:59:50', '', '', null, '', '1');
+INSERT INTO `sys_user` VALUES ('11', '11', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 02:09:43', null, '2019-10-14 10:20:12', null, null, null, null, '3');
+INSERT INTO `sys_user` VALUES ('12', '12', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 02:09:48', null, '2019-10-14 10:20:13', null, null, null, null, '4');
+INSERT INTO `sys_user` VALUES ('15', '15', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 02:10:01', null, '2019-10-14 10:20:14', null, null, null, null, '5');
+INSERT INTO `sys_user` VALUES ('19', '19', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 02:11:42', null, '2019-10-14 10:20:16', null, null, null, null, '6');
+INSERT INTO `sys_user` VALUES ('2', '2', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:15', null, '2019-10-14 10:20:17', null, null, null, null, '7');
+INSERT INTO `sys_user` VALUES ('20', '20', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 02:11:48', null, '2019-10-14 10:20:18', null, null, null, null, '8');
+INSERT INTO `sys_user` VALUES ('28', 'ziliaoyuan', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-09-03 21:20:35', null, '2019-10-14 10:20:21', null, null, null, null, '16');
+INSERT INTO `sys_user` VALUES ('3', '3', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:20', null, '2019-10-14 10:20:23', null, null, null, null, '12');
+INSERT INTO `sys_user` VALUES ('4', '5', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:25', null, '2019-10-14 10:20:24', null, null, null, null, '13');
+INSERT INTO `sys_user` VALUES ('7', '7', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:36', null, '2019-10-14 10:20:26', null, null, null, null, '14');
+INSERT INTO `sys_user` VALUES ('9', '9', '$2a$10$3R/61.UseRTzwvYulrVKk.KF0XBs2hZCHBd91ESsv6ZRDulsQbAqC', null, '0', '0', '1', null, null, null, '2019-05-04 01:59:47', null, '2019-10-14 10:20:29', null, null, null, null, '15');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -392,3 +390,4 @@ CREATE TABLE `sys_user_role` (
 INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
 INSERT INTO `sys_user_role` VALUES ('2', '2', '1');
 INSERT INTO `sys_user_role` VALUES ('3', '28', '2');
+INSERT INTO `sys_user_role` VALUES ('4', '100', '1');
