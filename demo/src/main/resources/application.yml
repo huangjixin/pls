@@ -1,0 +1,41 @@
+# dev 开发环境   uat 用户测试环境   prod 生产环境
+spring:
+  profiles:
+    active: dev
+  output:
+    ansi:
+      enabled: ALWAYS
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: resources/**,static/**,templates/**,public/**
+
+  resouces:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/
+  mvc:
+    static-path-pattern: /**
+
+  application:
+    name: demo-service
+
+  thymeleaf:
+    cache: false
+    #prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    enabled: true
+    check-template: false
+
+server:
+  port: 18888
+  servlet:
+    context-path: /
+
+mybatis:
+  mapper-locations: com/mydev/demo/modules/*/mapper/*.xml
+  type-aliases-package: com.mydev.demo.modules.**.domain
+  config-location: classpath:mybatis/mybatis-config.xml
+#management:
+#  health:
+#    ldap:
+#      enabled: false

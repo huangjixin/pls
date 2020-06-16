@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/versiontrace?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: 123qwe!@
+      validation-query: SELECT 1 FROM DUAL
+      validation-query-timeout: 60000
+      driver-class-name: com.mysql.jdbc.Driver
+      filter:
+        stat:
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 5000
+        wall:
+          config:
+            delete-allow: true
+            drop-table-allow: true
+          db-type: mysql
+          enabled: true
+      initial-size: 5
+      max-active: 100
+      max-pool-prepared-statement-per-connection-size: 20
+      max-wait: 60000
+      min-evictable-idle-time-millis: 100000
+      min-idle: 5
+      pool-prepared-statements: true
+      stat-view-servlet:
+        allow: localhost
+        enabled: true
+        login-password: admin
+        login-username: admin
+        reset-enable: false
+        url-pattern: /druid/*
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      web-stat-filter:
+        enabled: true
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+        url-pattern: /*
+
+
+

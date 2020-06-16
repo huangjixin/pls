@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body th:fragment="sidebar(menuname)">
+<ul class="nav nav-sidebar">
+    <li th:class="${menuname == '系统首页' ?'active':''}">
+        <a style="padding-left:30px;" th:href="@{/index}"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;系统首页</a>
+    </li>
+    <li th:class="${menuname == '用户管理' ?'active':''}">
+        <a th:href="@{/user}" style="padding-left:30px;"><i class="fa fa-user" aria-hidden="true"></i>&nbsp; 用户管理</a>
+    </li>
+
+    <li th:class="${menuname == '登录日志' ?'active':''}">
+        <a th:href="@{/loginLog}" style="padding-left:30px;"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>&nbsp;登录日志</a>
+    </li>
+    <li th:class="${menuname == 'H5管理' ?'active':''}">
+        <a th:href="@{/h5versionInfo}" style="padding-left:30px;"><i class="fa fa-header" aria-hidden="true"></i>&nbsp;H5版本信息</a></li>
+    <li th:class="${menuname == 'apk管理' ?'active':''}">
+        <a th:href="@{/apkversionInfo}" style="padding-left:30px;"><i class="fa fa-android" aria-hidden="true"></i>&nbsp;APK版本信息</a></li>
+</ul>
+<!--<ul class="nav nav-sidebar  ml-auto" th:if="${#authentication.principal.menus != null }">
+    <li  th:class="${menuname.contains('系统首页')?'active':''}">
+        <a th:href="@{/admin/home}">
+            <i class="fa fa-home" aria-hidden="true"></i>&nbsp;<label>系统首页</label>
+        </a>
+    </li>
+    <li data-th-each="menu : ${#authentication.principal.menus}" th:class="${menuname.contains(menu.name)?'active':''}">
+        &lt;!&ndash;<a th:href="@{${menu.url}}"><label  th:text="${menu.name}"></label></a>&ndash;&gt;
+        <a th:href="@{${menu.url}}" th:if="${menu.children == null }">
+            <i th:class="${menu.icon}" aria-hidden="true"></i>&nbsp;<label th:text="${menu.name}"></label>
+        </a>
+        <a th:href="${'#menu'+menu.id}" class="nav-header collapsed" data-toggle="collapse" th:if="${menu.children != null }">
+            <i th:class="${menu.icon}" aria-hidden="true"></i>&nbsp;<label th:text="${menu.name}"></label>
+        </a>
+        <ul th:id="${'menu'+menu.id}" th:if="${menu.children != null }" th:class="${menu.children == null && menuname.indexOf(menu.name)>0?'nav nav-sidebar nav-list  secondmenu collapse':'nav nav-sidebar nav-list  secondmenu'}" style="height:0px;">
+            &lt;!&ndash;如果要关闭请在class加上collapse&ndash;&gt;
+            <li data-th-each="child : ${menu.children}" th:class="${child.name==menuname?'active':''}">
+                <a th:href="@{${child.url}}" style="padding-left:50px;">
+                    <i th:class="${child.icon}" aria-hidden="true"></i>&nbsp;<span th:text="${child.name}"></span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>-->
+</body>

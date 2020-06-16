@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout/_main_layout">
+<title layout:fragment="title">系统主页</title>
+
+<div layout:fragment="content">
+    <div th:include="share/_header::header"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <div th:include="share/_sidebar::sidebar('系统首页')"></div>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <ul class="breadcrumb">
+                    <li><a th:href="@{/index}">首页</a></li>
+                </ul>
+                <h3 class="page-header">数据面板</h3>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
