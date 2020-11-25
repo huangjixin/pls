@@ -11,16 +11,19 @@
     <classPathEntry location="${db.driverLocation}"/>
     
 	<context id="Mysql"  targetRuntime="MyBatis3"><!-- targetRuntime="MyBatis3Simple" defaultModelType="flat" -->
-		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+		<!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
 			<property name="mappers"
 				value="tk.mybatis.mapper.common.Mapper" />
 			<property name="caseSensitive" value="true" />
-		</plugin>
+		</plugin>-->
 		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin> 
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin> 
 		<plugin
 			type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>
+		<plugin type="com.zhiyesoft.cloud.MysqlPaginationPlugin">
+		</plugin>
+
 		<!-- 想要mybaits代码生成器生成Example类换个名字，是通过插件实现的，即下面的这个插件配置参数很关键。 -->
 		<plugin
 			type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
@@ -28,11 +31,19 @@
 			<property name="replaceString" value="Criteria" />
 		</plugin>
 		<!-- optional，旨在创建class时，对注释进行控制 -->
-        <commentGenerator>
+        <commentGenerator type="com.zhiyesoft.cloud.NewbatisGenerator">
             <property name="suppressDate" value="true"/>
             <property name="suppressAllComments" value="false"/>
+			<property name="suppressDate" value="true"/>
+			<property name="suppressAllComments" value="true"/>
         </commentGenerator>
-        
+		<!-- 自定义的注释规则，继承 DefaultCommentGenerator 重写 一些方法 -->
+		<!--<commentGenerator type="com.zhiyesoft.cloud.NewbatisGenerator">
+			&lt;!&ndash; 是否去除自动生成日期的注释 true：是 ： false:否 &ndash;&gt;
+			<property name="suppressDate" value="true"/>
+			&lt;!&ndash; 是否去除所有自动生成的注释 true：是 ： false:否 &ndash;&gt;
+			<property name="suppressAllComments" value="true"/>
+		</commentGenerator>-->
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="${db.driverClassName}"
@@ -53,20 +64,20 @@
         
         
 		<javaModelGenerator
-			targetPackage="com.ccbft.report.backend.system.domain"
+			targetPackage="com.hjx.elecfile.modules.sys.domain"
 			targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 		<sqlMapGenerator
-				targetPackage="com.ccbft.report.backend.system.mapper"
+				targetPackage="com.hjx.elecfile.modules.sys.mapper"
 			targetProject="src\main\resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<javaClientGenerator
-			targetPackage="com.ccbft.report.backend.system.dao"
+			targetPackage="com.hjx.elecfile.modules.sys.dao"
 			targetProject="src\main\java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
@@ -81,7 +92,14 @@
 		</table>
 		<table tableName="sys_permission" domainObjectName="SysPermission">
 		</table>
-
+		<table tableName="sys_permission_menu" domainObjectName="PermissionMenu">
+		</table>
+		<table tableName="sys_menu" domainObjectName="Menu">
+		</table>
+		<table tableName="sys_login_log" domainObjectName="SysLoginLog">
+		</table>
+		<table tableName="sys_ope_log" domainObjectName="SysOpeLog">
+		</table>
 		<!-- <table tableName="user"  enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false">
 		</table>
@@ -123,10 +141,10 @@
 		<table tableName="sys_permission" domainObjectName="Permission">
 		</table>
 		<table tableName="sys_permission_menu" domainObjectName="PermissionMenu">
-		</table>-->
+		</table>
 		<table tableName="sys_menu" domainObjectName="Menu">
 		</table>
-		<!--<table tableName="sys_postion" domainObjectName="Postion">
+		--><!--<table tableName="sys_postion" domainObjectName="Postion">
 		</table>
 		<table tableName="sys_user_postion" domainObjectName="UserPostion">
 		</table>-->
