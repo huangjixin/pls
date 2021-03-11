@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ccb.gy.hrperf.system.mapper.UserPostionMapper">
-  <resultMap id="BaseResultMap" type="com.ccb.gy.hrperf.system.domain.UserPostion">
-    <!--
-      WARNING - @mbg.generated
-    -->
+<mapper namespace="com.hjx.elecfile.modules.sys.dao.SysUserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.hjx.elecfile.modules.sys.domain.SysUserRole">
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
-    <result column="POSITION_ID" jdbcType="VARCHAR" property="positionId" />
+    <result column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
   </resultMap>
   <sql id="Example_Where_Clause">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -42,9 +36,6 @@
     </where>
   </sql>
   <sql id="Update_By_Example_Where_Clause">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <where>
       <foreach collection="example.oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -74,51 +65,80 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    ID, USER_ID, POSITION_ID
+    ID, USER_ID, ROLE_ID
   </sql>
-  <select id="selectByExample" parameterType="com.ccb.gy.hrperf.system.domain.UserPostionCriteria" resultMap="BaseResultMap">
-    <!--
-      WARNING - @mbg.generated
-    -->
+  <select id="selectByExample" parameterType="com.hjx.elecfile.modules.sys.domain.SysUserRoleCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_user_postion
+    from sys_user_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="limitStart != null and limitSize &gt;= 0">
+      limit #{limitStart} , #{limitSize}
+    </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.ccb.gy.hrperf.system.domain.UserPostionCriteria">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    delete from sys_user_postion
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_role
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_user_role
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hjx.elecfile.modules.sys.domain.SysUserRoleCriteria">
+    delete from sys_user_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <select id="countByExample" parameterType="com.ccb.gy.hrperf.system.domain.UserPostionCriteria" resultType="java.lang.Long">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    select count(*) from sys_user_postion
+  <insert id="insert" parameterType="com.hjx.elecfile.modules.sys.domain.SysUserRole">
+    insert into sys_user_role (ID, USER_ID, ROLE_ID
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjx.elecfile.modules.sys.domain.SysUserRole">
+    insert into sys_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hjx.elecfile.modules.sys.domain.SysUserRoleCriteria" resultType="java.lang.Long">
+    select count(*) from sys_user_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    update sys_user_postion
+    update sys_user_role
     <set>
       <if test="record.id != null">
         ID = #{record.id,jdbcType=VARCHAR},
@@ -126,8 +146,8 @@
       <if test="record.userId != null">
         USER_ID = #{record.userId,jdbcType=VARCHAR},
       </if>
-      <if test="record.positionId != null">
-        POSITION_ID = #{record.positionId,jdbcType=VARCHAR},
+      <if test="record.roleId != null">
+        ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -135,16 +155,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    update sys_user_postion
+    update sys_user_role
     set ID = #{record.id,jdbcType=VARCHAR},
       USER_ID = #{record.userId,jdbcType=VARCHAR},
-      POSITION_ID = #{record.positionId,jdbcType=VARCHAR}
+      ROLE_ID = #{record.roleId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjx.elecfile.modules.sys.domain.SysUserRole">
+    update sys_user_role
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hjx.elecfile.modules.sys.domain.SysUserRole">
+    update sys_user_role
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      ROLE_ID = #{roleId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

@@ -11,11 +11,11 @@
     <classPathEntry location="${db.driverLocation}"/>
     
 	<context id="Mysql"  targetRuntime="MyBatis3"><!-- targetRuntime="MyBatis3Simple" defaultModelType="flat" -->
-		<!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
 			<property name="mappers"
 				value="tk.mybatis.mapper.common.Mapper" />
 			<property name="caseSensitive" value="true" />
-		</plugin>-->
+		</plugin>
 		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin> 
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin> 
@@ -64,25 +64,34 @@
         
         
 		<javaModelGenerator
-			targetPackage="com.hjx.elecfile.modules.sys.domain"
+			targetPackage="com.hjx.elecfile.modules.act.domain"
 			targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 		<sqlMapGenerator
-				targetPackage="com.hjx.elecfile.modules.sys.mapper"
+				targetPackage="com.hjx.elecfile.modules.act.mapper"
 			targetProject="src\main\resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<javaClientGenerator
-			targetPackage="com.hjx.elecfile.modules.sys.dao"
+			targetPackage="com.hjx.elecfile.modules.act.mapper"
 			targetProject="src\main\java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="sys_user" domainObjectName="SysUser">
+		<table tableName="act_activity" domainObjectName="Activity">
+		</table>
+		<!--<table tableName="act_prise" domainObjectName="Prise">
+		</table>
+		<table tableName="act_rules" domainObjectName="Rules">
+		</table>
+		<table tableName="act_template" domainObjectName="Template">
+		</table>-->
+
+		<!--<table tableName="sys_user" domainObjectName="SysUser">
 		</table>
 		<table tableName="sys_user_role" domainObjectName="SysUserRole">
 		</table>
@@ -99,7 +108,7 @@
 		<table tableName="sys_login_log" domainObjectName="SysLoginLog">
 		</table>
 		<table tableName="sys_ope_log" domainObjectName="SysOpeLog">
-		</table>
+		</table>-->
 		<!-- <table tableName="user"  enableCountByExample="false" enableUpdateByExample="false"
             enableDeleteByExample="false" enableSelectByExample="false">
 		</table>

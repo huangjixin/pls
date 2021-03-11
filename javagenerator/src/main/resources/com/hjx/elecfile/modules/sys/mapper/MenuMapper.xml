@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ccb.gy.hrperf.system.mapper.MenuMapper">
-  <resultMap id="BaseResultMap" type="com.ccb.gy.hrperf.system.domain.Menu">
-    <!--
-      WARNING - @mbg.generated
-    -->
+<mapper namespace="com.hjx.elecfile.modules.sys.dao.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.hjx.elecfile.modules.sys.domain.Menu">
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
     <result column="IS_EXPIRED" jdbcType="TINYINT" property="isExpired" />
@@ -23,9 +20,6 @@
     <result column="ICON" jdbcType="VARCHAR" property="icon" />
   </resultMap>
   <sql id="Example_Where_Clause">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -55,9 +49,6 @@
     </where>
   </sql>
   <sql id="Update_By_Example_Where_Clause">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <where>
       <foreach collection="example.oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -87,16 +78,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    <!--
-      WARNING - @mbg.generated
-    -->
     ID, NAME, IS_EXPIRED, IS_LOCKED, IS_ENABLED, TYPE, STATUS, CREATE_BY, CREATE_TIME, 
     UPDATE_BY, UPDATE_TIME, EN_NAME, PARENT_ID, CODE, URL, ICON
   </sql>
-  <select id="selectByExample" parameterType="com.ccb.gy.hrperf.system.domain.MenuCriteria" resultMap="BaseResultMap">
-    <!--
-      WARNING - @mbg.generated
-    -->
+  <select id="selectByExample" parameterType="com.hjx.elecfile.modules.sys.domain.MenuCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -109,29 +94,150 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="limitStart != null and limitSize &gt;= 0">
+      limit #{limitStart} , #{limitSize}
+    </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.ccb.gy.hrperf.system.domain.MenuCriteria">
-    <!--
-      WARNING - @mbg.generated
-    -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_menu
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hjx.elecfile.modules.sys.domain.MenuCriteria">
     delete from sys_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <select id="countByExample" parameterType="com.ccb.gy.hrperf.system.domain.MenuCriteria" resultType="java.lang.Long">
-    <!--
-      WARNING - @mbg.generated
-    -->
+  <insert id="insert" parameterType="com.hjx.elecfile.modules.sys.domain.Menu">
+    insert into sys_menu (ID, NAME, IS_EXPIRED, 
+      IS_LOCKED, IS_ENABLED, TYPE, 
+      STATUS, CREATE_BY, CREATE_TIME, 
+      UPDATE_BY, UPDATE_TIME, EN_NAME, 
+      PARENT_ID, CODE, URL, 
+      ICON)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{isExpired,jdbcType=TINYINT}, 
+      #{isLocked,jdbcType=TINYINT}, #{isEnabled,jdbcType=TINYINT}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{enName,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjx.elecfile.modules.sys.domain.Menu">
+    insert into sys_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="isExpired != null">
+        IS_EXPIRED,
+      </if>
+      <if test="isLocked != null">
+        IS_LOCKED,
+      </if>
+      <if test="isEnabled != null">
+        IS_ENABLED,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="enName != null">
+        EN_NAME,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="icon != null">
+        ICON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isExpired != null">
+        #{isExpired,jdbcType=TINYINT},
+      </if>
+      <if test="isLocked != null">
+        #{isLocked,jdbcType=TINYINT},
+      </if>
+      <if test="isEnabled != null">
+        #{isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enName != null">
+        #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hjx.elecfile.modules.sys.domain.MenuCriteria" resultType="java.lang.Long">
     select count(*) from sys_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    <!--
-      WARNING - @mbg.generated
-    -->
     update sys_menu
     <set>
       <if test="record.id != null">
@@ -188,9 +294,6 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    <!--
-      WARNING - @mbg.generated
-    -->
     update sys_menu
     set ID = #{record.id,jdbcType=VARCHAR},
       NAME = #{record.name,jdbcType=VARCHAR},
@@ -211,5 +314,75 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjx.elecfile.modules.sys.domain.Menu">
+    update sys_menu
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isExpired != null">
+        IS_EXPIRED = #{isExpired,jdbcType=TINYINT},
+      </if>
+      <if test="isLocked != null">
+        IS_LOCKED = #{isLocked,jdbcType=TINYINT},
+      </if>
+      <if test="isEnabled != null">
+        IS_ENABLED = #{isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enName != null">
+        EN_NAME = #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hjx.elecfile.modules.sys.domain.Menu">
+    update sys_menu
+    set NAME = #{name,jdbcType=VARCHAR},
+      IS_EXPIRED = #{isExpired,jdbcType=TINYINT},
+      IS_LOCKED = #{isLocked,jdbcType=TINYINT},
+      IS_ENABLED = #{isEnabled,jdbcType=TINYINT},
+      TYPE = #{type,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=INTEGER},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      EN_NAME = #{enName,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      CODE = #{code,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      ICON = #{icon,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

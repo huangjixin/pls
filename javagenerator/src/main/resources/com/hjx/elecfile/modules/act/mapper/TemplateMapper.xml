@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjx.elecfile.modules.act.mapper.TemplateMapper">
+  <resultMap id="BaseResultMap" type="com.hjx.elecfile.modules.act.domain.Template">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="SORT" jdbcType="BIGINT" property="sort" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ACT_H_ORDINATE" jdbcType="INTEGER" property="actHOrdinate" />
+    <result column="ACT_V_ORDINATE" jdbcType="INTEGER" property="actVOrdinate" />
+    <result column="START_ELEMENT_ID" jdbcType="VARCHAR" property="startElementId" />
+    <result column="PARTICIAPE_ELEMENT_ID" jdbcType="VARCHAR" property="particiapeElementId" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="PARENT_ID" jdbcType="VARCHAR" property="parentId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, TYPE, SORT, STATUS, DESCRIPTION, NAME, CREATE_BY, UPDATE_BY, CREATE_TIME, UPDATE_TIME, 
+    ACT_H_ORDINATE, ACT_V_ORDINATE, START_ELEMENT_ID, PARTICIAPE_ELEMENT_ID, ICON, URL, 
+    PARENT_ID
+  </sql>
+  <select id="selectByExample" parameterType="com.hjx.elecfile.modules.act.domain.TemplateCriteria" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from act_template
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitSize &gt;= 0">
+      limit #{limitStart} , #{limitSize}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.hjx.elecfile.modules.act.domain.TemplateCriteria">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from act_template
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.hjx.elecfile.modules.act.domain.TemplateCriteria" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from act_template
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update act_template
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        TYPE = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.sort != null">
+        SORT = #{record.sort,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null">
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actHOrdinate != null">
+        ACT_H_ORDINATE = #{record.actHOrdinate,jdbcType=INTEGER},
+      </if>
+      <if test="record.actVOrdinate != null">
+        ACT_V_ORDINATE = #{record.actVOrdinate,jdbcType=INTEGER},
+      </if>
+      <if test="record.startElementId != null">
+        START_ELEMENT_ID = #{record.startElementId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.particiapeElementId != null">
+        PARTICIAPE_ELEMENT_ID = #{record.particiapeElementId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.icon != null">
+        ICON = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        PARENT_ID = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update act_template
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=INTEGER},
+      SORT = #{record.sort,jdbcType=BIGINT},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      ACT_H_ORDINATE = #{record.actHOrdinate,jdbcType=INTEGER},
+      ACT_V_ORDINATE = #{record.actVOrdinate,jdbcType=INTEGER},
+      START_ELEMENT_ID = #{record.startElementId,jdbcType=VARCHAR},
+      PARTICIAPE_ELEMENT_ID = #{record.particiapeElementId,jdbcType=VARCHAR},
+      ICON = #{record.icon,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      PARENT_ID = #{record.parentId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <resultMap id="BaseResultMap" type="com.hjx.elecfile.modules.act.domain.Template">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="SORT" jdbcType="BIGINT" property="sort" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ACT_H_ORDINATE" jdbcType="INTEGER" property="actHOrdinate" />
+    <result column="ACT_V_ORDINATE" jdbcType="INTEGER" property="actVOrdinate" />
+    <result column="START_ELEMENT_ID" jdbcType="VARCHAR" property="startElementId" />
+    <result column="PARTICIAPE_ELEMENT_ID" jdbcType="VARCHAR" property="particiapeElementId" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="PARENT_ID" jdbcType="VARCHAR" property="parentId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, TYPE, SORT, STATUS, DESCRIPTION, NAME, CREATE_BY, UPDATE_BY, CREATE_TIME, UPDATE_TIME, 
+    ACT_H_ORDINATE, ACT_V_ORDINATE, START_ELEMENT_ID, PARTICIAPE_ELEMENT_ID, ICON, URL, 
+    PARENT_ID
+  </sql>
+  <select id="selectByExample" parameterType="com.hjx.elecfile.modules.act.domain.TemplateCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from act_template
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitSize &gt;= 0">
+      limit #{limitStart} , #{limitSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from act_template
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from act_template
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hjx.elecfile.modules.act.domain.TemplateCriteria">
+    delete from act_template
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hjx.elecfile.modules.act.domain.Template">
+    insert into act_template (ID, TYPE, SORT, 
+      STATUS, DESCRIPTION, NAME, 
+      CREATE_BY, UPDATE_BY, CREATE_TIME, 
+      UPDATE_TIME, ACT_H_ORDINATE, ACT_V_ORDINATE, 
+      START_ELEMENT_ID, PARTICIAPE_ELEMENT_ID, ICON, 
+      URL, PARENT_ID)
+    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{sort,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{actHOrdinate,jdbcType=INTEGER}, #{actVOrdinate,jdbcType=INTEGER}, 
+      #{startElementId,jdbcType=VARCHAR}, #{particiapeElementId,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjx.elecfile.modules.act.domain.Template">
+    insert into act_template
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="sort != null">
+        SORT,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="actHOrdinate != null">
+        ACT_H_ORDINATE,
+      </if>
+      <if test="actVOrdinate != null">
+        ACT_V_ORDINATE,
+      </if>
+      <if test="startElementId != null">
+        START_ELEMENT_ID,
+      </if>
+      <if test="particiapeElementId != null">
+        PARTICIAPE_ELEMENT_ID,
+      </if>
+      <if test="icon != null">
+        ICON,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actHOrdinate != null">
+        #{actHOrdinate,jdbcType=INTEGER},
+      </if>
+      <if test="actVOrdinate != null">
+        #{actVOrdinate,jdbcType=INTEGER},
+      </if>
+      <if test="startElementId != null">
+        #{startElementId,jdbcType=VARCHAR},
+      </if>
+      <if test="particiapeElementId != null">
+        #{particiapeElementId,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hjx.elecfile.modules.act.domain.TemplateCriteria" resultType="java.lang.Long">
+    select count(*) from act_template
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update act_template
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        TYPE = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.sort != null">
+        SORT = #{record.sort,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null">
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actHOrdinate != null">
+        ACT_H_ORDINATE = #{record.actHOrdinate,jdbcType=INTEGER},
+      </if>
+      <if test="record.actVOrdinate != null">
+        ACT_V_ORDINATE = #{record.actVOrdinate,jdbcType=INTEGER},
+      </if>
+      <if test="record.startElementId != null">
+        START_ELEMENT_ID = #{record.startElementId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.particiapeElementId != null">
+        PARTICIAPE_ELEMENT_ID = #{record.particiapeElementId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.icon != null">
+        ICON = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        PARENT_ID = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update act_template
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=INTEGER},
+      SORT = #{record.sort,jdbcType=BIGINT},
+      STATUS = #{record.status,jdbcType=INTEGER},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      CREATE_BY = #{record.createBy,jdbcType=VARCHAR},
+      UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      ACT_H_ORDINATE = #{record.actHOrdinate,jdbcType=INTEGER},
+      ACT_V_ORDINATE = #{record.actVOrdinate,jdbcType=INTEGER},
+      START_ELEMENT_ID = #{record.startElementId,jdbcType=VARCHAR},
+      PARTICIAPE_ELEMENT_ID = #{record.particiapeElementId,jdbcType=VARCHAR},
+      ICON = #{record.icon,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      PARENT_ID = #{record.parentId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjx.elecfile.modules.act.domain.Template">
+    update act_template
+    <set>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        SORT = #{sort,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actHOrdinate != null">
+        ACT_H_ORDINATE = #{actHOrdinate,jdbcType=INTEGER},
+      </if>
+      <if test="actVOrdinate != null">
+        ACT_V_ORDINATE = #{actVOrdinate,jdbcType=INTEGER},
+      </if>
+      <if test="startElementId != null">
+        START_ELEMENT_ID = #{startElementId,jdbcType=VARCHAR},
+      </if>
+      <if test="particiapeElementId != null">
+        PARTICIAPE_ELEMENT_ID = #{particiapeElementId,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hjx.elecfile.modules.act.domain.Template">
+    update act_template
+    set TYPE = #{type,jdbcType=INTEGER},
+      SORT = #{sort,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=INTEGER},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      ACT_H_ORDINATE = #{actHOrdinate,jdbcType=INTEGER},
+      ACT_V_ORDINATE = #{actVOrdinate,jdbcType=INTEGER},
+      START_ELEMENT_ID = #{startElementId,jdbcType=VARCHAR},
+      PARTICIAPE_ELEMENT_ID = #{particiapeElementId,jdbcType=VARCHAR},
+      ICON = #{icon,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ccb.gy.hrperf.system.mapper.PostionMapper">
-  <resultMap id="BaseResultMap" type="com.ccb.gy.hrperf.system.domain.Postion">
-    <!--
-      WARNING - @mbg.generated
-    -->
+<mapper namespace="com.hjx.elecfile.modules.sys.dao.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="com.hjx.elecfile.modules.sys.domain.SysRole">
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
     <result column="IS_EXPIRED" jdbcType="TINYINT" property="isExpired" />
@@ -17,13 +14,8 @@
     <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="EN_NAME" jdbcType="VARCHAR" property="enName" />
-    <result column="CODE" jdbcType="VARCHAR" property="code" />
-    <result column="DEPT_ID" jdbcType="VARCHAR" property="deptId" />
   </resultMap>
   <sql id="Example_Where_Clause">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -53,9 +45,6 @@
     </where>
   </sql>
   <sql id="Update_By_Example_Where_Clause">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <where>
       <foreach collection="example.oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -85,52 +74,141 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    <!--
-      WARNING - @mbg.generated
-    -->
     ID, NAME, IS_EXPIRED, IS_LOCKED, IS_ENABLED, TYPE, STATUS, CREATE_BY, CREATE_TIME, 
-    UPDATE_BY, UPDATE_TIME, EN_NAME, CODE, DEPT_ID
+    UPDATE_BY, UPDATE_TIME, EN_NAME
   </sql>
-  <select id="selectByExample" parameterType="com.ccb.gy.hrperf.system.domain.PostionCriteria" resultMap="BaseResultMap">
-    <!--
-      WARNING - @mbg.generated
-    -->
+  <select id="selectByExample" parameterType="com.hjx.elecfile.modules.sys.domain.SysRoleCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_postion
+    from sys_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="limitStart != null and limitSize &gt;= 0">
+      limit #{limitStart} , #{limitSize}
+    </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.ccb.gy.hrperf.system.domain.PostionCriteria">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    delete from sys_postion
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_role
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hjx.elecfile.modules.sys.domain.SysRoleCriteria">
+    delete from sys_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <select id="countByExample" parameterType="com.ccb.gy.hrperf.system.domain.PostionCriteria" resultType="java.lang.Long">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    select count(*) from sys_postion
+  <insert id="insert" parameterType="com.hjx.elecfile.modules.sys.domain.SysRole">
+    insert into sys_role (ID, NAME, IS_EXPIRED, 
+      IS_LOCKED, IS_ENABLED, TYPE, 
+      STATUS, CREATE_BY, CREATE_TIME, 
+      UPDATE_BY, UPDATE_TIME, EN_NAME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{isExpired,jdbcType=TINYINT}, 
+      #{isLocked,jdbcType=TINYINT}, #{isEnabled,jdbcType=TINYINT}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{enName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjx.elecfile.modules.sys.domain.SysRole">
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="isExpired != null">
+        IS_EXPIRED,
+      </if>
+      <if test="isLocked != null">
+        IS_LOCKED,
+      </if>
+      <if test="isEnabled != null">
+        IS_ENABLED,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="enName != null">
+        EN_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isExpired != null">
+        #{isExpired,jdbcType=TINYINT},
+      </if>
+      <if test="isLocked != null">
+        #{isLocked,jdbcType=TINYINT},
+      </if>
+      <if test="isEnabled != null">
+        #{isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enName != null">
+        #{enName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hjx.elecfile.modules.sys.domain.SysRoleCriteria" resultType="java.lang.Long">
+    select count(*) from sys_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    update sys_postion
+    update sys_role
     <set>
       <if test="record.id != null">
         ID = #{record.id,jdbcType=VARCHAR},
@@ -168,22 +246,13 @@
       <if test="record.enName != null">
         EN_NAME = #{record.enName,jdbcType=VARCHAR},
       </if>
-      <if test="record.code != null">
-        CODE = #{record.code,jdbcType=VARCHAR},
-      </if>
-      <if test="record.deptId != null">
-        DEPT_ID = #{record.deptId,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    update sys_postion
+    update sys_role
     set ID = #{record.id,jdbcType=VARCHAR},
       NAME = #{record.name,jdbcType=VARCHAR},
       IS_EXPIRED = #{record.isExpired,jdbcType=TINYINT},
@@ -195,12 +264,63 @@
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
       UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
-      EN_NAME = #{record.enName,jdbcType=VARCHAR},
-      CODE = #{record.code,jdbcType=VARCHAR},
-      DEPT_ID = #{record.deptId,jdbcType=VARCHAR}
+      EN_NAME = #{record.enName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjx.elecfile.modules.sys.domain.SysRole">
+    update sys_role
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isExpired != null">
+        IS_EXPIRED = #{isExpired,jdbcType=TINYINT},
+      </if>
+      <if test="isLocked != null">
+        IS_LOCKED = #{isLocked,jdbcType=TINYINT},
+      </if>
+      <if test="isEnabled != null">
+        IS_ENABLED = #{isEnabled,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enName != null">
+        EN_NAME = #{enName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hjx.elecfile.modules.sys.domain.SysRole">
+    update sys_role
+    set NAME = #{name,jdbcType=VARCHAR},
+      IS_EXPIRED = #{isExpired,jdbcType=TINYINT},
+      IS_LOCKED = #{isLocked,jdbcType=TINYINT},
+      IS_ENABLED = #{isEnabled,jdbcType=TINYINT},
+      TYPE = #{type,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=INTEGER},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      EN_NAME = #{enName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>
