@@ -11,11 +11,11 @@
     <classPathEntry location="${db.driverLocation}"/>
     
 	<context id="Mysql"  targetRuntime="MyBatis3"><!-- targetRuntime="MyBatis3Simple" defaultModelType="flat" -->
-		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+		<!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
 			<property name="mappers"
 				value="tk.mybatis.mapper.common.Mapper" />
 			<property name="caseSensitive" value="true" />
-		</plugin>
+		</plugin>-->
 		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin> 
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin> 
@@ -64,26 +64,26 @@
         
         
 		<javaModelGenerator
-			targetPackage="com.hjx.elecfile.modules.act.domain"
+			targetPackage="com.hjx.webmaker.modules.sys.domain"
 			targetProject="src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 		<sqlMapGenerator
-				targetPackage="com.hjx.elecfile.modules.act.mapper"
+				targetPackage="com.hjx.webmaker.modules.sys.mapper"
 			targetProject="src\main\resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<javaClientGenerator
-			targetPackage="com.hjx.elecfile.modules.act.mapper"
+			targetPackage="com.hjx.webmaker.modules.sys.mapper"
 			targetProject="src\main\java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="act_activity" domainObjectName="Activity">
-		</table>
+		<!--<table tableName="act_activity" domainObjectName="Activity">
+		</table>-->
 		<!--<table tableName="act_prise" domainObjectName="Prise">
 		</table>
 		<table tableName="act_rules" domainObjectName="Rules">
@@ -157,5 +157,19 @@
 		</table>
 		<table tableName="sys_user_postion" domainObjectName="UserPostion">
 		</table>-->
+		<!--<table tableName="sys_login_log" domainObjectName="LoginLog">
+		</table>
+		<table tableName="sys_permission" domainObjectName="Permission">
+		</table>
+		<table tableName="sys_role" domainObjectName="Role">
+		</table>
+		<table tableName="sys_role_permission" domainObjectName="RolePermission">
+		</table>
+		<table tableName="sys_user" domainObjectName="User">
+		</table>
+		<table tableName="sys_user_role" domainObjectName="UserRole">
+		</table>-->
+		<table tableName="message" domainObjectName="Message">
+		</table>
 	</context>
 </generatorConfiguration>
